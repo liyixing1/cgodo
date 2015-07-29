@@ -1,0 +1,336 @@
+package cn.gou23.cgodo.util;
+
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
+/***
+ * 时间帮助类
+ * 
+ * @author 李义星
+ * 
+ */
+public final class UtilDateTime {
+	/** 时间格式化器集合，该类在使用过一次格式后，根据格式，保存该格式对应的格式化对象 */
+	public static final Map<String, SimpleDateFormat> datetimeFormats = new HashMap<String, SimpleDateFormat>();
+	/** 年月日格式 */
+	public static final String YYYY_MM_DD = "yyyy-MM-dd";
+	/** 年月日 时分秒格式 */
+	public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+	/** 时分秒格式 */
+	public static final String HH_MM_SS = "HH:mm:ss";
+	/** 一天的毫秒数 */
+	public static final long DAY_MILLISECOND = 86400000;
+
+	/**
+	 * 
+	 * 描述:获取当前时间的java.util.Calendar
+	 * 
+	 * @return
+	 * @author liyixing 2012-11-12 下午2:50:58
+	 */
+	public static final Calendar getNowCalendar() {
+		return Calendar.getInstance();
+	}
+
+	/**
+	 * 描述:获取当前时间的java.util.Date
+	 * 
+	 * @return
+	 * 
+	 * @author liyixing 2012-11-12 下午2:50:58
+	 */
+	public static final Date getNowDate() {
+		return new Date();
+	}
+
+	/**
+	 * 
+	 * 描述:获取当前时间的java.sql.Timestamp类型
+	 * 
+	 * @return
+	 * @author liyixing 2012-11-12 下午2:51:47
+	 */
+	public static final Timestamp getNowTimestamp() {
+		return new Timestamp(System.currentTimeMillis());
+	}
+
+	/**
+	 * 
+	 * 描述:根据格式获取时间格式器对象
+	 * 
+	 * @param format
+	 * @return
+	 * @author liyixing 2012-11-12 下午2:51:56
+	 */
+	public static final SimpleDateFormat getDateFormat(String format) {
+		SimpleDateFormat simpleDateFormat = UtilDateTime.datetimeFormats
+				.get(format);
+
+		if (simpleDateFormat == null) {
+			simpleDateFormat = new SimpleDateFormat(format);
+			UtilDateTime.datetimeFormats.put(format, simpleDateFormat);
+		}
+
+		return simpleDateFormat;
+	}
+
+	/**
+	 * 
+	 * 描述:格式化时间
+	 * 
+	 * @param date
+	 * @param format
+	 * @return
+	 * @author liyixing 2012-11-12 下午2:52:31
+	 */
+	public static final String format(Date date, String format) {
+		return getDateFormat(format).format(date);
+	}
+
+	/**
+	 * 
+	 * 描述:格式化Timestamp类型时间
+	 * 
+	 * @param timestamp
+	 * @param format
+	 * @return
+	 * @author liyixing 2012-11-12 下午2:52:56
+	 */
+	public static final String format(Timestamp timestamp, String format) {
+		return format(new Date(timestamp.getTime()), format);
+	}
+
+	/**
+	 * 
+	 * 描述:格式化Calendar类型时间
+	 * 
+	 * @param calendar
+	 * @param format
+	 * @return
+	 * @author liyixing 2012-11-12 下午2:53:10
+	 */
+	public static final String format(Calendar calendar, String format) {
+		return format(calendar.getTime(), format);
+	}
+
+	/**
+	 * 
+	 * 描述:以字符串格式获取当前日期与时间，格式yyyy-MM-dd HH:mm:ss
+	 * 
+	 * @return
+	 * @author liyixing 2012-11-12 下午2:53:31
+	 */
+	public static final String formatNowDateTime() {
+		return format(getNowCalendar(), YYYY_MM_DD_HH_MM_SS);
+	}
+
+	/**
+	 * 
+	 * 描述:以字符串格式获取当前日期，格式yyyy-MM-dd
+	 * 
+	 * @return
+	 * @author liyixing 2012-11-12 下午2:54:06
+	 */
+	public static final String formatNowDate() {
+		return format(getNowCalendar(), YYYY_MM_DD);
+	}
+
+	/**
+	 * 
+	 * 描述:以字符串格式获取当前时间，格式HH:mm:ss
+	 * 
+	 * @return
+	 * @author liyixing 2012-11-12 下午2:54:06
+	 */
+	public static final String formatNowTime() {
+		return format(getNowCalendar(), HH_MM_SS);
+	}
+
+	/**
+	 * 
+	 * 描述:解析字符串，转化成时间
+	 * 
+	 * @param date
+	 * @param format
+	 * @return
+	 * @throws ParseException
+	 * @author liyixing 2012-11-12 下午2:55:07
+	 */
+	public static final Date parse(String date, String format)
+			throws ParseException {
+		return getDateFormat(format).parse(date);
+	}
+
+	/**
+	 * 
+	 * 描述:将Date类型的时间修改为这天最后时间，也就是23点59分59秒
+	 * 
+	 * @param date
+	 * @return
+	 * @author liyixing 2012-11-12 下午2:56:25
+	 */
+	public static final Date setDateToLastTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		Calendar c = Calendar.getInstance();
+
+		c.setTime(date);
+		setCalendarToLastTime(c);
+
+		return c.getTime();
+	}
+
+	/**
+	 * 
+	 * 描述:将Calendar类型的时间修改为这天最后时间，也就是23点59分59秒.999毫秒
+	 * 
+	 * @param date
+	 * @author liyixing 2012-11-12 下午2:57:22
+	 */
+	public static final void setCalendarToLastTime(Calendar date) {
+		if (date == null) {
+			return;
+		}
+
+		date.set(Calendar.HOUR_OF_DAY, 23);
+		date.set(Calendar.MINUTE, 59);
+		date.set(Calendar.SECOND, 59);
+		date.set(Calendar.MILLISECOND, 999);
+	}
+
+	/**
+	 * 
+	 * 描述:将date类型的时间修改为这天开始时间，也就是00点00分00秒
+	 * 
+	 * @param date
+	 * @return
+	 * @author liyixing 2012-11-12 下午2:58:51
+	 */
+	public static final Date setDateToFirstTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		Calendar c = Calendar.getInstance();
+
+		c.setTime(date);
+		setCalendarToFirstTime(c);
+
+		return c.getTime();
+	}
+
+	/**
+	 * 
+	 * 描述:将Calendar类型的时间修改为这天开始时间，也就是0点0分0秒
+	 * 
+	 * @param date
+	 * @author liyixing 2012-11-12 下午2:58:58
+	 */
+	public static final void setCalendarToFirstTime(Calendar date) {
+		if (date == null) {
+			return;
+		}
+
+		date.set(Calendar.HOUR_OF_DAY, 0);
+		date.set(Calendar.MINUTE, 0);
+		date.set(Calendar.SECOND, 0);
+		date.set(Calendar.MILLISECOND, 0);
+	}
+
+	/**
+	 * 
+	 * 描述:计算两个时间相差的天数
+	 * 
+	 * 把第一个date改成该date天的开始，即0点0分0秒
+	 * 
+	 * 计算两个date相差毫秒数
+	 * 
+	 * 用相差毫秒数/一天总毫秒数，即相差天数
+	 * 
+	 * 返回值，永远是个整数
+	 * 
+	 * @param d1
+	 * @param d2
+	 * @author liyixing 2011-7-26
+	 */
+	public static final long getDifferenceDay(Date date1, Date date2) {
+		date1 = setDateToFirstTime(date1);
+
+		long d1t = date1.getTime();
+		long d2t = date2.getTime();
+		// 计算时间差值（毫秒）
+		long div = Math.abs(d1t - d2t);
+		long day = div / DAY_MILLISECOND;
+
+		return day;
+	}
+
+	/**
+	 * 
+	 * 描述:将Date类型的时间修改为这月最后时间，也就是一个月最后一天的23点59分59秒.999
+	 * 
+	 * @param date
+	 * @return
+	 * @author liyixing 2012-11-12 下午2:56:25
+	 */
+	public static final Date setDateToLastMonthTime(Date date) {
+		Calendar c = Calendar.getInstance();
+
+		c.setTime(date);
+		setCalendarToLastMonthTime(c);
+
+		return c.getTime();
+	}
+
+	/**
+	 * 
+	 * 描述:将Calendar类型的时间修改为这月最后时间，也就是一个月最后一天的23点59分59秒
+	 * 
+	 * @param date
+	 * @author liyixing 2012-11-12 下午2:57:22
+	 */
+	public static final void setCalendarToLastMonthTime(Calendar date) {
+		// 设为下月第一天
+		date.set(Calendar.DAY_OF_MONTH, 1);
+		date.add(Calendar.MONTH, 1);
+		// 往前推算一天
+		date.add(Calendar.DAY_OF_MONTH, -1);
+		setCalendarToLastTime(date);
+	}
+
+	/**
+	 * 
+	 * 描述:将date类型的时间修改为这月开始时间，也就是1号00点00分00秒
+	 * 
+	 * @param date
+	 * @return
+	 * @author liyixing 2012-11-12 下午2:58:51
+	 */
+	public static final Date setDateToFirstMonthTime(Date date) {
+		Calendar c = Calendar.getInstance();
+
+		c.setTime(date);
+		setCalendarToFirstMonthTime(c);
+
+		return c.getTime();
+	}
+
+	/**
+	 * 
+	 * 描述:将Calendar类型的时间修改为这月开始时间，也就是1号00点00分00秒
+	 * 
+	 * @param date
+	 * @author liyixing 2012-11-12 下午2:58:58
+	 */
+	public static final void setCalendarToFirstMonthTime(Calendar date) {
+		date.set(Calendar.DAY_OF_MONTH, 1);
+		setCalendarToFirstTime(date);
+	}
+}

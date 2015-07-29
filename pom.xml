@@ -19,6 +19,17 @@
 		</repository>
 	</repositories>
 
+	<distributionManagement>
+		<repository>
+			<id>weimaodian</id>
+			<url>http://maven.weimaodian.com/content/groups/public</url>
+		</repository>
+		<snapshotRepository>
+			<id>weimaodian-snapshots</id>
+			<url>http://maven.weimaodian.com/content/groups/public-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 
 	<dependencies>
 		<!-- JEE程序编译依赖 -->
@@ -202,5 +213,14 @@
 				<include>logback.xml</include> </includes> <filtering>true</filtering> </resource> -->
 		</resources>
 		<finalName>cgodo</finalName>
+
+		<extensions>
+			<!-- Enabling the use of FTP -->
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>1.0-beta-6</version>
+			</extension>
+		</extensions>
 	</build>
 </project>
