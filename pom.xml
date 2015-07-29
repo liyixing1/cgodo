@@ -16,7 +16,7 @@
 			<id>weimaodian</id>
 			<!-- user admin password huangpengpeng -->
 			<name>私有maven仓库地址</name>
-			<url>file:/root/sonatype-work/nexus/storage/liyixing/</url>
+			<url>http://maven.weimaodian.com/content/groups/public/</url>
 			<!-- 
 			<url>http://maven.weimaodian.com/content/groups/public</url>
 			 -->
