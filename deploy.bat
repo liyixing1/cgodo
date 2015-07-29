@@ -1,0 +1,1 @@
+mvn deploy -X -s settings.xml
