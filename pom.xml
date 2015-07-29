@@ -21,13 +21,97 @@
 
 
 	<dependencies>
-
+		<!-- JEE程序编译依赖 -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		</dependency>
+
+		<!-- 日志 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.12</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.12</version>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
+		<!-- apache commons -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.9.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+
+		<!-- spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>4.1.7.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>4.1.7.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>4.1.7.RELEASE</version>
+		</dependency>
+
+		<!-- swt -->
+		<dependency>
+			<groupId>org.eclipse.swt</groupId>
+			<artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId>
+			<version>4.3</version>
+		</dependency>
+
 		<!-- <dependency> <groupId>org.apache.httpcomponents</groupId> <artifactId>httpclient</artifactId> 
 			<version>4.3.6</version> </dependency> <dependency> <groupId>ch.qos.logback</groupId> 
 			<artifactId>logback-classic</artifactId> <version>1.1.2</version> </dependency> -->
@@ -89,34 +173,12 @@
 	</dependencies>
 
 
-	<profiles><!-- 
-		<profile>
-			<id>dev</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<build>
-				<filters>
-					<filter>src/main/resources/cn/gou23/resource/dev.properties</filter>
-				</filters>
-			</build>
-		</profile>
-		<profile>
-			<id>test</id>
-			<build>
-				<filters>
-					<filter>src/main/resources/cn/gou23/config/test.properties</filter>
-				</filters>
-			</build>
-		</profile>
-		<profile>
-			<id>pro</id>
-			<build>
-				<filters>
-					<filter>src/main/resources/cn/gou23/config/pro.properties</filter>
-				</filters>
-			</build>
-		</profile> -->
+	<profiles><!-- <profile> <id>dev</id> <activation> <activeByDefault>true</activeByDefault> 
+			</activation> <build> <filters> <filter>src/main/resources/cn/gou23/resource/dev.properties</filter> 
+			</filters> </build> </profile> <profile> <id>test</id> <build> <filters> 
+			<filter>src/main/resources/cn/gou23/config/test.properties</filter> </filters> 
+			</build> </profile> <profile> <id>pro</id> <build> <filters> <filter>src/main/resources/cn/gou23/config/pro.properties</filter> 
+			</filters> </build> </profile> -->
 	</profiles>
 
 	<build>
@@ -136,14 +198,8 @@
 				</includes>
 			</resource>
 			<!-- config.properties进行过虑，即这些文件中的${key}会被替换掉为真正的值 -->
-			<!-- <resource>
-				<directory>src/main/resources</directory>
-				<includes>
-					<include>com/qichefenqi/config.properties</include>
-					<include>logback.xml</include>
-				</includes>
-				<filtering>true</filtering>
-			</resource> -->
+			<!-- <resource> <directory>src/main/resources</directory> <includes> <include>com/qichefenqi/config.properties</include> 
+				<include>logback.xml</include> </includes> <filtering>true</filtering> </resource> -->
 		</resources>
 		<finalName>cgodo</finalName>
 	</build>
