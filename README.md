@@ -22,14 +22,8 @@
 * 博客: [@liyixing1](http://liyixing1.iteye.com)
 
 ##捐助开发者
-[@http://www.23gou.cn](http://www.23gou.cn)
+[访问 http://www.23gou.cn 贡献流量](http://www.23gou.cn)
 
-##感激
-感谢以下的项目,排名不分先后
-
-* [mou](http://mouapp.com/) 
-* [ace](http://ace.ajax.org/)
-* [jquery](http://jquery.com)
 
 ##关于作者
 
