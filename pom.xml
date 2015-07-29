@@ -14,23 +14,9 @@
 	<repositories>
 		<repository>
 			<id>weimaodian</id>
+			<!-- user admin  password huangpengpeng -->
 			<name>私有maven仓库地址</name>
 			<url>http://maven.weimaodian.com/content/groups/public</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-
-		<repository>
-			<id>oschina</id>
-			<name>oschina maven仓库地址</name>
-			<url>http://maven.oschina.net/content/groups/public/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
 		</repository>
 	</repositories>
 
