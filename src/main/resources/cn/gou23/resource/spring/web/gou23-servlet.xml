@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-3.0.xsd
+			http://www.springframework.org/schema/util
+			http://www.springframework.org/schema/util/spring-util-3.0.xsd
+			http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+           ">
+	<!-- 开启mvc注解 -->
+	<mvc:annotation-driven />
+
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+		<bean class="org.springframework.web.servlet.theme.ThemeChangeInterceptor" />
+	</mvc:interceptors>
+
+	<!-- 扫描范围 -->
+	<context:component-scan base-package="cn.gou23.act" />
+	<!-- 静态资源 -->
+	<mvc:resources mapping="/index_files/**/*" location="/index_files/"
+		cache-period="31556926" />
+	<mvc:view-controller path="/" view-name="index.html" />
+
+	<!-- 根据客户端的不同的请求决定不同的view进行响应, 如 /rest/1.json /rest/1.xml /rest?format=json 
+		/rest?format=xml -->
+	<bean
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<!-- 设置为true以忽略对Accept Header的支持 -->
+		<property name="ignoreAcceptHeader" value="true" />
+		<!-- true，开启扩展名支持，false关闭支持 -->
+		<property name="favorPathExtension" value="false" />
+		<!-- 用于开启 /userinfo/123?format=json的支持 -->
+		<property name="favorParameter" value="true" />
+		<!-- 在没有扩展名和参数时即: "/user/1" 时的默认展现形式 -->
+		<property name="defaultContentType" value="text/html" />
+
+		<!-- 参数值mimeType的映射,即 /rest?format=json json是key，application/json就是value 
+			暂时只支持json -->
+		<property name="mediaTypes">
+			<map>
+				<entry key="json" value="application/json" />
+			</map>
+		</property>
+
+		<property name="viewResolvers">
+			<!-- 关闭所有的解析器，防止它在查找候选视图时多个解析器都运行 -->
+			<list></list>
+		</property>
+
+		<property name="defaultViews">
+			<list>
+				<!-- 对json的支持 -->
+				<bean
+					class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+					<property name="objectMapper">
+						<bean class="org.codehaus.jackson.map.ObjectMapper">
+							<!-- 设置objectMapper的serializationConfig的serializationInclusion属性，以忽略null对象 -->
+							<property name="serializationConfig.serializationInclusion">
+								<value
+									type="org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion">NON_NULL</value>
+							</property>
+						</bean>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 将ftl后缀的文件使用freemarker摸版引擎解析 -->
+	<bean id="freemarkerViewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="prefix" value="" />
+		<property name="suffix" value=".html" />
+		<property name="contentType" value="text/html; charset=UTF-8" />
+		<property name="exposeRequestAttributes" value="false" />
+		<property name="exposeSessionAttributes" value="false" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+	</bean>
+
+	<!-- 设置freemarker 解析参数 -->
+	<bean id="freemarkerConfig"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/html" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">1</prop>
+				<prop key="defaultEncoding">UTF-8</prop>
+				<prop key="url_escaping_charset">UTF-8</prop>
+				<prop key="locale">zh_CN</prop>
+				<prop key="boolean_format">true,false</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="time_format">HH:mm:ss</prop>
+				<prop key="number_format">0.######</prop>
+				<prop key="whitespace_stripping">true</prop>
+				<prop key="auto_import">/common/spring.ftl as s</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 国际化信息的存取由cookie决定 这个是根据参数设置本地信息 -->
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
+</beans>
