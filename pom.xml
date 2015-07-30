@@ -13,6 +13,15 @@
 
 	<repositories>
 		<repository>
+			<id>weimaodian-porxy</id>
+			<name>私有maven仓库地址</name>
+			<url>http://maven.weimaodian.com/content/repositories/central/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
+		<repository>
 			<id>weimaodian</id>
 			<!-- user admin password huangpengpeng -->
 			<name>私有maven仓库地址</name>
@@ -269,14 +278,8 @@
 			</resource>
 		</resources>
 		<finalName>cn.23gou.cgodo-${project.version}</finalName>
-
-		<extensions>
-			<!-- Enabling the use of FTP -->
-			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-ftp</artifactId>
-				<version>1.0-beta-6</version>
-			</extension>
-		</extensions>
+		<!-- <extensions> <extension> <groupId>org.apache.maven.wagon</groupId> 
+			<artifactId>wagon-ftp</artifactId> <version>1.0-beta-6</version> </extension> 
+			</extensions> -->
 	</build>
 </project>

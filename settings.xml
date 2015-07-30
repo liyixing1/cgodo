@@ -1,19 +1,28 @@
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
             http://maven.apache.org/xsd/settings-1.0.0.xsd">
-    <localRepository/>
-    <interactiveMode/>
-    <usePluginRegistry/>
-    <offline/>
-    <pluginGroups/>
-    <servers><server> 
-      <id>snapshots</id> 
-      <username>admin</username> 
-      <password>huangpengpeng</password> 
-    </server> </servers>
-    <mirrors/>
-    <proxies/>
-    <profiles/>
-    <activeProfiles/>
+	<localRepository />
+	<interactiveMode />
+	<usePluginRegistry />
+	<offline />
+	<pluginGroups />
+	<servers>
+		<server>
+			<id>snapshots</id>
+			<username>admin</username>
+			<password>huangpengpeng</password>
+		</server>
+	</servers>
+	<mirrors>
+		<mirror>
+			<id>weimaodian-porxy</id>
+			<name>weimaodian-porxy</name>
+			<url>http://maven.weimaodian.com/content/repositories/central/</url>
+			<mirrorOf>*</mirrorOf>
+		</mirror>
+	</mirrors>
+	<proxies />
+	<profiles />
+	<activeProfiles />
 </settings>
