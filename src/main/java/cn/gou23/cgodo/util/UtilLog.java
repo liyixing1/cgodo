@@ -112,8 +112,7 @@ public final class UtilLog {
 	 * @param message
 	 * @author liyixing 2012-7-18 上午11:46:00
 	 */
-	public static final void debug(Object message, String format,
-			Object... args) {
+	public static final void debug(String format, Object... args) {
 		recordLog(LOG_LEVEL_DEBUG, format, args);
 	}
 
@@ -125,8 +124,9 @@ public final class UtilLog {
 	 * @param throwable
 	 * @author liyixing 2012-7-18 上午11:46:00
 	 */
-	public static final void debug(Object message, Throwable throwable) {
-		recordLog(LOG_LEVEL_DEBUG, message, null);
+	public static final void debug(String format, Throwable throwable,
+			Object... args) {
+		recordLog(LOG_LEVEL_DEBUG, format, throwable, args);
 	}
 
 	/**
@@ -136,8 +136,8 @@ public final class UtilLog {
 	 * @param message
 	 * @author liyixing 2012-7-18 上午11:46:00
 	 */
-	public static final void info(Object message) {
-		info(message, null);
+	public static final void info(String format, Object... args) {
+		recordLog(LOG_LEVEL_INFO, format, args);
 	}
 
 	/**
@@ -148,8 +148,9 @@ public final class UtilLog {
 	 * @param throwable
 	 * @author liyixing 2012-7-18 上午11:46:00
 	 */
-	public static final void info(Object message, Throwable throwable) {
-		recordLog(LOG_LEVEL_INFO, message, throwable);
+	public static final void info(String format, Throwable throwable,
+			Object... args) {
+		recordLog(LOG_LEVEL_INFO, format, throwable, args);
 	}
 
 	/**
@@ -159,8 +160,8 @@ public final class UtilLog {
 	 * @param message
 	 * @author liyixing 2012-7-18 上午11:46:00
 	 */
-	public static final void warn(Object message) {
-		warn(message, null);
+	public static final void warn(String format, Object... args) {
+		recordLog(LOG_LEVEL_WARN, format, args);
 	}
 
 	/**
@@ -171,8 +172,9 @@ public final class UtilLog {
 	 * @param throwable
 	 * @author liyixing 2012-7-18 上午11:46:00
 	 */
-	public static final void warn(Object message, Throwable throwable) {
-		recordLog(LOG_LEVEL_WARN, message, throwable);
+	public static final void warn(String format, Throwable throwable,
+			Object... args) {
+		recordLog(LOG_LEVEL_WARN, format, throwable, args);
 	}
 
 	/**
@@ -182,8 +184,8 @@ public final class UtilLog {
 	 * @param message
 	 * @author liyixing 2012-7-18 上午11:46:00
 	 */
-	public static final void error(Object message) {
-		error(message, null);
+	public static final void error(String format, Object... args) {
+		recordLog(LOG_LEVEL_ERROR, format, args);
 	}
 
 	/**
@@ -194,8 +196,9 @@ public final class UtilLog {
 	 * @param throwable
 	 * @author liyixing 2012-7-18 上午11:46:00
 	 */
-	public static final void error(Object message, Throwable throwable) {
-		recordLog(LOG_LEVEL_ERROR, message, throwable);
+	public static final void error(String format, Throwable throwable,
+			Object... args) {
+		recordLog(LOG_LEVEL_ERROR, format, throwable, args);
 	}
 
 	/**
