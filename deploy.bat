@@ -1,0 +1,1 @@
+mvn clean deploy -X -s settings.xml

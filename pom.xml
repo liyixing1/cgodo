@@ -13,7 +13,7 @@
 
 	<repositories>
 		<repository>
-			<id>weimaodian</id>
+			<id>weimaodian-porxy</id>
 			<name>私有maven仓库地址</name>
 			<url>http://maven.weimaodian.com/content/repositories/central/</url>
 			<snapshots>
@@ -22,9 +22,21 @@
 		</repository>
 
 		<repository>
-			<id>oschina</id>
-			<name>oschina maven仓库地址</name>
-			<url>http://maven.oschina.net/content/groups/public/</url>
+			<id>weimaodian</id>
+			<!-- user admin password huangpengpeng -->
+			<name>私有maven仓库地址</name>
+			<url>http://maven.weimaodian.com/content/groups/public/</url>
+			<!-- <url>http://maven.weimaodian.com/content/groups/public</url> -->
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
+		<repository>
+			<id>snapshots</id>
+			<!-- user admin password huangpengpeng -->
+			<name>私有maven仓库地址</name>
+			<url>http://maven.weimaodian.com/content/repositories/snapshots/</url>
 			<releases>
 				<enabled>false</enabled>
 			</releases>
@@ -35,13 +47,11 @@
 	</repositories>
 
 	<distributionManagement>
-		<repository>
-			<id>weimaodian</id>
-			<url>http://maven.weimaodian.com/content/groups/public</url>
-		</repository>
+		<!-- <repository> <id>weimaodian</id> <url>http://maven.weimaodian.com/content/repositories/liyixing/</url> 
+			</repository> -->
 		<snapshotRepository>
-			<id>weimaodian-snapshots</id>
-			<url>http://maven.weimaodian.com/content/groups/public-snapshots/</url>
+			<id>snapshots</id>
+			<url>http://maven.weimaodian.com/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
@@ -131,12 +141,8 @@
 			<version>4.1.7.RELEASE</version>
 		</dependency>
 
-		<!-- swt -->
-		<dependency>
-			<groupId>org.eclipse.swt</groupId>
-			<artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId>
-			<version>4.3</version>
-		</dependency>
+		<!-- swt <dependency> <groupId>org.eclipse.swt</groupId> <artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId> 
+			<version>4.3</version> </dependency> -->
 
 		<!-- <dependency> <groupId>org.apache.httpcomponents</groupId> <artifactId>httpclient</artifactId> 
 			<version>4.3.6</version> </dependency> <dependency> <groupId>ch.qos.logback</groupId> 
@@ -199,12 +205,47 @@
 	</dependencies>
 
 
-	<profiles><!-- <profile> <id>dev</id> <activation> <activeByDefault>true</activeByDefault> 
-			</activation> <build> <filters> <filter>src/main/resources/cn/gou23/resource/dev.properties</filter> 
-			</filters> </build> </profile> <profile> <id>test</id> <build> <filters> 
-			<filter>src/main/resources/cn/gou23/config/test.properties</filter> </filters> 
-			</build> </profile> <profile> <id>pro</id> <build> <filters> <filter>src/main/resources/cn/gou23/config/pro.properties</filter> 
-			</filters> </build> </profile> -->
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<!-- 默认激活 -->
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<filters>
+					<filter>antx/dev.properties</filter>
+				</filters>
+			</build>
+		</profile>
+		<profile>
+			<id>test</id>
+			<build>
+				<filters>
+					<filter>antx/test.properties</filter>
+				</filters>
+			</build>
+		</profile>
+		<profile>
+			<id>deploy</id>
+			<build>
+				<filters>
+					<filter>antx/deploy.properties</filter>
+				</filters>
+			</build>
+		</profile>
+		<profile>
+			<id>jdk-1.6</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<jdk>1.6</jdk>
+			</activation>
+			<properties>
+				<maven.compiler.source>1.6</maven.compiler.source>
+				<maven.compiler.target>1.6</maven.compiler.target>
+				<maven.compiler.compilerVersion>1.6</maven.compiler.compilerVersion>
+			</properties>
+		</profile>
 	</profiles>
 
 	<build>
@@ -216,26 +257,26 @@
 					<include>**/*</include>
 				</includes>
 			</resource>
-			<!-- 先指定 src/main/resources下所有文件及文件夹为资源文件 -->
+			<!-- 先指定 src/test/resources下所有文件及文件夹为资源文件 -->
 			<resource>
 				<directory>src/test/resources</directory>
 				<includes>
 					<include>**/*</include>
 				</includes>
 			</resource>
-			<!-- config.properties进行过虑，即这些文件中的${key}会被替换掉为真正的值 -->
-			<!-- <resource> <directory>src/main/resources</directory> <includes> <include>com/qichefenqi/config.properties</include> 
-				<include>logback.xml</include> </includes> <filtering>true</filtering> </resource> -->
+			<!-- 配置文件进行过虑，即这些文件中的${key}会被替换掉为真正的值 -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>cn/gou23/cgodo/resource/jdbc/jdbc.properties</include>
+					<include>cn/gou23/cgodo/resource/log4j/log4j.xml</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
 		</resources>
-		<finalName>cgodo</finalName>
-
-		<extensions>
-			<!-- Enabling the use of FTP -->
-			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-ftp</artifactId>
-				<version>1.0-beta-6</version>
-			</extension>
-		</extensions>
+		<finalName>cn.23gou.cgodo-${project.version}</finalName>
+		<!-- <extensions> <extension> <groupId>org.apache.maven.wagon</groupId> 
+			<artifactId>wagon-ftp</artifactId> <version>1.0-beta-6</version> </extension> 
+			</extensions> -->
 	</build>
 </project>
