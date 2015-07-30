@@ -1,1 +1,1 @@
-mvn deploy -X -s settings.xml
+mvn clean deploy -X -s settings.xml

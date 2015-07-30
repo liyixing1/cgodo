@@ -141,12 +141,8 @@
 			<version>4.1.7.RELEASE</version>
 		</dependency>
 
-		<!-- swt -->
-		<dependency>
-			<groupId>org.eclipse.swt</groupId>
-			<artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId>
-			<version>4.3</version>
-		</dependency>
+		<!-- swt <dependency> <groupId>org.eclipse.swt</groupId> <artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId> 
+			<version>4.3</version> </dependency> -->
 
 		<!-- <dependency> <groupId>org.apache.httpcomponents</groupId> <artifactId>httpclient</artifactId> 
 			<version>4.3.6</version> </dependency> <dependency> <groupId>ch.qos.logback</groupId> 
@@ -212,6 +208,7 @@
 	<profiles>
 		<profile>
 			<id>dev</id>
+			<!-- 默认激活 -->
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
@@ -260,7 +257,7 @@
 					<include>**/*</include>
 				</includes>
 			</resource>
-			<!-- 先指定 src/main/resources下所有文件及文件夹为资源文件 -->
+			<!-- 先指定 src/test/resources下所有文件及文件夹为资源文件 -->
 			<resource>
 				<directory>src/test/resources</directory>
 				<includes>
@@ -271,8 +268,8 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<includes>
-					<include>cn/gou23/resource/jdbc/jdbc.properties</include>
-					<include>cn/gou23/resource/log4j/log4j.xml</include>
+					<include>cn/gou23/cgodo/resource/jdbc/jdbc.properties</include>
+					<include>cn/gou23/cgodo/resource/log4j/log4j.xml</include>
 				</includes>
 				<filtering>true</filtering>
 			</resource>
