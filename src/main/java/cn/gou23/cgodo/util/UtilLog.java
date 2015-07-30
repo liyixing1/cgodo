@@ -10,11 +10,12 @@ import org.slf4j.LoggerFactory;
  * @version 1.0
  * @since 2012-7-18 上午11:40:15
  */
-public final class UtilLog4j {
+public final class UtilLog {
 	private static final int LOG_LEVEL_DEBUG = 2;
 	private static final int LOG_LEVEL_INFO = 3;
 	private static final int LOG_LEVEL_WARN = 4;
 	private static final int LOG_LEVEL_ERROR = 5;
+	private static final String CLASS_NAME = UtilLog.class.getName();
 
 	/**
 	 * 
@@ -214,29 +215,53 @@ public final class UtilLog4j {
 	 * 
 	 * @param level
 	 *            要记录的级别
-	 * @param msg
-	 *            要记录的消息，代码会自动计算出要求输出日志的类.方法，以及行数
+	 * @param format
+	 *            可以是消息，或者格式化串
 	 * @param throwable
 	 *            如果有异常，则传入
+	 * @param
 	 * @author liyixing 2012-11-25 下午8:03:06
 	 */
-	private static final void recordLog(int level, Object msg,
-			Throwable throwable) {
+	private static final void recordLog(int level, String format,
+			Throwable throwable, Object... args) {
 		StackTraceElement stackTraceElement = getStatckTraceElement();
 		Logger log = getLog(stackTraceElement);
+
+		if (LOG_LEVEL_DEBUG == level && isDebugEnabled(log)) {
+			String msg = String.format(format, args);
+			String logMessagePrefix = getPrefix(stackTraceElement);
+
+			log.debug(logMessagePrefix + msg, throwable);
+		} else if (LOG_LEVEL_INFO == level && isInfoEnabled(log)) {
+			String msg = String.format(format, args);
+			String logMessagePrefix = getPrefix(stackTraceElement);
+
+			log.info(logMessagePrefix + msg, throwable);
+		} else if (LOG_LEVEL_WARN == level && isWarnEnabled(log)) {
+			String msg = String.format(format, args);
+			String logMessagePrefix = getPrefix(stackTraceElement);
+
+			log.warn(logMessagePrefix + msg, throwable);
+		} else if (LOG_LEVEL_ERROR == level && isErrorEnabled(log)) {
+			String msg = String.format(format, args);
+			String logMessagePrefix = getPrefix(stackTraceElement);
+
+			log.error(logMessagePrefix + msg, throwable);
+		}
+	}
+
+	/**
+	 * 描述:消息前缀，计算出类，方法，行
+	 * 
+	 * @param stackTraceElement
+	 * @return
+	 * @author liyixing 2015年7月30日 下午6:22:49
+	 */
+	private static String getPrefix(StackTraceElement stackTraceElement) {
 		String logMessagePrefix = "\r\n" + stackTraceElement.getClassName()
 				+ "." + stackTraceElement.getMethodName() + "() \r\n" + "line："
 				+ stackTraceElement.getLineNumber() + "\r\n";// 添加前缀
-
-		if (LOG_LEVEL_DEBUG == level && isDebugEnabled(log)) {
-			log.debug(logMessagePrefix + msg, throwable);
-		} else if (LOG_LEVEL_INFO == level && isInfoEnabled(log)) {
-			log.info(logMessagePrefix + msg, throwable);
-		} else if (LOG_LEVEL_WARN == level && isWarnEnabled(log)) {
-			log.warn(logMessagePrefix + msg, throwable);
-		} else if (LOG_LEVEL_ERROR == level && isErrorEnabled(log)) {
-			log.error(logMessagePrefix + msg, throwable);
-		}
+		return logMessagePrefix;
 	}
 
 	/**
@@ -254,8 +279,7 @@ public final class UtilLog4j {
 		for (StackTraceElement stackTraceElementTemp : stacks) {
 			stackTraceElement = stackTraceElementTemp;
 			// 找出第一个不是本类的堆栈信息
-			if (!stackTraceElement.getClassName().equals(
-					"cn.gou23.cgodo.util.UtilLog4j")) {
+			if (!stackTraceElement.getClassName().equals(CLASS_NAME)) {
 				break;
 			}
 		}
