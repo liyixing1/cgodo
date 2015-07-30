@@ -15,7 +15,7 @@
 		<repository>
 			<id>weimaodian</id>
 			<name>私有maven仓库地址</name>
-			<url>http://maven.weimaodian.com/content/groups/public</url>
+			<url>http://maven.weimaodian.com/content/repositories/central/</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
