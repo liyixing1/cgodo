@@ -112,8 +112,9 @@ public final class UtilLog {
 	 * @param message
 	 * @author liyixing 2012-7-18 上午11:46:00
 	 */
-	public static final void debug(Object message) {
-		debug(message, null);
+	public static final void debug(Object message, String format,
+			Object... args) {
+		recordLog(LOG_LEVEL_DEBUG, format, args);
 	}
 
 	/**
@@ -223,27 +224,68 @@ public final class UtilLog {
 	 * @author liyixing 2012-11-25 下午8:03:06
 	 */
 	private static final void recordLog(int level, String format,
+			Object... args) {
+		StackTraceElement stackTraceElement = getStatckTraceElement();
+		Logger log = getLog(stackTraceElement);
+
+		if (LOG_LEVEL_DEBUG == level && isDebugEnabled(log)) {
+			String msg = String.format(format.replace("{}", "%s"), args);
+			String logMessagePrefix = getPrefix(stackTraceElement);
+
+			log.debug(logMessagePrefix + msg);
+		} else if (LOG_LEVEL_INFO == level && isInfoEnabled(log)) {
+			String msg = String.format(format.replace("{}", "%s"), args);
+			String logMessagePrefix = getPrefix(stackTraceElement);
+
+			log.info(logMessagePrefix + msg);
+		} else if (LOG_LEVEL_WARN == level && isWarnEnabled(log)) {
+			String msg = String.format(format.replace("{}", "%s"), args);
+			String logMessagePrefix = getPrefix(stackTraceElement);
+
+			log.warn(logMessagePrefix + msg);
+		} else if (LOG_LEVEL_ERROR == level && isErrorEnabled(log)) {
+			String msg = String.format(format.replace("{}", "%s"), args);
+			String logMessagePrefix = getPrefix(stackTraceElement);
+
+			log.error(logMessagePrefix + msg);
+		}
+	}
+
+	/**
+	 * 
+	 * 描述:记录日志
+	 * 
+	 * @param level
+	 *            要记录的级别
+	 * @param format
+	 *            可以是消息，或者格式化串
+	 * @param throwable
+	 *            如果有异常，则传入
+	 * @param
+	 * @author liyixing 2012-11-25 下午8:03:06
+	 */
+	private static final void recordLog(int level, String format,
 			Throwable throwable, Object... args) {
 		StackTraceElement stackTraceElement = getStatckTraceElement();
 		Logger log = getLog(stackTraceElement);
 
 		if (LOG_LEVEL_DEBUG == level && isDebugEnabled(log)) {
-			String msg = String.format(format, args);
+			String msg = String.format(format.replace("{}", "%s"), args);
 			String logMessagePrefix = getPrefix(stackTraceElement);
 
 			log.debug(logMessagePrefix + msg, throwable);
 		} else if (LOG_LEVEL_INFO == level && isInfoEnabled(log)) {
-			String msg = String.format(format, args);
+			String msg = String.format(format.replace("{}", "%s"), args);
 			String logMessagePrefix = getPrefix(stackTraceElement);
 
 			log.info(logMessagePrefix + msg, throwable);
 		} else if (LOG_LEVEL_WARN == level && isWarnEnabled(log)) {
-			String msg = String.format(format, args);
+			String msg = String.format(format.replace("{}", "%s"), args);
 			String logMessagePrefix = getPrefix(stackTraceElement);
 
 			log.warn(logMessagePrefix + msg, throwable);
 		} else if (LOG_LEVEL_ERROR == level && isErrorEnabled(log)) {
-			String msg = String.format(format, args);
+			String msg = String.format(format.replace("{}", "%s"), args);
 			String logMessagePrefix = getPrefix(stackTraceElement);
 
 			log.error(logMessagePrefix + msg, throwable);
