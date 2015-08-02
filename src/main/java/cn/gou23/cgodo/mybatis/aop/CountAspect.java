@@ -40,19 +40,19 @@ public class CountAspect {
 		Object[] args = pjp.getArgs();
 		RowBounds rowBounds = (RowBounds) args[1];
 		Method sourceMethod = reflectiveMethodInvocation.getMethod();
-		
-		//分页查询，必须存在rowBounds
-		if(rowBounds == null) {
+		Page<?> page = PageContext.get();
+
+		// 分页查询，必须存在rowBounds
+		if (rowBounds == null) {
 			rowBounds = RowBounds.DEFAULT;
 			args[1] = rowBounds;
 		}
-		
+
 		Object ret = pjp.proceed(args);
 
 		try {
 			// 需要分页
-			if (rowBounds instanceof Page<?>) {
-				Page<?> page = PageContext.get();
+			if (rowBounds instanceof Page<?> && page != null) {
 				Object target = pjp.getTarget();
 				int count = (Integer) MethodUtils.getAccessibleMethod(
 						target.getClass(), "countByExample",

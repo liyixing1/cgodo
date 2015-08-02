@@ -38,6 +38,21 @@ public final class UtilDateTime {
 	}
 
 	/**
+	 * 
+	 * 描述:根据指定date或者calendar
+	 * 
+	 * @return
+	 * @author liyixing 2012-11-12 下午2:50:58
+	 */
+	public static final Calendar getCalendar(Date date) {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(date);
+
+		return calendar;
+	}
+
+	/**
 	 * 描述:获取当前时间的java.util.Date
 	 * 
 	 * @return
@@ -179,9 +194,7 @@ public final class UtilDateTime {
 			return null;
 		}
 
-		Calendar c = Calendar.getInstance();
-
-		c.setTime(date);
+		Calendar c = getCalendar(date);
 		setCalendarToLastTime(c);
 
 		return c.getTime();
@@ -218,9 +231,7 @@ public final class UtilDateTime {
 			return null;
 		}
 
-		Calendar c = Calendar.getInstance();
-
-		c.setTime(date);
+		Calendar c = getCalendar(date);
 		setCalendarToFirstTime(c);
 
 		return c.getTime();
@@ -281,9 +292,7 @@ public final class UtilDateTime {
 	 * @author liyixing 2012-11-12 下午2:56:25
 	 */
 	public static final Date setDateToLastMonthTime(Date date) {
-		Calendar c = Calendar.getInstance();
-
-		c.setTime(date);
+		Calendar c = getCalendar(date);
 		setCalendarToLastMonthTime(c);
 
 		return c.getTime();
@@ -314,9 +323,7 @@ public final class UtilDateTime {
 	 * @author liyixing 2012-11-12 下午2:58:51
 	 */
 	public static final Date setDateToFirstMonthTime(Date date) {
-		Calendar c = Calendar.getInstance();
-
-		c.setTime(date);
+		Calendar c = getCalendar(date);
 		setCalendarToFirstMonthTime(c);
 
 		return c.getTime();
@@ -332,5 +339,34 @@ public final class UtilDateTime {
 	public static final void setCalendarToFirstMonthTime(Calendar date) {
 		date.set(Calendar.DAY_OF_MONTH, 1);
 		setCalendarToFirstTime(date);
+	}
+
+	/**
+	 * 
+	 * 描述:是否同一天
+	 * 
+	 * @param date
+	 * @author liyixing 2012-11-12 下午2:58:58
+	 */
+	public static final boolean isEqualDay(Date date1, Date date2) {
+		if (date1 == null || date2 == null) {
+			return false;
+		}
+
+		return isEqualDay(getCalendar(date1), getCalendar(date2));
+	}
+
+	/**
+	 * 
+	 * 描述:是否同一天
+	 * 
+	 * @param date
+	 * @author liyixing 2012-11-12 下午2:58:58
+	 */
+	public static final boolean isEqualDay(Calendar date1, Calendar date2) {
+		return date1.get(Calendar.YEAR) == date2.get(Calendar.YEAR)
+				&& date1.get(Calendar.MONTH) == date2.get(Calendar.MONTH)
+				&& date1.get(Calendar.DAY_OF_MONTH) == date2
+						.get(Calendar.DAY_OF_MONTH);
 	}
 }

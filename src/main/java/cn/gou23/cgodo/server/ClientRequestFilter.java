@@ -3,6 +3,7 @@ package cn.gou23.cgodo.server;
 import java.io.IOException;
 import java.util.Date;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -10,10 +11,12 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ApplicationObjectSupport;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import cn.gou23.cgodo.server.model.ClientRequestModel;
+import cn.gou23.cgodo.server.service.ClientRequestService;
 import cn.gou23.cgodo.util.UtilDateTime;
 import cn.gou23.cgodo.util.UtilHttpRequest;
 import cn.gou23.cgodo.util.UtilLog;
@@ -27,8 +30,10 @@ import cn.gou23.cgodo.util.UtilLog;
  * @version 1.0
  * @since 2015年7月30日 下午6:08:43
  */
-public class ServerRequestFilter extends ApplicationObjectSupport implements
-		javax.servlet.Filter {
+@Aspect
+public class ClientRequestFilter implements Filter {
+	private ClientRequestService clientRequestService;
+
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 	}
@@ -43,20 +48,36 @@ public class ServerRequestFilter extends ApplicationObjectSupport implements
 		Date start = UtilDateTime.getNowDate();
 
 		UtilLog.debug("开始处理请求{}，请求ip{}，开始时间{}", url, ip, start.getTime());
-		ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request
-				.getServletContext());
+
 		try {
 			chain.doFilter(request, response);
 		} finally {
 			Date end = UtilDateTime.getNowDate();
 
+			// 插入
+			ClientRequestModel clientRequestModel = new ClientRequestModel();
+
+			clientRequestModel.setIp(ip);
+			clientRequestModel.setRequestTime(start);
+			clientRequestModel.setProcessingTime(end.getTime()
+					- start.getTime());
+			clientRequestModel.setRequestUrl(url);
+
+			if (clientRequestService == null) {
+				WebApplicationContext webApplicationContext = WebApplicationContextUtils
+						.getRequiredWebApplicationContext(request
+								.getServletContext());
+				clientRequestService = webApplicationContext
+						.getBean(ClientRequestService.class);
+			}
+
+			clientRequestService.addClientRequest(clientRequestModel);
 			UtilLog.debug("处理请求{}结束，请求ip{}，结束时间{}，耗时{}毫秒", url, ip,
-					end.getTime(), end.getTime() - start.getTime());
+					end.getTime(), clientRequestModel.getProcessingTime());
 		}
 	}
 
 	@Override
 	public void destroy() {
-
 	}
 }
