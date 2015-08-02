@@ -42,6 +42,25 @@ public class Page<T> extends RowBounds implements Serializable {
 		return page;
 	}
 
+	/**
+	 * 
+	 * 描述:下一页,如果返回true，表示有下一页
+	 * 
+	 * @return
+	 * @author liyixing 2015年8月2日 下午4:12:33
+	 */
+	public boolean next() {
+		if (getTotalPage() <= pageNo) {
+			// 已经是最后一页了
+			pageNo = getTotalPage();
+			return false;
+		}
+
+		pageNo++;
+
+		return true;
+	}
+
 	private int pageSize = 20; // 页大小
 	private int pageNo = 1; // 页码，从1开始
 	private int totalCount = 0; // 总记录数
@@ -60,22 +79,18 @@ public class Page<T> extends RowBounds implements Serializable {
 	}
 
 	public void setPageSize(int pageSize) {
-		if (pageSize < 1) {
-			pageSize = 10;
-		}
-
 		this.pageSize = pageSize;
 	}
 
 	public void setPageSize(String pageSize) {
 		if (StringUtils.isBlank(pageSize)) {
-			this.pageSize = 10;
+			return;
 		}
-
+		
 		try {
 			setPageSize(Integer.valueOf(pageSize));
 		} catch (NumberFormatException e) {
-			this.pageSize = 10;
+			return;
 		}
 	}
 
@@ -93,13 +108,13 @@ public class Page<T> extends RowBounds implements Serializable {
 
 	public void setPageNo(String pageNo) {
 		if (StringUtils.isBlank(pageNo)) {
-			this.pageNo = 0;
+			return;
 		}
 
 		try {
 			setPageNo(Integer.valueOf(pageNo));
 		} catch (NumberFormatException e) {
-			this.pageNo = 0;
+			return;
 		}
 	}
 

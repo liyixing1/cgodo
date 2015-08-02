@@ -358,6 +358,7 @@
 				<filtering>true</filtering>
 			</resource>
 		</resources>
+
 		<finalName>cn.23gou.cgodo-${project.version}</finalName>
 		<!-- <extensions> <extension> <groupId>org.apache.maven.wagon</groupId> 
 			<artifactId>wagon-ftp</artifactId> <version>1.0-beta-6</version> </extension> 
