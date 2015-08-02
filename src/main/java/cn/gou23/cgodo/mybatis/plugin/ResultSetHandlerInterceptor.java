@@ -3,12 +3,16 @@ package cn.gou23.cgodo.mybatis.plugin;
 import java.sql.Statement;
 import java.util.Properties;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.ibatis.executor.resultset.ResultSetHandler;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
+import org.apache.ibatis.session.RowBounds;
+
+import cn.gou23.cgodo.page.Page;
 
 /**
  * 结果集插件，防止分页情况下，mybatis再次做假分页
@@ -21,14 +25,14 @@ import org.apache.ibatis.plugin.Signature;
 public class ResultSetHandlerInterceptor implements Interceptor {
 	public Object intercept(Invocation invocation) throws Throwable {
 		Object target = invocation.getTarget();
-//		RowBounds rowBounds = (RowBounds) FieldUtils.getField(
-//				FastResultSetHandler.class, "rowBounds", true).get(target);
-//
-//		// 非mybatis默认分页信息，就设置为mybatis默认分页，这样mybatis就不会做list的假分页了
-//		if (rowBounds != RowBounds.DEFAULT) {
-//			FieldUtils.getField(FastResultSetHandler.class, "rowBounds", true)
-//					.set(resultSet, RowBounds.DEFAULT);
-//		}
+		RowBounds rowBounds = (RowBounds) FieldUtils.getField(
+				target.getClass(), "rowBounds", true).get(target);
+		//
+		// // 非mybatis默认分页信息，就设置为mybatis默认分页，这样mybatis就不会做list的假分页了
+		if (rowBounds instanceof Page<?>) {
+			FieldUtils.getField(target.getClass(), "rowBounds", true).set(
+					target, RowBounds.DEFAULT);
+		}
 
 		return invocation.proceed();
 	}

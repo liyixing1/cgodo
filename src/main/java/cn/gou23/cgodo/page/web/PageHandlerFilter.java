@@ -44,6 +44,7 @@ public class PageHandlerFilter implements javax.servlet.Filter {
 		String pageSize = map.get("pageSize");
 
 		PageContext.set(page);
+		request.setAttribute("page", page);
 
 		// 解析参数
 		if (StringUtils.isNotBlank(pageNo)) {
@@ -58,7 +59,6 @@ public class PageHandlerFilter implements javax.servlet.Filter {
 
 		try {
 			chain.doFilter(request, response);
-			;
 		} finally {
 			PageContext.clear();
 		}
