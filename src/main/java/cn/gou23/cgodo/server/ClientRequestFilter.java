@@ -62,6 +62,8 @@ public class ClientRequestFilter implements Filter {
 			clientRequestModel.setProcessingTime(end.getTime()
 					- start.getTime());
 			clientRequestModel.setRequestUrl(url);
+			clientRequestModel.setUserAgent(UtilHttpRequest
+					.getUseragent(httpServletRequest));
 
 			if (clientRequestService == null) {
 				WebApplicationContext webApplicationContext = WebApplicationContextUtils
