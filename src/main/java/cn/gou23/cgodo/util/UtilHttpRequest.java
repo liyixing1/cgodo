@@ -29,6 +29,8 @@ public class UtilHttpRequest {
 	 * \b 是单词边界(连着的两个(字母字符 与 非字母字符) 之间的逻辑上的间隔),<br>
 	 * 字符串在编译时会被转码一次,所以是<br>
 	 * "\\b" \B 是单词内部逻辑间隔(连着的两个字母字符之间的逻辑上的间隔)
+	 * <br>
+	 * CASE_INSENSITIVE不区分大小写
 	 */
 	private static final Pattern PAR_PATTERN = Pattern.compile(
 			"\\b(ip(hone|od)|android|opera m(ob|in)i"
