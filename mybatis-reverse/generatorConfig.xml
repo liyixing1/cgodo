@@ -4,7 +4,7 @@
 	<!-- 指定JDBC驱动路径,从用户目录读取,来兼容不同的开发人员 -->
 	<classPathEntry location="${user.home}/mysql-connector-java-5.1.6.jar" />
 
-	<context id="gou23" targetRuntime="MyBatis3">
+	<context id="cn.23gou.cgodo" targetRuntime="MyBatis3">
 		<!-- true为加入mybatis generator的注释 ， false则不加入 -->
 		<property name="suppressTypeWarnings" value="false" />
 		<!-- 生成hashcode方法 -->
@@ -21,8 +21,8 @@
 		</plugin>
 
 		<!-- <plugin type="org.mybatis.generator.plugins.SqlMapConfigPlugin"> -->
-		<!-- <property name="targetProject" value="gou23/resource-test" /> -->
-		<!-- <property name="targetPackage" value="cn..gou23.resource.mybatis" 
+		<!-- <property name="targetProject" value="23gou/resource-test" /> -->
+		<!-- <property name="targetPackage" value="cn.gou23.resource.mybatis" 
 			/> -->
 		<!-- <property name="fileName" value="SqlMapConfig.xml" /> -->
 		<!-- </plugin> -->
@@ -39,10 +39,10 @@
 
 		<!-- URL,连接地址使用用户目录,来兼容不同用户 -->
 		<!-- <jdbcConnection driverClass="com.hxtt.sql.paradox.ParadoxDriver" -->
-		<!-- connectionURL="jdbc:paradox:/${user.home}/gou23" userId="" password="" 
+		<!-- connectionURL="jdbc:paradox:/${user.home}/23gou" userId="" password="" 
 			/> -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://127.0.0.1:3306/gou23?useUnicode=false&amp;autoReconnect=true&amp;characterEncoding=utf-8"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/23gou?useUnicode=false&amp;autoReconnect=true&amp;characterEncoding=utf-8"
 			userId="root" password="2722261" />
 
 		<javaModelGenerator targetPackage="cn.gou23.cgodo.server.entity"

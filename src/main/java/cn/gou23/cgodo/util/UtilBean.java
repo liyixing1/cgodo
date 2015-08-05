@@ -28,15 +28,20 @@ public final class UtilBean {
 	 * @throws InstantiationException
 	 */
 	public static <E> List<E> copyProperties(Collection<?> srcList,
-			Class<E> targetType, String... ignoreProperties) throws Exception {
+			Class<E> targetType, String... ignoreProperties) {
 		List<E> targetList = new ArrayList<E>();
 
 		for (Object src : srcList) {// 复制
-			E newBean = targetType.newInstance();
-			org.springframework.beans.BeanUtils.copyProperties(src, newBean,
-					ignoreProperties);
-
-			targetList.add(newBean);
+			E newBean;
+			
+			try {
+				newBean = targetType.newInstance();
+				org.springframework.beans.BeanUtils.copyProperties(src,
+						newBean, ignoreProperties);
+				targetList.add(newBean);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
 
 		return targetList;

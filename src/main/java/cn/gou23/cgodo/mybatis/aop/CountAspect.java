@@ -52,7 +52,7 @@ public class CountAspect {
 
 		try {
 			// 需要分页
-			if (rowBounds instanceof Page<?> && page != null) {
+			if (rowBounds == page) {
 				Object target = pjp.getTarget();
 				int count = (Integer) MethodUtils.getAccessibleMethod(
 						target.getClass(), "countByExample",
