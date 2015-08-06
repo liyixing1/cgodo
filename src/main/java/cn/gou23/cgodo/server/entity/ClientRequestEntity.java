@@ -8,26 +8,36 @@ public class ClientRequestEntity implements Serializable {
 
     /**
      * ip地址
+     *
+     * @mbggenerated do_not_delete_during_merge
      */
     private String ip;
 
     /**
      * 请求时间
+     *
+     * @mbggenerated do_not_delete_during_merge
      */
     private Date requestTime;
 
     /**
      * 处理时间
+     *
+     * @mbggenerated do_not_delete_during_merge
      */
     private Long processingTime;
 
     /**
      * 请求地址
+     *
+     * @mbggenerated do_not_delete_during_merge
      */
     private String requestUrl;
 
     /**
      * 请求浏览器
+     *
+     * @mbggenerated do_not_delete_during_merge
      */
     private String userAgent;
 
@@ -44,11 +54,13 @@ public class ClientRequestEntity implements Serializable {
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = id == null ? null : id.trim();
     }
 
     /**
      * ip地址
+     *
+     * @mbggenerated do_not_delete_during_merge
      */
     public String getIp() {
         return ip;
@@ -56,13 +68,17 @@ public class ClientRequestEntity implements Serializable {
 
     /**
      * ip地址
+     *
+     * @mbggenerated do_not_delete_during_merge
      */
     public void setIp(String ip) {
-        this.ip = ip;
+        this.ip = ip == null ? null : ip.trim();
     }
 
     /**
      * 请求时间
+     *
+     * @mbggenerated do_not_delete_during_merge
      */
     public Date getRequestTime() {
         return requestTime;
@@ -70,6 +86,8 @@ public class ClientRequestEntity implements Serializable {
 
     /**
      * 请求时间
+     *
+     * @mbggenerated do_not_delete_during_merge
      */
     public void setRequestTime(Date requestTime) {
         this.requestTime = requestTime;
@@ -77,6 +95,8 @@ public class ClientRequestEntity implements Serializable {
 
     /**
      * 处理时间
+     *
+     * @mbggenerated do_not_delete_during_merge
      */
     public Long getProcessingTime() {
         return processingTime;
@@ -84,6 +104,8 @@ public class ClientRequestEntity implements Serializable {
 
     /**
      * 处理时间
+     *
+     * @mbggenerated do_not_delete_during_merge
      */
     public void setProcessingTime(Long processingTime) {
         this.processingTime = processingTime;
@@ -91,6 +113,8 @@ public class ClientRequestEntity implements Serializable {
 
     /**
      * 请求地址
+     *
+     * @mbggenerated do_not_delete_during_merge
      */
     public String getRequestUrl() {
         return requestUrl;
@@ -98,13 +122,17 @@ public class ClientRequestEntity implements Serializable {
 
     /**
      * 请求地址
+     *
+     * @mbggenerated do_not_delete_during_merge
      */
     public void setRequestUrl(String requestUrl) {
-        this.requestUrl = requestUrl;
+        this.requestUrl = requestUrl == null ? null : requestUrl.trim();
     }
 
     /**
      * 请求浏览器
+     *
+     * @mbggenerated do_not_delete_during_merge
      */
     public String getUserAgent() {
         return userAgent;
@@ -112,9 +140,11 @@ public class ClientRequestEntity implements Serializable {
 
     /**
      * 请求浏览器
+     *
+     * @mbggenerated do_not_delete_during_merge
      */
     public void setUserAgent(String userAgent) {
-        this.userAgent = userAgent;
+        this.userAgent = userAgent == null ? null : userAgent.trim();
     }
 
     /**

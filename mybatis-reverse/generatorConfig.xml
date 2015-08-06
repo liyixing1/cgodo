@@ -5,6 +5,9 @@
 	<classPathEntry location="${user.home}/mysql-connector-java-5.1.6.jar" />
 
 	<context id="cn.23gou.cgodo" targetRuntime="MyBatis3">
+		<property name="beginningDelimiter" value="`" />
+		<property name="endingDelimiter" value="`" />
+		<property name="jdbcType" value="false" />
 		<!-- true为加入mybatis generator的注释 ， false则不加入 -->
 		<property name="suppressTypeWarnings" value="false" />
 		<!-- 生成hashcode方法 -->
@@ -22,17 +25,17 @@
 
 		<!-- <plugin type="org.mybatis.generator.plugins.SqlMapConfigPlugin"> -->
 		<!-- <property name="targetProject" value="23gou/resource-test" /> -->
-		<!-- <property name="targetPackage" value="cn.gou23.resource.mybatis" 
-			/> -->
+		<!-- <property name="targetPackage" value="cn.gou23.resource.mybatis" /> -->
 		<!-- <property name="fileName" value="SqlMapConfig.xml" /> -->
 		<!-- </plugin> -->
 
 		<!-- 分页插件 -->
 		<plugin type="org.mybatis.generator.plugins.RowBoundsPlugin">
 		</plugin>
-
+		
 		<!-- 禁止在生成的代码中,生成时间,禁止在生成的代码中生成注释 -->
-		<commentGenerator type="cn.gou23.cgodo.mybatis.generator.CommentFromDatabaseGenerator">
+		<commentGenerator
+			type="cn.gou23.cgodo.mybatis.generator.CommentFromDatabaseGenerator">
 			<property name="suppressDate" value="true" />
 			<property name="suppressAllComments" value="false" />
 		</commentGenerator>
@@ -42,13 +45,14 @@
 		<!-- connectionURL="jdbc:paradox:/${user.home}/23gou" userId="" password="" 
 			/> -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://127.0.0.1:3306/23gou?useUnicode=false&amp;autoReconnect=true&amp;characterEncoding=utf-8"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/gou23?useUnicode=false&amp;autoReconnect=true&amp;characterEncoding=utf-8"
 			userId="root" password="2722261" />
 
 		<javaModelGenerator targetPackage="cn.gou23.cgodo.server.entity"
 			targetProject="../src/main/java">
 			<!-- 关闭自动添加子包（自动添加schema) -->
 			<property name="enableSubPackages" value="false" />
+			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 
 		<sqlMapGenerator targetPackage="cn.gou23.cgodo.resource.mybatis.sqlmap"
@@ -64,11 +68,7 @@
 		</javaClientGenerator>
 
 		<table tableName="client_request" domainObjectName="ClientRequestEntity">
-			
-		</table>
-		
-		<table tableName="client_request_summary" domainObjectName="ClientRequestSummaryEntity">
-			
+
 		</table>
 	</context>
 </generatorConfiguration>
