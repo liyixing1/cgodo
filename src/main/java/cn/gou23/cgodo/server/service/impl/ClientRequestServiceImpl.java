@@ -11,7 +11,6 @@ import cn.gou23.cgodo.page.Page;
 import cn.gou23.cgodo.server.dao.ClientRequestEntityMapper;
 import cn.gou23.cgodo.server.dao.ClientRequestSummaryEntityMapper;
 import cn.gou23.cgodo.server.entity.ClientRequestEntityCondition;
-import cn.gou23.cgodo.server.entity.ClientRequestSummaryEntity;
 import cn.gou23.cgodo.server.entity.ClientRequestSummaryEntityCondition;
 import cn.gou23.cgodo.server.model.ClientRequestModel;
 import cn.gou23.cgodo.server.model.ClientRequestSummaryModel;
@@ -71,7 +70,7 @@ public class ClientRequestServiceImpl implements ClientRequestService {
 		clientRequestSummaryEntityCondition
 				.setOrderByClause("CURRENT_DATE DESC, CLIENT_NUMBER DESC");
 
-		List<ClientRequestSummaryEntity> clientRequestSummaryEntities = clientRequestSummaryEntityMapper
+		List<ClientRequestSummaryModel> clientRequestSummaryEntities = clientRequestSummaryEntityMapper
 				.selectByExampleWithRowbounds(
 						clientRequestSummaryEntityCondition,
 						Page.getPageSizeIsOne());

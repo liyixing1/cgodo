@@ -23,6 +23,9 @@
 			<property name="replaceString" value="Condition" />
 		</plugin>
 
+		<!-- 该插件需要在org.mybatis.generator.plugins.RowBoundsPlugin插件之前，来保证在分页前执行了修改返回值类型的插件 -->
+		<plugin type="cn.gou23.cgodo.mybatis.generator.SelectPlugin" />
+
 		<!-- <plugin type="org.mybatis.generator.plugins.SqlMapConfigPlugin"> -->
 		<!-- <property name="targetProject" value="23gou/resource-test" /> -->
 		<!-- <property name="targetPackage" value="cn.gou23.resource.mybatis" /> -->
@@ -32,7 +35,7 @@
 		<!-- 分页插件 -->
 		<plugin type="org.mybatis.generator.plugins.RowBoundsPlugin">
 		</plugin>
-		
+
 		<!-- 禁止在生成的代码中,生成时间,禁止在生成的代码中生成注释 -->
 		<commentGenerator
 			type="cn.gou23.cgodo.mybatis.generator.CommentFromDatabaseGenerator">
@@ -66,6 +69,10 @@
 			<!-- 关闭自动添加子包（自动添加schema) -->
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
+
+		<table tableName="client_request" domainObjectName="ClientRequestEntity">
+
+		</table>
 
 		<table tableName="client_request_summary" domainObjectName="ClientRequestSummaryEntity">
 
