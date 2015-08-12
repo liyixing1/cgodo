@@ -24,6 +24,16 @@ public interface ClientRequestService {
 
 	/**
 	 * 
+	 * 描述:根据Ip获取数量，只计算当天的
+	 * 
+	 * @param clientRequestModel
+	 * @return
+	 * @author liyixing 2015年8月12日 下午3:27:20
+	 */
+	public int countByIp(ClientRequestModel clientRequestModel);
+
+	/**
+	 * 
 	 * 描述:获取最后一次汇总
 	 * 
 	 * @author liyixing 2015年8月3日 上午1:08:12

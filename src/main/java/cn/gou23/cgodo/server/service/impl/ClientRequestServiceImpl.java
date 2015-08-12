@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import cn.gou23.cgodo.page.Page;
 import cn.gou23.cgodo.server.dao.ClientRequestEntityMapper;
 import cn.gou23.cgodo.server.dao.ClientRequestSummaryEntityMapper;
+import cn.gou23.cgodo.server.entity.ClientRequestEntityCondition;
 import cn.gou23.cgodo.server.entity.ClientRequestSummaryEntity;
 import cn.gou23.cgodo.server.entity.ClientRequestSummaryEntityCondition;
 import cn.gou23.cgodo.server.model.ClientRequestModel;
@@ -25,10 +26,25 @@ public class ClientRequestServiceImpl implements ClientRequestService {
 	private ClientRequestSummaryEntityMapper clientRequestSummaryEntityMapper;
 
 	@Override
+	public int countByIp(ClientRequestModel clientRequestModel) {
+		Date now = UtilDateTime.getNowDate();
+		ClientRequestEntityCondition clientRequestEntityCondition = new ClientRequestEntityCondition();
+
+		clientRequestEntityCondition
+				.createCriteria()
+				.andIpEqualTo(clientRequestModel.getIp())
+				.andRequestTimeBetween(UtilDateTime.setDateToFirstTime(now),
+						UtilDateTime.setDateToLastTime(now));
+
+		return clientRequestEntityMapper
+				.countByExample(clientRequestEntityCondition);
+	}
+
+	@Override
 	public void addClientRequest(ClientRequestModel clientRequestModel) {
 		// 汇总
 		ClientRequestSummaryModel clientRequestSummaryModel = getCurrentSummary();
-		
+
 		clientRequestEntityMapper.insert(clientRequestModel);
 		// 当天加1
 		// 总数加1
@@ -36,7 +52,15 @@ public class ClientRequestServiceImpl implements ClientRequestService {
 				.getClientNumber() + 1);
 		clientRequestSummaryModel.setCurrentDayNumber(clientRequestSummaryModel
 				.getCurrentDayNumber() + 1);
-		clientRequestSummaryEntityMapper.updateByPrimaryKey(clientRequestSummaryModel);
+
+		// 查看该UV是否被统计过
+		if (countByIp(clientRequestModel) < 2) {
+			clientRequestSummaryModel
+					.setUv(clientRequestSummaryModel.getUv() + 1);
+		}
+
+		clientRequestSummaryEntityMapper
+				.updateByPrimaryKey(clientRequestSummaryModel);
 	}
 
 	@Override
@@ -79,10 +103,11 @@ public class ClientRequestServiceImpl implements ClientRequestService {
 			clientRequestSummaryModel.setId(null);
 			// 重新保存
 			clientRequestSummaryModel.setCurrentDayNumber(0);
+			// 当天UV
+			clientRequestSummaryModel.setUv(0);
 			clientRequestSummaryEntityMapper.insert(clientRequestSummaryModel);
 		}
 
 		return clientRequestSummaryModel;
 	}
-
 }

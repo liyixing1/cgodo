@@ -45,7 +45,7 @@
 		<!-- connectionURL="jdbc:paradox:/${user.home}/23gou" userId="" password="" 
 			/> -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://127.0.0.1:3306/gou23?useUnicode=false&amp;autoReconnect=true&amp;characterEncoding=utf-8"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/23gou?useUnicode=false&amp;autoReconnect=true&amp;characterEncoding=utf-8"
 			userId="root" password="2722261" />
 
 		<javaModelGenerator targetPackage="cn.gou23.cgodo.server.entity"
@@ -67,7 +67,7 @@
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 
-		<table tableName="client_request" domainObjectName="ClientRequestEntity">
+		<table tableName="client_request_summary" domainObjectName="ClientRequestSummaryEntity">
 
 		</table>
 	</context>

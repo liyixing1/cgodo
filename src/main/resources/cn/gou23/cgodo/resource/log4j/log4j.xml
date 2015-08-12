@@ -15,7 +15,7 @@
 	<!-- debug级别日志文件 -->
 	<appender name="DEBUG" class="org.apache.log4j.RollingFileAppender">
 		<param name="Threshold" value="DEBUG" />
-		<param name="File" value="${loghome}/23gou/cgodo/debug.log" />
+		<param name="File" value="$${loghome}/23gou/cgodo/debug.log" />
 		<param name="Append" value="true" />
 		<param name="MaxFileSize" value="50MB" />
 		<param name="MaxBackupIndex" value="100" />
@@ -34,7 +34,7 @@
 	<!-- info级别日志文件 -->
 	<appender name="INFO" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="Threshold" value="INFO" />
-		<param name="File" value="${loghome}/23gou/cgodo/info.log" />
+		<param name="File" value="$${loghome}/23gou/cgodo/info.log" />
 		<param name="Append" value="true" />
 		<param name="DatePattern" value="yyyy-MM-dd-HH" />
 
@@ -52,7 +52,7 @@
 	<!-- warn级别日志文件 -->
 	<appender name="WARN" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="Threshold" value="WARN" />
-		<param name="File" value="${loghome}/23gou/cgodo/warn.log" />
+		<param name="File" value="$${loghome}/23gou/cgodo/warn.log" />
 		<param name="Append" value="true" />
 		<param name="DatePattern" value="yyyy-MM-dd-HH" />
 
@@ -70,7 +70,7 @@
 	<!-- error级别日志文件 -->
 	<appender name="ERROR" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="Threshold" value="ERROR" />
-		<param name="File" value="${loghome}/23gou/cgodo/error.log" />
+		<param name="File" value="$${loghome}/23gou/cgodo/error.log" />
 		<param name="Append" value="true" />
 		<param name="DatePattern" value="yyyy-MM-dd-HH" />
 
@@ -86,7 +86,7 @@
 	</appender>
 
 	<appender name="SQL" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="${loghome}/23gou/cgodo/sql.log" />
+		<param name="File" value="$${loghome}/23gou/cgodo/sql.log" />
 		<param name="Append" value="true" />
 		<param name="DatePattern" value="yyyy-MM-dd-HH" />
 

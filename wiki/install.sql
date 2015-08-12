@@ -12,8 +12,9 @@ CREATE TABLE `client_request` (
 
 CREATE TABLE `client_request_summary` (
   `ID` varchar(32) NOT NULL,
-  `CLIENT_NUMBER` int(11) DEFAULT NULL COMMENT '总客户数',
-  `CURRENT_DAY_NUMBER` int(11) DEFAULT NULL COMMENT '当天客户数',
+  `CLIENT_NUMBER` int(11) DEFAULT NULL COMMENT '总客户数，每次请求，都被视为一次统计',
+  `CURRENT_DAY_NUMBER` int(11) DEFAULT NULL COMMENT '当天客户数，每次请求，都被视为一次统计',
   `SUMMARY_TIME` datetime DEFAULT NULL COMMENT '统计当天时间',
+  `UV` int(11) DEFAULT NULL COMMENT '当天UV，按站点统计，即当天进入站点的人数(IP)',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
