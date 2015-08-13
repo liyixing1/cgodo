@@ -70,6 +70,18 @@ public class SelectPlugin extends PluginAdapter {
 		return true;
 	}
 
+	/**
+	 * 结果集
+	 * 
+	 * @see org.mybatis.generator.api.PluginAdapter#sqlMapResultMapWithoutBLOBsElementGenerated(org.mybatis.generator.api.dom.xml.XmlElement,
+	 *      org.mybatis.generator.api.IntrospectedTable)
+	 */
+	public boolean sqlMapResultMapWithBLOBsElementGenerated(XmlElement element,
+			IntrospectedTable introspectedTable) {
+		return sqlMapResultMapWithoutBLOBsElementGenerated(element,
+				introspectedTable);
+	}
+
 	@Override
 	public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(
 			Method method, Interface interfaze,
