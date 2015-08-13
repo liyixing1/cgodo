@@ -79,7 +79,7 @@ public class CommentFromDatabaseGenerator extends DefaultCommentGenerator {
 
 	/**
 	 * 
-	 * 描述:类注释
+	 * 描述:类注释，条件类的内部类注释
 	 * 
 	 * @param innerClass
 	 * @param introspectedTable
@@ -117,6 +117,12 @@ public class CommentFromDatabaseGenerator extends DefaultCommentGenerator {
 		innerClass.addJavaDocLine(" */");
 	}
 
+	/**
+	 * * 描述:类注释，条件类的内部类注释
+	 * 
+	 * @see org.mybatis.generator.internal.DefaultCommentGenerator#addClassComment(org.mybatis.generator.api.dom.java.InnerClass,
+	 *      org.mybatis.generator.api.IntrospectedTable)
+	 */
 	public void addClassComment(InnerClass innerClass,
 			IntrospectedTable introspectedTable) {
 		// String comment = (String) introspectedTable.getAttribute("REMARKS");

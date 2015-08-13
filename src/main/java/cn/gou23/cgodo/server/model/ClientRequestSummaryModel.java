@@ -19,18 +19,10 @@ public class ClientRequestSummaryModel extends ClientRequestSummaryEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 * @see cn.gou23.cgodo.server.entity.ClientRequestSummaryEntity#getClientNumber()
-	 */
 	public Integer getClientNumber() {
 		return super.getClientNumber() == null ? 0 : super.getClientNumber();
 	}
 
-	/**
-	 * 
-	 * @see cn.gou23.cgodo.server.entity.ClientRequestSummaryEntity#getCurrentDayNumber()
-	 */
 	public Integer getCurrentDayNumber() {
 		return super.getCurrentDayNumber() == null ? 0 : super
 				.getCurrentDayNumber();

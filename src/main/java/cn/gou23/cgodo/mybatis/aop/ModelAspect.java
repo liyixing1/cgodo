@@ -17,6 +17,7 @@ import cn.gou23.cgodo.util.UtilModel;
  * @version 1.0
  * @since 2011-12-6 下午09:34:24
  */
+@Deprecated
 @Aspect
 public class ModelAspect {
 	/**
@@ -27,7 +28,9 @@ public class ModelAspect {
 	 * @author liyixing 2011-12-6 下午09:47:50
 	 * @throws Throwable
 	 */
-	@Around("execution(* selectByExampleWithRowbounds(..)) || execution(* selectByPrimaryKey(..)) || execution(* selectByExample(..))")
+	@Around("execution(* selectByExampleWithRowbounds(..)) || execution(* selectByPrimaryKey(..)) || execution(* selectByExample(..))"
+			+ "|| execution(* selectByExampleWithBLOBsWithRowbounds(..))"
+			+ "|| execution(* selectByExampleWithBLOBs(..))")
 	public Object select(ProceedingJoinPoint pjp) throws Throwable {
 		Object[] args = pjp.getArgs();
 		Object ret = pjp.proceed(args);

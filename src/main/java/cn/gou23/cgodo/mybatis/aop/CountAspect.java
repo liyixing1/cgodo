@@ -33,7 +33,8 @@ public class CountAspect {
 	 * @author liyixing 2011-12-6 下午09:47:50
 	 * @throws Throwable
 	 */
-	@Around("execution(* selectByExampleWithRowbounds(.., org.apache.ibatis.session.RowBounds))")
+	@Around("execution(* selectByExampleWithRowbounds(.., org.apache.ibatis.session.RowBounds)) || "
+			+ "execution(* selectByExampleWithBLOBsWithRowbounds(.., org.apache.ibatis.session.RowBounds)) ")
 	public Object count(ProceedingJoinPoint pjp) throws Throwable {
 		ReflectiveMethodInvocation reflectiveMethodInvocation = (ReflectiveMethodInvocation) FieldUtils
 				.getField(pjp.getClass(), "methodInvocation", true).get(pjp);

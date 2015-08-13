@@ -12,6 +12,8 @@ import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.XmlElement;
 
 import cn.gou23.cgodo.util.UtilModel;
 
@@ -28,11 +30,42 @@ public class SelectPlugin extends PluginAdapter {
 		return true;
 	}
 
-	@Override
-	public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
-			Interface interfaze, IntrospectedTable introspectedTable) {
-		if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
-			updateMethodReturn(method, interfaze);
+	// @Override
+	// public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method
+	// method,
+	// Interface interfaze, IntrospectedTable introspectedTable) {
+	// if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
+	// updateMethodReturn(method, interfaze);
+	// }
+	// return true;
+	// }
+
+	/**
+	 * 结果集
+	 * 
+	 * @see org.mybatis.generator.api.PluginAdapter#sqlMapResultMapWithoutBLOBsElementGenerated(org.mybatis.generator.api.dom.xml.XmlElement,
+	 *      org.mybatis.generator.api.IntrospectedTable)
+	 */
+	public boolean sqlMapResultMapWithoutBLOBsElementGenerated(
+			XmlElement element, IntrospectedTable introspectedTable) {
+		// 修改成Model
+		List<Attribute> attributes = element.getAttributes();
+		Attribute attributeTypeModel = null;
+		Attribute attributeTypeEntity = null;
+
+		for (Attribute attribute : attributes) {
+			if ("type".equals(attribute.getName())) {
+				attributeTypeEntity = attribute;
+				// 找到需要修改的Entity
+				attributeTypeModel = new Attribute("type",
+						UtilModel.entityToModelName(attribute.getValue()));
+				break;
+			}
+		}
+
+		if (attributeTypeModel != null) {
+			attributes.remove(attributeTypeEntity);
+			attributes.add(attributeTypeModel);
 		}
 		return true;
 	}
@@ -46,6 +79,37 @@ public class SelectPlugin extends PluginAdapter {
 		}
 		return true;
 	}
+
+	public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
+			Interface interfaze, IntrospectedTable introspectedTable) {
+		if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
+			updateMethodReturn(method, interfaze);
+		}
+		return true;
+	}
+
+	// @Override
+	// public boolean sqlMapDocumentGenerated(Document document,
+	// IntrospectedTable introspectedTable) {
+	// introspectedTable.setBaseRecordType(UtilModel
+	// .entityToModelName(introspectedTable.getBaseRecordType()));
+	// return true;
+	// }
+	//
+	// public boolean sqlMapResultMapWithoutBLOBsElementGenerated(
+	// XmlElement element, IntrospectedTable introspectedTable) {
+	// introspectedTable.setBaseRecordType(UtilModel
+	// .entityToModelName(introspectedTable.getBaseRecordType()));
+	// return true;
+	// }
+	//
+	// public boolean sqlMapResultMapWithBLOBsElementGenerated(XmlElement
+	// element,
+	// IntrospectedTable introspectedTable) {
+	// introspectedTable.setBaseRecordType(UtilModel
+	// .entityToModelName(introspectedTable.getBaseRecordType()));
+	// return true;
+	// }
 
 	public boolean clientSelectByPrimaryKeyMethodGenerated(Method method,
 			Interface interfaze, IntrospectedTable introspectedTable) {
