@@ -67,7 +67,7 @@ public class ClientRequestFilter implements Filter {
 
 			if (clientRequestService == null) {
 				WebApplicationContext webApplicationContext = WebApplicationContextUtils
-						.getRequiredWebApplicationContext(request
+						.getRequiredWebApplicationContext(httpServletRequest
 								.getServletContext());
 				clientRequestService = webApplicationContext
 						.getBean(ClientRequestService.class);
