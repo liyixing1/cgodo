@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -46,6 +47,8 @@ public class ClientRequestFilter implements Filter {
 		String url = httpServletRequest.getRequestURL().toString();
 		String ip = UtilHttpRequest.getIpAddr(httpServletRequest);
 		Date start = UtilDateTime.getNowDate();
+		ServletContext servletContext = httpServletRequest.getSession()
+				.getServletContext();
 
 		UtilLog.debug("开始处理请求{}，请求ip{}，开始时间{}", url, ip, start.getTime());
 
@@ -67,8 +70,7 @@ public class ClientRequestFilter implements Filter {
 
 			if (clientRequestService == null) {
 				WebApplicationContext webApplicationContext = WebApplicationContextUtils
-						.getRequiredWebApplicationContext(httpServletRequest
-								.getSession().getServletContext());
+						.getRequiredWebApplicationContext(servletContext);
 				clientRequestService = webApplicationContext
 						.getBean(ClientRequestService.class);
 			}
