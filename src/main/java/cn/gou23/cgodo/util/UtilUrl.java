@@ -194,7 +194,7 @@ public final class UtilUrl {
 			return url.substring(parameterStartIndex + 1);
 		}
 
-		return url;
+		return null;
 	}
 
 	/**
