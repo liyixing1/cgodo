@@ -54,6 +54,8 @@ public class ClientRequestFilter implements Filter {
 
 		try {
 			chain.doFilter(request, response);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		} finally {
 			Date end = UtilDateTime.getNowDate();
 
