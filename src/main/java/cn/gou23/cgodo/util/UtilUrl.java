@@ -219,6 +219,11 @@ public final class UtilUrl {
 		}
 		
 		String paramAsString = getParameterAsString(url, encoding);
+		
+		if(StringUtils.isEmpty(paramAsString)) {
+			return map;
+		}
+		
 		String allParamsAsString[] = paramAsString.split(PARAMETER_SEPARATION); // 分割参数
 
 		for (String oneParamAsString : allParamsAsString) {
