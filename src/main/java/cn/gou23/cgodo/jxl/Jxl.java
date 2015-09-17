@@ -51,7 +51,7 @@ public final class Jxl {
 	/**
 	 * 当前正在处理的行
 	 */
-	private int currentRow = 0;
+	private int currentRow = 1;
 	/**
 	 * 当前正在写入的行
 	 */
@@ -232,6 +232,8 @@ public final class Jxl {
 			columnNamesIndex.put(cell.getContents(), i);
 		}
 
+		currentRow = 1;
+
 		return sheet;
 	}
 
@@ -266,8 +268,15 @@ public final class Jxl {
 	 * @param sheetName
 	 *            表名 不能为blank
 	 * @author liyixing 2012-12-3 上午10:05:17
+	 * @throws IOException
 	 */
-	public void addSheet(String sheetName) {
+	public void addSheet(String sheetName) throws IOException {
+		if (sheetName == null) {
+			return;
+		}
+
+		currentWriteRow = 0;
+
 		writableSheet = writableWorkBook.createSheet(sheetName,
 				writableWorkBook.getSheets().length);
 	}
@@ -312,7 +321,6 @@ public final class Jxl {
 	public void addCell(String text, int r) throws RowsExceededException,
 			WriteException {
 		Cell[] cells = writableSheet.getRow(r);
-
 		writableSheet.addCell(new Label(cells.length, r, text));
 	}
 
@@ -337,6 +345,7 @@ public final class Jxl {
 		}
 
 		if (writableWorkBook != null) {
+			writableWorkBook.write();
 			writableWorkBook.close();
 		}
 	}
