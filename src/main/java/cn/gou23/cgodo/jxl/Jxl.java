@@ -51,7 +51,7 @@ public final class Jxl {
 	/**
 	 * 当前正在处理的行
 	 */
-	private int currentRow = 1;
+	private int currentRow = 0;
 	/**
 	 * 当前正在写入的行
 	 */
@@ -213,6 +213,37 @@ public final class Jxl {
 	 *            表名 不能为blank
 	 * @author liyixing 2012-12-3 上午10:05:17
 	 */
+	public Sheet setSheet(Sheet sheet) {
+		if (sheet == null) {
+			sheet = workBook.getSheets()[0];
+		}
+
+		this.sheet = sheet;
+		
+		// 读取列名,第一行作为列名存在
+		Cell[] cells = sheet.getRow(0);
+
+		for (int i = 0; i < cells.length; i++) {
+			Cell cell = cells[i];
+
+			columnNamesIndex.put(cell.getContents(), i);
+		}
+
+		currentRow = 0;
+
+		return sheet;
+	}
+
+	/**
+	 * 
+	 * 描述:读取工作页
+	 * 
+	 * 调用后,会自动将当前表格定位到该表
+	 * 
+	 * @param sheetName
+	 *            表名 不能为blank
+	 * @author liyixing 2012-12-3 上午10:05:17
+	 */
 	public Sheet getSheet(String sheetName) {
 		Workbook book = getWorkbook();
 		sheet = null;
@@ -232,7 +263,7 @@ public final class Jxl {
 			columnNamesIndex.put(cell.getContents(), i);
 		}
 
-		currentRow = 1;
+		currentRow = 0;
 
 		return sheet;
 	}
