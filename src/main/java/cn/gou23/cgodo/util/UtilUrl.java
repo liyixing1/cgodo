@@ -91,7 +91,7 @@ public final class UtilUrl {
 
 		int index = getParameterStartIndex(url);
 
-		return index > 0 && index < url.length() - 1;
+		return index >= 0 && index < url.length() - 1;
 	}
 
 	/**
@@ -188,13 +188,40 @@ public final class UtilUrl {
 		url = URLDecoder.decode(url, encoding);
 		url = url.trim();
 
-		//有问号
+		// 有问号
 		if (hasParameterStart(url)) {
 			int parameterStartIndex = getParameterStartIndex(url);
 
 			return url.substring(parameterStartIndex + 1);
 		} else {
-			//没有问号
+			// 没有问号
+			return url;
+		}
+	}
+
+	/**
+	 * 
+	 * 描述:得到url参数部分
+	 * 
+	 * @param url
+	 *            要获取的url
+	 * @param encoding
+	 *            编码
+	 * @author liyixing 2012-11-28 下午1:48:20
+	 * @throws UnsupportedEncodingException
+	 */
+	public static final String getParameterAsString(String url)
+			throws UnsupportedEncodingException {
+		Assert.notNull(url);
+		url = url.trim();
+
+		// 有问号
+		if (hasParameterStart(url)) {
+			int parameterStartIndex = getParameterStartIndex(url);
+
+			return url.substring(parameterStartIndex + 1);
+		} else {
+			// 没有问号
 			return url;
 		}
 	}
@@ -219,13 +246,13 @@ public final class UtilUrl {
 		if (StringUtils.isBlank(url)) {
 			return map;
 		}
-		
+
 		String paramAsString = getParameterAsString(url, encoding);
-		
-		if(StringUtils.isEmpty(paramAsString)) {
+
+		if (StringUtils.isEmpty(paramAsString)) {
 			return map;
 		}
-		
+
 		String allParamsAsString[] = paramAsString.split(PARAMETER_SEPARATION); // 分割参数
 
 		for (String oneParamAsString : allParamsAsString) {
