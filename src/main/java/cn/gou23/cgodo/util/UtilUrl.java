@@ -188,13 +188,15 @@ public final class UtilUrl {
 		url = URLDecoder.decode(url, encoding);
 		url = url.trim();
 
+		//有问号
 		if (hasParameterStart(url)) {
 			int parameterStartIndex = getParameterStartIndex(url);
 
 			return url.substring(parameterStartIndex + 1);
+		} else {
+			//没有问号
+			return url;
 		}
-
-		return null;
 	}
 
 	/**
