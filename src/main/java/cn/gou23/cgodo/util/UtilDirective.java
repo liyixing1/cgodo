@@ -255,6 +255,12 @@ public final class UtilDirective {
 			throws TemplateModelException {
 		return (T) env.__getitem__(key);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static final <T> T getValue(Map env, String key)
+			throws TemplateModelException {
+		return (T) env.get(key);
+	}
 
 	public static final void setValue(Environment env, String key, Object value)
 			throws TemplateException {

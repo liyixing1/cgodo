@@ -47,6 +47,10 @@ public class TemplateOverrideDirective implements
 		// 获取要重写的上级页面名称
 		String beseViewName = UtilDirective.getValue(env, VIEW_NAME);// 当前父视图模版文件名称
 
+		// if(StringUtils.isBlank(beseViewName)) {
+		// beseViewName = UtilDirective.getValue(params, VIEW_NAME).toString();
+		// }
+
 		// viewName 路径包含解析的视图路径说明是模板页面
 		if (beseViewName != null && !"".equals(currentViewName)
 				&& beseViewName.contains(currentViewName)) {
@@ -111,6 +115,11 @@ public class TemplateOverrideDirective implements
 		// 设置传递的所有参数
 		UtilDirective.addParamsToVariable(env, params);
 		Writer write = new StringWriter();
+
+		if (body == null) {
+			return;
+		}
+
 		body.render(write);
 		UtilDirective.setValue(env, getName(params), write.toString());
 	}
