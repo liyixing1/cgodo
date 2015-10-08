@@ -218,7 +218,7 @@ public class MySqlSsh implements Driver {
 	 * 
 	 * @author liyixing 2015年9月17日 上午11:18:03
 	 */
-	public class Proxy {
+	public static class Proxy {
 		public String sshUser;// SSH连接用户名
 		public String sshPassword;// SSH连接密码
 		public String sshIp;// SSH服务器
@@ -300,5 +300,17 @@ public class MySqlSsh implements Driver {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static void main(String args[]) {
+		Proxy proxy = new Proxy();
+		
+		proxy.setMysqlIp("192.168.29.4");
+		proxy.setMysqlPort(3389);
+		proxy.setSshIp("202.106.219.6");
+		proxy.setSshPassword("dhmapp@FXR");
+		proxy.setSshPort(9149);
+		proxy.setSshUser("root");
+		proxy.doPorxy();
 	}
 }
