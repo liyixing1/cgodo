@@ -1,10 +1,11 @@
 package cn.gou23.cgodo.util;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -368,5 +369,82 @@ public final class UtilDateTime {
 				&& date1.get(Calendar.MONTH) == date2.get(Calendar.MONTH)
 				&& date1.get(Calendar.DAY_OF_MONTH) == date2
 						.get(Calendar.DAY_OF_MONTH);
+	}
+
+	/**
+	 * 
+	 * 描述:增加N周
+	 * 
+	 * @param date
+	 * @param weeks
+	 *            多少周，如果要减少，则负数
+	 * @author liyixing 2015年10月15日 下午2:49:11
+	 */
+	public static final void addWeek(Calendar date, int weeks) {
+		date.add(Calendar.DATE, weeks * 7);
+	}
+
+	/**
+	 * 
+	 * 描述:增加N周
+	 * 
+	 * @param date
+	 * @param weeks
+	 *            多少周，如果要减少，则负数
+	 * @author liyixing 2015年10月15日 下午2:49:11
+	 */
+	public static final void addWeek(Date date, int weeks) {
+		addWeek(getCalendar(date), weeks);
+	}
+
+	/**
+	 * 
+	 * 描述:上周一
+	 * 
+	 * @param date
+	 * @param weeks
+	 *            多少周，如果要减少，则负数
+	 * @author liyixing 2015年10月15日 下午2:49:11
+	 * @return
+	 */
+	public static final Date getPreMondy(Date date) {
+		Calendar calendar = getCalendar(date);
+		addWeek(calendar, -1);
+		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+		return calendar.getTime();
+	}
+
+	/**
+	 * 
+	 * 描述:上周日
+	 * 
+	 * @param date
+	 * @param weeks
+	 *            多少周，如果要减少，则负数
+	 * @author liyixing 2015年10月15日 下午2:49:11
+	 * @return
+	 */
+	public static final Date getPreSundy(Date date) {
+		Calendar calendar = getCalendar(date);
+		calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+
+		return calendar.getTime();
+	}
+
+	public static void main(String args[]) {
+		System.out.println(UtilDateTime.format(
+				getPreMondy(UtilDateTime.getNowDate()),
+				UtilDateTime.YYYY_MM_DD_HH_MM_SS));
+		System.out.println(UtilDateTime.format(
+				getPreSundy(UtilDateTime.getNowDate()),
+				UtilDateTime.YYYY_MM_DD_HH_MM_SS));
+		System.out.println(BigDecimal.valueOf(4.1)
+				.setScale(0, BigDecimal.ROUND_UP));
+		System.out.println(BigDecimal.valueOf(33)
+				.divide(BigDecimal.valueOf(7), 0, BigDecimal.ROUND_UP)
+				.intValue());
+		System.out.println(BigDecimal.valueOf(33).divide(BigDecimal.valueOf(7),
+				0, BigDecimal.ROUND_UP));
 	}
 }
