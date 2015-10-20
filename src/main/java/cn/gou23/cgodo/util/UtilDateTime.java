@@ -433,6 +433,8 @@ public final class UtilDateTime {
 	}
 
 	public static void main(String args[]) {
+		byte y = 127;
+		System.out.println((char)y);
 		System.out.println(UtilDateTime.format(
 				getPreMondy(UtilDateTime.getNowDate()),
 				UtilDateTime.YYYY_MM_DD_HH_MM_SS));
