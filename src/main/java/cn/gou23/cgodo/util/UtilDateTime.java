@@ -434,15 +434,26 @@ public final class UtilDateTime {
 
 	public static void main(String args[]) {
 		byte y = 127;
-		System.out.println((char)y);
+		Calendar c = Calendar.getInstance();
+		c.setTimeInMillis(1445184000000l);
+
+		System.out.println(UtilDateTime.format(c.getTime(),
+				UtilDateTime.YYYY_MM_DD_HH_MM_SS));
+
+		c.setTimeInMillis(1445788799000l);
+
+		System.out.println(UtilDateTime.format(c.getTime(),
+				UtilDateTime.YYYY_MM_DD_HH_MM_SS));
+		System.out.println(new Date().getTime());
+		System.out.println((char) y);
 		System.out.println(UtilDateTime.format(
 				getPreMondy(UtilDateTime.getNowDate()),
 				UtilDateTime.YYYY_MM_DD_HH_MM_SS));
 		System.out.println(UtilDateTime.format(
 				getPreSundy(UtilDateTime.getNowDate()),
 				UtilDateTime.YYYY_MM_DD_HH_MM_SS));
-		System.out.println(BigDecimal.valueOf(4.1)
-				.setScale(0, BigDecimal.ROUND_UP));
+		System.out.println(BigDecimal.valueOf(4.1).setScale(0,
+				BigDecimal.ROUND_UP));
 		System.out.println(BigDecimal.valueOf(33)
 				.divide(BigDecimal.valueOf(7), 0, BigDecimal.ROUND_UP)
 				.intValue());
