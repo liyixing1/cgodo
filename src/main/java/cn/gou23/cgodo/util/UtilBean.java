@@ -167,4 +167,42 @@ public final class UtilBean {
 
 		return beanGroupByNotPkField;
 	}
+
+	/**
+	 * 
+	 * 描述:从多个bean中取出某个属性，组合成新的list，list中的元素就是bean中的field对应的值
+	 * 
+	 * 如果bean中属性值为null，那么会忽略该bean
+	 * 
+	 * @param beans
+	 *            要读取的beans
+	 * @param field
+	 *            要获取的field
+	 * @author liyixing 2011-12-28 上午10:58:50
+	 * @throws NoSuchMethodException
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
+	 */
+	@SuppressWarnings("unchecked")
+	public static <E, B> List<E> beansFieldTolist(Collection<B> beans,
+			String field) throws IllegalAccessException,
+			InvocationTargetException, NoSuchMethodException {
+		List<E> fields = new ArrayList<E>();
+
+		for (B bean : beans) {
+			try {
+				E value = (E) PropertyUtils.getNestedProperty(bean, field);// 取值
+
+				if (value != null) {
+					fields.add(value);// 放值
+				}
+			} catch (NestedNullException e) {// 空值
+				UtilLog.info("获取属性" + field + "失败，可能是层次属性中有一个属性是null，忽略该行数据。");
+
+				continue;
+			}
+		}
+
+		return fields;
+	}
 }
