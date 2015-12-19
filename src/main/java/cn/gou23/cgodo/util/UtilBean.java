@@ -1,7 +1,11 @@
 package cn.gou23.cgodo.util;
 
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +13,10 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.NestedNullException;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.FatalBeanException;
+import org.springframework.util.Assert;
+import org.springframework.util.ClassUtils;
 
 /**
  * Bean操作工具类
@@ -33,7 +41,7 @@ public final class UtilBean {
 	 * @throws IllegalAccessException
 	 * @throws InstantiationException
 	 */
-	public static <E> List<E> copyProperties(Collection<?> srcList,
+	public static final <E> List<E> copysProperties(Collection<?> srcList,
 			Class<E> targetType, String... ignoreProperties) {
 		List<E> targetList = new ArrayList<E>();
 
@@ -42,8 +50,7 @@ public final class UtilBean {
 
 			try {
 				newBean = targetType.newInstance();
-				org.springframework.beans.BeanUtils.copyProperties(src,
-						newBean, ignoreProperties);
+				BeanUtils.copyProperties(src, newBean, ignoreProperties);
 				targetList.add(newBean);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
@@ -51,6 +58,164 @@ public final class UtilBean {
 		}
 
 		return targetList;
+	}
+
+	/**
+	 * 
+	 * 描述:复制集合，包含属性
+	 * 
+	 * @param srcList
+	 * @param targetType
+	 * @param containProperties
+	 * @return
+	 * @author liyixing 2015年12月19日 下午3:42:20
+	 */
+	public static final <E> List<E> copysContainProperties(
+			Collection<?> srcList, Class<E> targetType,
+			String... containProperties) {
+		List<E> targetList = new ArrayList<E>();
+
+		for (Object src : srcList) {// 复制
+			E newBean;
+
+			try {
+				newBean = targetType.newInstance();
+				copyContainProperties(src, newBean, containProperties);
+				targetList.add(newBean);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+
+		return targetList;
+	}
+
+	/**
+	 * 
+	 * 描述:包含拷贝
+	 * 
+	 * @param src
+	 * @param target
+	 * @param containProperties
+	 * @return
+	 * @author liyixing 2015年12月19日 下午3:46:37
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 */
+	@SuppressWarnings("unchecked")
+	public static final <E> E copyContainProperties(Object src,
+			Class<?> targetType, String... containProperties)
+			throws InstantiationException, IllegalAccessException {
+		Object target = targetType.newInstance();
+
+		copyContainProperties(src, target, containProperties);
+
+		return (E) target;
+	}
+
+	/**
+	 * 
+	 * 描述:包含拷贝
+	 * 
+	 * @param src
+	 * @param target
+	 * @param containProperties
+	 * @return
+	 * @author liyixing 2015年12月19日 下午3:46:37
+	 */
+	public static final void copyContainProperties(Object src, Object target,
+			String... containProperties) {
+		copyContainProperties(src, target, null, containProperties);
+	}
+
+	/**
+	 * 
+	 * 描述:包含拷贝
+	 * 
+	 * @param src
+	 * @param target
+	 * @param containProperties
+	 * @return
+	 * @author liyixing 2015年12月19日 下午3:46:37
+	 */
+	public static final void copyContainProperties(Object src, Object target,
+			Class<?> editable, String... containProperties) {
+		Assert.notNull(src, "原始对象不能为空");
+		Assert.notNull(target, "目标对象不能为空");
+
+		Class<?> actualEditable = target.getClass();
+		if (editable != null) {
+			if (!editable.isInstance(target)) {
+				throw new IllegalArgumentException("Target class ["
+						+ target.getClass().getName()
+						+ "] not assignable to Editable class ["
+						+ editable.getName() + "]");
+			}
+			actualEditable = editable;
+		}
+		PropertyDescriptor[] targetPds = BeanUtils
+				.getPropertyDescriptors(actualEditable);
+		List<String> containList = (containProperties != null ? Arrays
+				.asList(containProperties) : null);
+
+		// 拷贝目标属性
+		for (PropertyDescriptor targetPd : targetPds) {
+			Method writeMethod = targetPd.getWriteMethod();
+			// 包含该属性
+			if (writeMethod != null
+					&& (containList == null || containList.contains(targetPd
+							.getName()))) {
+				PropertyDescriptor sourcePd = BeanUtils.getPropertyDescriptor(
+						src.getClass(), targetPd.getName());
+				if (sourcePd != null) {
+					Method readMethod = sourcePd.getReadMethod();
+					if (readMethod != null
+							&& ClassUtils.isAssignable(
+									writeMethod.getParameterTypes()[0],
+									readMethod.getReturnType())) {
+						try {
+							if (!Modifier.isPublic(readMethod
+									.getDeclaringClass().getModifiers())) {
+								readMethod.setAccessible(true);
+							}
+							Object value = readMethod.invoke(src);
+							if (!Modifier.isPublic(writeMethod
+									.getDeclaringClass().getModifiers())) {
+								writeMethod.setAccessible(true);
+							}
+							writeMethod.invoke(target, value);
+						} catch (Throwable ex) {
+							throw new FatalBeanException(targetPd.getName()
+									+ " 无法从原始对象拷贝到目标对象中from source to target",
+									ex);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * 描述:按照类型拷贝
+	 * 
+	 * @param src
+	 * @param targetType
+	 * @param ignoreProperties
+	 * @return
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @author liyixing 2015年12月19日 下午3:46:15
+	 */
+	@SuppressWarnings("unchecked")
+	public static final <E> E copyProperties(Object src, Class<E> targetType,
+			String... ignoreProperties) throws InstantiationException,
+			IllegalAccessException {
+		Object target = targetType.newInstance();
+
+		BeanUtils.copyProperties(src, target, ignoreProperties);
+
+		return (E) target;
 	}
 
 	/**
@@ -71,31 +236,21 @@ public final class UtilBean {
 	 * @throws IllegalAccessException
 	 */
 	@SuppressWarnings("unchecked")
-	public static <K, V> Map<K, V> beansGroupByPkField(Collection<V> beans,
-			String... fields) throws IllegalAccessException,
-			InvocationTargetException, NoSuchMethodException {
+	public static final <K, V> Map<K, V> beansGroupByPkField(
+			Collection<V> beans, String... fields)
+			throws IllegalAccessException, InvocationTargetException,
+			NoSuchMethodException {
 		Map<K, V> beansGroupByPkField = new HashMap<K, V>();
 
 		for (V bean : beans) {
 			K key = null;
-			for (String field : fields) {
-				try {
-					K keyTemp = (K) PropertyUtils
-							.getNestedProperty(bean, field); // 取出字段值
 
-					if (key == null) {
-						key = keyTemp;
-					} else {
-						key = (K) (key.toString() + (keyTemp == null ? ""
-								: keyTemp));
-					}
-				} catch (NestedNullException e) {
-					// 空值
-					UtilLog.warn("获取属性" + field
-							+ "失败，可能是层次属性中有一个属性是null，忽略该字段数据。");
-
-					continue;
-				}
+			try {
+				key = (K) getNestedProperty(bean, fields);// 取值
+			} catch (NestedNullException e) {// 空值
+				key = null;
+				UtilLog.info("获取属性" + fields
+						+ "失败，可能是层次属性中有一个属性是null，该行数据key=null。");
 			}
 
 			if (key != null) {
@@ -123,7 +278,7 @@ public final class UtilBean {
 	 * @throws IllegalAccessException
 	 */
 	@SuppressWarnings("unchecked")
-	public static <K, V> Map<K, List<V>> beansGroupByNotPkField(
+	public static final <K, V> Map<K, List<V>> beansGroupByNotPkField(
 			Collection<V> beans, String... fields)
 			throws IllegalAccessException, InvocationTargetException,
 			NoSuchMethodException {
@@ -132,37 +287,22 @@ public final class UtilBean {
 		for (V bean : beans) {
 			K key = null;
 
-			for (String field : fields) {
-				try {
-					K keyTemp = (K) PropertyUtils
-							.getNestedProperty(bean, field); // 取出字段值
-
-					if (key == null) {
-						key = keyTemp;
-					} else {
-						key = (K) (key.toString() + (keyTemp == null ? ""
-								: keyTemp));
-					}
-				} catch (NestedNullException e) {
-					// 空值
-					UtilLog.warn("获取属性" + field
-							+ "失败，可能是层次属性中有一个属性是null，忽略该字段数据。");
-
-					continue;
-				}
+			try {
+				key = (K) getNestedProperty(bean, fields);// 取值
+			} catch (NestedNullException e) {// 空值
+				key = null;
+				UtilLog.info("获取属性" + fields
+						+ "失败，可能是层次属性中有一个属性是null，该行数据key=null。");
 			}
 
-			if (key != null) {
-				List<V> thisKeyBeans = beanGroupByNotPkField.get(key); // 检查是否已经存在这个list
+			List<V> thisKeyBeans = beanGroupByNotPkField.get(key); // 检查是否已经存在这个list
 
-				if (thisKeyBeans == null) {// 不存在
-					thisKeyBeans = new ArrayList<V>();
-
-					beanGroupByNotPkField.put(key, thisKeyBeans);
-				}
-
-				thisKeyBeans.add(bean);// 存放map
+			if (thisKeyBeans == null) {// 不存在
+				thisKeyBeans = new ArrayList<V>();
+				beanGroupByNotPkField.put(key, thisKeyBeans);
 			}
+
+			thisKeyBeans.add(bean);// 存放map
 		}
 
 		return beanGroupByNotPkField;
@@ -176,33 +316,93 @@ public final class UtilBean {
 	 * 
 	 * @param beans
 	 *            要读取的beans
-	 * @param field
-	 *            要获取的field
+	 * @param fieldNames
+	 *            要获取的fieldNames
 	 * @author liyixing 2011-12-28 上午10:58:50
 	 * @throws NoSuchMethodException
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
 	 */
 	@SuppressWarnings("unchecked")
-	public static <E, B> List<E> beansFieldTolist(Collection<B> beans,
-			String field) throws IllegalAccessException,
+	public static final <E> List<E> beansFieldTolist(Collection<?> beans,
+			String... fieldNames) throws IllegalAccessException,
 			InvocationTargetException, NoSuchMethodException {
 		List<E> fields = new ArrayList<E>();
 
-		for (B bean : beans) {
+		for (Object bean : beans) {
 			try {
-				E value = (E) PropertyUtils.getNestedProperty(bean, field);// 取值
+				E value = (E) getNestedProperty(bean, fieldNames);// 取值
 
-				if (value != null) {
-					fields.add(value);// 放值
-				}
+				fields.add(value);// 放值
 			} catch (NestedNullException e) {// 空值
-				UtilLog.info("获取属性" + field + "失败，可能是层次属性中有一个属性是null，忽略该行数据。");
+				fields.add(null);
+				UtilLog.info("获取属性" + fieldNames
+						+ "失败，可能是层次属性中有一个属性是null，该行数据自动添加null。");
 
 				continue;
 			}
 		}
 
 		return fields;
+	}
+
+	/**
+	 * 
+	 * 描述:获取对象的属性值，如果是多个属性，会进行拼接，如<br>
+	 * id=1 <br>
+	 * name=2<br>
+	 * 那么传入id,name，得到的结果是1_2<br>
+	 * 如果某个字段属性值是null，那么会忽略该字段
+	 * 
+	 * @param fieldName
+	 * @return
+	 * @author liyixing 2015年12月18日 下午2:28:36
+	 * @throws NoSuchMethodException
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
+	 */
+	public static final Object getNestedProperty(Object bean,
+			String... fieldNames) throws IllegalAccessException,
+			InvocationTargetException, NoSuchMethodException {
+		boolean isFirst = true;
+		String result = null;
+
+		if (fieldNames == null || fieldNames.length == 0) {
+			return null;
+		}
+
+		if (fieldNames.length == 1) {
+			return PropertyUtils.getNestedProperty(bean, fieldNames[0]);
+		}
+
+		for (String fieldName : fieldNames) {
+			try {
+				Object value = PropertyUtils.getNestedProperty(bean, fieldName);// 取值
+
+				if (value == null) {
+					// 空值
+					UtilLog.warn("获取属性" + fieldName + "值是null，忽略该字段数据。");
+
+					continue;
+				}
+
+				if (!isFirst) {
+					result += "_";
+				} else {
+					result = "";
+				}
+
+				result += value.toString();
+				isFirst = false;
+			} catch (NestedNullException e) {
+				// 空值
+				UtilLog.warn("获取属性" + fieldName
+						+ "失败，可能是层次属性中有一个属性是null，忽略该字段数据。");
+
+				continue;
+			}
+		}
+
+		return result.length() == 0 ? null : result;
 	}
 }

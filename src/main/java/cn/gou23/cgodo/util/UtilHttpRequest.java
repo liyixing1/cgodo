@@ -90,10 +90,6 @@ public class UtilHttpRequest {
 	 * @return
 	 */
 	public static final boolean isWechat(HttpServletRequest request) {
-		if (!isMobile(request)) {
-			return false;
-		}
-
 		String ua = getUseragent(request);
 
 		if (StringUtils.isBlank(ua)) {
