@@ -18,7 +18,7 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import cn.gou23.cgodo.util.UtilModel;
 
 /**
- * select 查询结果类型修改
+ * select 查询结果返回类型修改
  * 
  * @author Jeff Butler
  */
