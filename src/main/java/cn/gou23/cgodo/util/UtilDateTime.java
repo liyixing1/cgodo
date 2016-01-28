@@ -1,10 +1,11 @@
 package cn.gou23.cgodo.util;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +36,21 @@ public final class UtilDateTime {
 	 */
 	public static final Calendar getNowCalendar() {
 		return Calendar.getInstance();
+	}
+
+	/**
+	 * 
+	 * 描述:根据指定date或者calendar
+	 * 
+	 * @return
+	 * @author liyixing 2012-11-12 下午2:50:58
+	 */
+	public static final Calendar getCalendar(Date date) {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(date);
+
+		return calendar;
 	}
 
 	/**
@@ -179,9 +195,7 @@ public final class UtilDateTime {
 			return null;
 		}
 
-		Calendar c = Calendar.getInstance();
-
-		c.setTime(date);
+		Calendar c = getCalendar(date);
 		setCalendarToLastTime(c);
 
 		return c.getTime();
@@ -218,9 +232,7 @@ public final class UtilDateTime {
 			return null;
 		}
 
-		Calendar c = Calendar.getInstance();
-
-		c.setTime(date);
+		Calendar c = getCalendar(date);
 		setCalendarToFirstTime(c);
 
 		return c.getTime();
@@ -281,9 +293,7 @@ public final class UtilDateTime {
 	 * @author liyixing 2012-11-12 下午2:56:25
 	 */
 	public static final Date setDateToLastMonthTime(Date date) {
-		Calendar c = Calendar.getInstance();
-
-		c.setTime(date);
+		Calendar c = getCalendar(date);
 		setCalendarToLastMonthTime(c);
 
 		return c.getTime();
@@ -314,9 +324,7 @@ public final class UtilDateTime {
 	 * @author liyixing 2012-11-12 下午2:58:51
 	 */
 	public static final Date setDateToFirstMonthTime(Date date) {
-		Calendar c = Calendar.getInstance();
-
-		c.setTime(date);
+		Calendar c = getCalendar(date);
 		setCalendarToFirstMonthTime(c);
 
 		return c.getTime();
@@ -332,5 +340,141 @@ public final class UtilDateTime {
 	public static final void setCalendarToFirstMonthTime(Calendar date) {
 		date.set(Calendar.DAY_OF_MONTH, 1);
 		setCalendarToFirstTime(date);
+	}
+
+	/**
+	 * 
+	 * 描述:是否同一天
+	 * 
+	 * @param date
+	 * @author liyixing 2012-11-12 下午2:58:58
+	 */
+	public static final boolean isEqualDay(Date date1, Date date2) {
+		if (date1 == null || date2 == null) {
+			return false;
+		}
+
+		return isEqualDay(getCalendar(date1), getCalendar(date2));
+	}
+
+	/**
+	 * 
+	 * 描述:是否同一天
+	 * 
+	 * @param date
+	 * @author liyixing 2012-11-12 下午2:58:58
+	 */
+	public static final boolean isEqualDay(Calendar date1, Calendar date2) {
+		return date1.get(Calendar.YEAR) == date2.get(Calendar.YEAR)
+				&& date1.get(Calendar.MONTH) == date2.get(Calendar.MONTH)
+				&& date1.get(Calendar.DAY_OF_MONTH) == date2
+						.get(Calendar.DAY_OF_MONTH);
+	}
+
+	/**
+	 * 
+	 * 描述:增加N周
+	 * 
+	 * @param date
+	 * @param weeks
+	 *            多少周，如果要减少，则负数
+	 * @author liyixing 2015年10月15日 下午2:49:11
+	 */
+	public static final void addWeek(Calendar date, int weeks) {
+		date.add(Calendar.DATE, weeks * 7);
+	}
+
+	/**
+	 * 
+	 * 描述:增加N周
+	 * 
+	 * @param date
+	 * @param weeks
+	 *            多少周，如果要减少，则负数
+	 * @author liyixing 2015年10月15日 下午2:49:11
+	 */
+	public static final void addWeek(Date date, int weeks) {
+		addWeek(getCalendar(date), weeks);
+	}
+
+	/**
+	 * 
+	 * 描述:上周一
+	 * 
+	 * @param date
+	 * @param weeks
+	 *            多少周，如果要减少，则负数
+	 * @author liyixing 2015年10月15日 下午2:49:11
+	 * @return
+	 */
+	public static final Date getPreMondy(Date date) {
+		Calendar calendar = getCalendar(date);
+		addWeek(calendar, -1);
+		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+		return calendar.getTime();
+	}
+
+	/**
+	 * 
+	 * 描述:N天之后 
+	 * 
+	 * @param date
+	 * @param day
+	 *            天，如果要减少，则负数
+	 * @author liyixing 2015年10月15日 下午2:49:11
+	 * @return
+	 */
+	public static final Date addDay(Date date, int day) {
+		Calendar calendar = getCalendar(date);
+		calendar.set(Calendar.DAY_OF_YEAR, day);
+
+		return calendar.getTime();
+	}
+
+	/**
+	 * 
+	 * 描述:上周日
+	 * 
+	 * @param date
+	 * @param weeks
+	 *            多少周，如果要减少，则负数
+	 * @author liyixing 2015年10月15日 下午2:49:11
+	 * @return
+	 */
+	public static final Date getPreSundy(Date date) {
+		Calendar calendar = getCalendar(date);
+		calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+
+		return calendar.getTime();
+	}
+
+	public static void main(String args[]) {
+		byte y = 127;
+		Calendar c = Calendar.getInstance();
+		c.setTimeInMillis(1447793852000l);
+
+		System.out.println(UtilDateTime.format(c.getTime(),
+				UtilDateTime.YYYY_MM_DD_HH_MM_SS));
+
+		c.setTimeInMillis(1447189052000l);
+
+		System.out.println(UtilDateTime.format(c.getTime(),
+				UtilDateTime.YYYY_MM_DD_HH_MM_SS));
+		System.out.println(new Date().getTime());
+		System.out.println((char) y);
+		System.out.println(UtilDateTime.format(
+				getPreMondy(UtilDateTime.getNowDate()),
+				UtilDateTime.YYYY_MM_DD_HH_MM_SS));
+		System.out.println(UtilDateTime.format(
+				getPreSundy(UtilDateTime.getNowDate()),
+				UtilDateTime.YYYY_MM_DD_HH_MM_SS));
+		System.out.println(BigDecimal.valueOf(4.1).setScale(0,
+				BigDecimal.ROUND_UP));
+		System.out.println(BigDecimal.valueOf(33)
+				.divide(BigDecimal.valueOf(7), 0, BigDecimal.ROUND_UP)
+				.intValue());
+		System.out.println(BigDecimal.valueOf(33).divide(BigDecimal.valueOf(7),
+				0, BigDecimal.ROUND_UP));
 	}
 }
