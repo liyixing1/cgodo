@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>cn.23gou</groupId>
+	<groupId>com</groupId>
 	<artifactId>cgodo</artifactId>
 	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
@@ -350,7 +350,7 @@
 			</resource>
 		</resources>
 
-		<finalName>cn.23gou.cgodo-${project.version}</finalName>
+		<finalName>com.cgodo-${project.version}</finalName>
 		<!-- <extensions> <extension> <groupId>org.apache.maven.wagon</groupId> 
 			<artifactId>wagon-ftp</artifactId> <version>1.0-beta-6</version> </extension> 
 			</extensions> -->

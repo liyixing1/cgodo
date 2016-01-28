@@ -4,7 +4,7 @@
 	<!-- 指定JDBC驱动路径,从用户目录读取,来兼容不同的开发人员 -->
 	<classPathEntry location="${user.home}/mysql-connector-java-5.1.6.jar" />
 
-	<context id="cn.23gou.cgodo" targetRuntime="MyBatis3">
+	<context id="com.cgodo" targetRuntime="MyBatis3">
 		<property name="beginningDelimiter" value="`" />
 		<property name="endingDelimiter" value="`" />
 		<property name="jdbcType" value="false" />
@@ -24,11 +24,11 @@
 		</plugin>
 
 		<!-- 该插件需要在org.mybatis.generator.plugins.RowBoundsPlugin插件之前，来保证在分页前执行了修改返回值类型的插件 -->
-		<plugin type="cn.gou23.cgodo.mybatis.generator.SelectPlugin" />
+		<plugin type="com.cgodo.mybatis.generator.SelectPlugin" />
 
 		<!-- <plugin type="org.mybatis.generator.plugins.SqlMapConfigPlugin"> -->
 		<!-- <property name="targetProject" value="23gou/resource-test" /> -->
-		<!-- <property name="targetPackage" value="cn.gou23.resource.mybatis" /> -->
+		<!-- <property name="targetPackage" value="com.resource.mybatis" /> -->
 		<!-- <property name="fileName" value="SqlMapConfig.xml" /> -->
 		<!-- </plugin> -->
 
@@ -38,7 +38,7 @@
 
 		<!-- 禁止在生成的代码中,生成时间,禁止在生成的代码中生成注释 -->
 		<commentGenerator
-			type="cn.gou23.cgodo.mybatis.generator.CommentFromDatabaseGenerator">
+			type="com.cgodo.mybatis.generator.CommentFromDatabaseGenerator">
 			<property name="suppressDate" value="true" />
 			<property name="suppressAllComments" value="false" />
 		</commentGenerator>
@@ -51,20 +51,20 @@
 			connectionURL="jdbc:mysql://127.0.0.1:3306/23gou?useUnicode=false&amp;autoReconnect=true&amp;characterEncoding=utf-8"
 			userId="root" password="2722261" />
 
-		<javaModelGenerator targetPackage="cn.gou23.cgodo.server.entity"
+		<javaModelGenerator targetPackage="com.cgodo.server.entity"
 			targetProject="../src/main/java">
 			<!-- 关闭自动添加子包（自动添加schema) -->
 			<property name="enableSubPackages" value="false" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 
-		<sqlMapGenerator targetPackage="cn.gou23.cgodo.resource.mybatis.sqlmap"
+		<sqlMapGenerator targetPackage="com.cgodo.resource.mybatis.sqlmap"
 			targetProject="../src/main/resources">
 			<!-- 关闭自动添加子包（自动添加schema) -->
 			<property name="enableSubPackages" value="false" />
 		</sqlMapGenerator>
 
-		<javaClientGenerator targetPackage="cn.gou23.cgodo.server.dao"
+		<javaClientGenerator targetPackage="com.cgodo.server.dao"
 			targetProject="../src/main/java" type="XMLMAPPER">
 			<!-- 关闭自动添加子包（自动添加schema) -->
 			<property name="enableSubPackages" value="false" />
