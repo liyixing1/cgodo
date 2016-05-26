@@ -33,46 +33,4 @@ public class UtilJson {
 			throw new RuntimeException(e);
 		}
 	}
-	/**
-	 * 
-	 * 描述:
-	 * 
-	 * @param str
-	 * @return
-	 * @author huangpengpeng2013年9月9日 下午3:04:12
-	 */
-	// @SuppressWarnings("unchecked")
-	// public final static Map<String, Object> toMap(String str) {
-	// try {
-	// return MAPPER.readValue(str, Map.class);
-	// } catch (JsonParseException e) {
-	// handerException(e);
-	// } catch (JsonMappingException e) {
-	// handerException(e);
-	// } catch (IOException e) {
-	// handerException(e);
-	// }
-	// }
-	//
-	// @SuppressWarnings("unchecked")
-	// public final static List<Object> toList(String str) {
-	// try {
-	// return MAPPER.readValue(str, List.class);
-	// } catch (JsonParseException e) {
-	// handerException(e);
-	// } catch (JsonMappingException e) {
-	// handerException(e);
-	// } catch (IOException e) {
-	// handerException(e);
-	// }
-	// }
-	//
-	// /**
-	// * JSON字符串异常处理
-	// *
-	// * @param ex
-	// */
-	// private final static void handerException(Throwable ex) {
-	// throw new IllegalStateException(ex.getMessage(), ex);
-	// }
 }
