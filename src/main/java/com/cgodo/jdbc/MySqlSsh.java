@@ -58,6 +58,7 @@ public class MySqlSsh implements Driver {
 
 			for (Iterator<String> i = SUBDRIVERS_SET.iterator(); i.hasNext();) {
 				String driverClass = (String) i.next();
+				
 				try {
 					Class.forName(driverClass);
 				} catch (Throwable c) {
@@ -65,8 +66,8 @@ public class MySqlSsh implements Driver {
 				}
 			}
 		} catch (SQLException s) {
-			throw (RuntimeException) new RuntimeException("无法注册驱动!")
-					.initCause(s);
+			throw (RuntimeException) new RuntimeException("无法注册驱动!"
+					+ MySqlSsh.class.getName()).initCause(s);
 		}
 	}
 

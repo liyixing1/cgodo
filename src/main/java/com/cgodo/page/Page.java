@@ -172,4 +172,12 @@ public class Page<T> extends RowBounds implements Serializable {
 	public int getLimit() {
 		return pageSize;
 	}
+	
+	public boolean isFirst() {
+		return pageNo == 1;
+	}
+	
+	public boolean isLast() {
+		return pageNo == getTotalPage();
+	}
 }

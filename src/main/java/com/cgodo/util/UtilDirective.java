@@ -256,7 +256,7 @@ public final class UtilDirective {
 		return (T) env.__getitem__(key);
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static final <T> T getValue(Map env, String key)
 			throws TemplateModelException {
 		return (T) env.get(key);

@@ -59,8 +59,6 @@ public class PageHandlerFilter implements javax.servlet.Filter {
 
 		try {
 			chain.doFilter(request, response);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
 		} finally {
 			PageContext.clear();
 		}
