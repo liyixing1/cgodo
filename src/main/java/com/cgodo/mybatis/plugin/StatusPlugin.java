@@ -62,7 +62,7 @@ public class StatusPlugin implements Interceptor {
 	 */
 	protected void initStatus(Object o) {
 		try {
-			PropertyUtils.setProperty(o, "dataStatus", EnumStatus.创建);
+			PropertyUtils.setProperty(o, "status", EnumStatus.创建);
 		} catch (Exception e) {
 			// 该对象可能无法设置时间
 			UtilLog.debug("设置dataStatus失败！");
@@ -77,7 +77,7 @@ public class StatusPlugin implements Interceptor {
 	 */
 	protected void updateStatus(Object o) {
 		try {
-			PropertyUtils.setProperty(o, "dataStatus", EnumStatus.修改);
+			PropertyUtils.setProperty(o, "status", EnumStatus.修改);
 		} catch (Exception e) {
 			// 该对象可能无法设置时间
 			UtilLog.debug("设置dataStatus失败！");

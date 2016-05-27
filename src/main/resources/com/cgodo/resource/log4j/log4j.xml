@@ -102,6 +102,12 @@
 		<appender-ref ref="SQL" />
 		<appender-ref ref="CONSOLE_ALL" />
 	</logger>
+	
+	<logger name="com.cgodo.mybatis" additivity="false">
+		<level value="${log.level}" />
+		<appender-ref ref="SQL" />
+		<appender-ref ref="CONSOLE_ALL" />
+	</logger>
 
 	<logger name="org.apache.ibatis" additivity="false">
 		<level value="${log.level}" />

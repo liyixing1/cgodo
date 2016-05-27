@@ -68,7 +68,7 @@ public class PageStatementHandlerInterceptor implements Interceptor {
 	}
 
 	public void setProperties(Properties properties) {
-		//初始化方言
+		// 初始化方言
 		String dialectClassName = (String) properties.get("dialect");
 
 		if (StringUtils.isNotBlank(dialectClassName)) {

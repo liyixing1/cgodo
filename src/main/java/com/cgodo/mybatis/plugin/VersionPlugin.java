@@ -74,7 +74,8 @@ public class VersionPlugin implements Interceptor {
 	 */
 	protected void addVersion(Object o) {
 		try {
-			PropertyUtils.setProperty(o, "version", 0l);
+			Long version = (Long) PropertyUtils.getProperty(o, "version");
+			PropertyUtils.setProperty(o, "version", version+1);
 		} catch (Exception e) {
 			// 该对象可能无法设置时间
 			UtilLog.debug("设置version失败！");
