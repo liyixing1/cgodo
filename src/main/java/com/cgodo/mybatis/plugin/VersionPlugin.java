@@ -40,9 +40,9 @@ public class VersionPlugin implements Interceptor {
 		lastId = lastId.trim().toLowerCase();
 
 		if (lastId.startsWith("update")) {
-			addVersion(args[1], lastId);
+			addVersion(args[1]);
 		} else if(lastId.startsWith("insert")) {
-			
+			initVersion(args[1]);
 		}
 		// }
 
@@ -57,7 +57,7 @@ public class VersionPlugin implements Interceptor {
 	 * 
 	 * @author liyixing 2011-11-8 下午11:48:08
 	 */
-	protected void initVersion(Object o, String lastId) {
+	protected void initVersion(Object o) {
 		try {
 			PropertyUtils.setProperty(o, "version", 1l);
 		} catch (Exception e) {
@@ -72,7 +72,7 @@ public class VersionPlugin implements Interceptor {
 	 * 
 	 * @author liyixing 2011-11-8 下午11:48:08
 	 */
-	protected void addVersion(Object o, String lastId) {
+	protected void addVersion(Object o) {
 		try {
 			PropertyUtils.setProperty(o, "version", 0l);
 		} catch (Exception e) {

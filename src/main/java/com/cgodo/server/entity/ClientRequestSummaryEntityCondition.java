@@ -1,5 +1,6 @@
 package com.cgodo.server.entity;
 
+import com.cgodo.constant.EnumStatus;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -150,6 +151,10 @@ public class ClientRequestSummaryEntityCondition {
 
     /**
      * <ul>
+     * <li>gmtCreated 创建时间</li>
+     * <li>gmtUpdated 修改时间</li>
+     * <li>status 数据状态，表示该数据对应的数据逻辑状态，如已删除，已修改等</li>
+     * <li>version 该数据当前所属的版本，用来做事物控制</li>
      * <li>clientNumber 总客户数，每次请求，都被视为一次统计</li>
      * <li>currentDayNumber 当天客户数，每次请求，都被视为一次统计</li>
      * <li>summaryTime 统计当天时间</li>
@@ -266,6 +271,256 @@ public class ClientRequestSummaryEntityCondition {
 
         public Criteria andIdNotBetween(String value1, String value2) {
             addCriterion("ID not between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtCreatedIsNull() {
+            addCriterion("GMT_CREATED is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtCreatedIsNotNull() {
+            addCriterion("GMT_CREATED is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtCreatedEqualTo(Date value) {
+            addCriterion("GMT_CREATED =", value, "gmtCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtCreatedNotEqualTo(Date value) {
+            addCriterion("GMT_CREATED <>", value, "gmtCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtCreatedGreaterThan(Date value) {
+            addCriterion("GMT_CREATED >", value, "gmtCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtCreatedGreaterThanOrEqualTo(Date value) {
+            addCriterion("GMT_CREATED >=", value, "gmtCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtCreatedLessThan(Date value) {
+            addCriterion("GMT_CREATED <", value, "gmtCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtCreatedLessThanOrEqualTo(Date value) {
+            addCriterion("GMT_CREATED <=", value, "gmtCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtCreatedIn(List<Date> values) {
+            addCriterion("GMT_CREATED in", values, "gmtCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtCreatedNotIn(List<Date> values) {
+            addCriterion("GMT_CREATED not in", values, "gmtCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtCreatedBetween(Date value1, Date value2) {
+            addCriterion("GMT_CREATED between", value1, value2, "gmtCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtCreatedNotBetween(Date value1, Date value2) {
+            addCriterion("GMT_CREATED not between", value1, value2, "gmtCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtUpdatedIsNull() {
+            addCriterion("GMT_UPDATED is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtUpdatedIsNotNull() {
+            addCriterion("GMT_UPDATED is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtUpdatedEqualTo(Date value) {
+            addCriterion("GMT_UPDATED =", value, "gmtUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtUpdatedNotEqualTo(Date value) {
+            addCriterion("GMT_UPDATED <>", value, "gmtUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtUpdatedGreaterThan(Date value) {
+            addCriterion("GMT_UPDATED >", value, "gmtUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtUpdatedGreaterThanOrEqualTo(Date value) {
+            addCriterion("GMT_UPDATED >=", value, "gmtUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtUpdatedLessThan(Date value) {
+            addCriterion("GMT_UPDATED <", value, "gmtUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtUpdatedLessThanOrEqualTo(Date value) {
+            addCriterion("GMT_UPDATED <=", value, "gmtUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtUpdatedIn(List<Date> values) {
+            addCriterion("GMT_UPDATED in", values, "gmtUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtUpdatedNotIn(List<Date> values) {
+            addCriterion("GMT_UPDATED not in", values, "gmtUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtUpdatedBetween(Date value1, Date value2) {
+            addCriterion("GMT_UPDATED between", value1, value2, "gmtUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andGmtUpdatedNotBetween(Date value1, Date value2) {
+            addCriterion("GMT_UPDATED not between", value1, value2, "gmtUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNull() {
+            addCriterion("STATUS is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("STATUS is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(EnumStatus value) {
+            addCriterion("STATUS =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(EnumStatus value) {
+            addCriterion("STATUS <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(EnumStatus value) {
+            addCriterion("STATUS >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(EnumStatus value) {
+            addCriterion("STATUS >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(EnumStatus value) {
+            addCriterion("STATUS <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(EnumStatus value) {
+            addCriterion("STATUS <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLike(EnumStatus value) {
+            addCriterion("STATUS like", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotLike(EnumStatus value) {
+            addCriterion("STATUS not like", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<EnumStatus> values) {
+            addCriterion("STATUS in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<EnumStatus> values) {
+            addCriterion("STATUS not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(EnumStatus value1, EnumStatus value2) {
+            addCriterion("STATUS between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(EnumStatus value1, EnumStatus value2) {
+            addCriterion("STATUS not between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionIsNull() {
+            addCriterion("VERSION is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionIsNotNull() {
+            addCriterion("VERSION is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionEqualTo(Long value) {
+            addCriterion("VERSION =", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionNotEqualTo(Long value) {
+            addCriterion("VERSION <>", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionGreaterThan(Long value) {
+            addCriterion("VERSION >", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionGreaterThanOrEqualTo(Long value) {
+            addCriterion("VERSION >=", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionLessThan(Long value) {
+            addCriterion("VERSION <", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionLessThanOrEqualTo(Long value) {
+            addCriterion("VERSION <=", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionIn(List<Long> values) {
+            addCriterion("VERSION in", values, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionNotIn(List<Long> values) {
+            addCriterion("VERSION not in", values, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionBetween(Long value1, Long value2) {
+            addCriterion("VERSION between", value1, value2, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionNotBetween(Long value1, Long value2) {
+            addCriterion("VERSION not between", value1, value2, "version");
             return (Criteria) this;
         }
 
@@ -517,6 +772,10 @@ public class ClientRequestSummaryEntityCondition {
 
     /**
      * <ul>
+     * <li>gmtCreated 创建时间</li>
+     * <li>gmtUpdated 修改时间</li>
+     * <li>status 数据状态，表示该数据对应的数据逻辑状态，如已删除，已修改等</li>
+     * <li>version 该数据当前所属的版本，用来做事物控制</li>
      * <li>clientNumber 总客户数，每次请求，都被视为一次统计</li>
      * <li>currentDayNumber 当天客户数，每次请求，都被视为一次统计</li>
      * <li>summaryTime 统计当天时间</li>
@@ -534,6 +793,10 @@ public class ClientRequestSummaryEntityCondition {
 
     /**
      * <ul>
+     * <li>gmtCreated 创建时间</li>
+     * <li>gmtUpdated 修改时间</li>
+     * <li>status 数据状态，表示该数据对应的数据逻辑状态，如已删除，已修改等</li>
+     * <li>version 该数据当前所属的版本，用来做事物控制</li>
      * <li>clientNumber 总客户数，每次请求，都被视为一次统计</li>
      * <li>currentDayNumber 当天客户数，每次请求，都被视为一次统计</li>
      * <li>summaryTime 统计当天时间</li>

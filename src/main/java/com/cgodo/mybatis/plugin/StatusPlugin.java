@@ -11,7 +11,7 @@ import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
 
-import com.cgodo.constant.DataStatus;
+import com.cgodo.constant.EnumStatus;
 import com.cgodo.util.UtilLog;
 
 /**
@@ -43,9 +43,9 @@ public class StatusPlugin implements Interceptor {
 		lastId = lastId.trim().toLowerCase();
 
 		if (lastId.startsWith("insert")) {
-			initStatus(args[1], lastId);
+			initStatus(args[1]);
 		} else if (lastId.startsWith("update")) {
-			updateStatus(args[1], lastId);
+			updateStatus(args[1]);
 		}
 		// }
 
@@ -60,9 +60,9 @@ public class StatusPlugin implements Interceptor {
 	 * 
 	 * @author liyixing 2011-11-8 下午11:48:08
 	 */
-	protected void initStatus(Object o, String lastId) {
+	protected void initStatus(Object o) {
 		try {
-			PropertyUtils.setProperty(o, "dataStatus", DataStatus.创建);
+			PropertyUtils.setProperty(o, "dataStatus", EnumStatus.创建);
 		} catch (Exception e) {
 			// 该对象可能无法设置时间
 			UtilLog.debug("设置dataStatus失败！");
@@ -75,9 +75,9 @@ public class StatusPlugin implements Interceptor {
 	 * 
 	 * @author liyixing 2011-11-8 下午11:48:08
 	 */
-	protected void updateStatus(Object o, String lastId) {
+	protected void updateStatus(Object o) {
 		try {
-			PropertyUtils.setProperty(o, "dataStatus", DataStatus.修改);
+			PropertyUtils.setProperty(o, "dataStatus", EnumStatus.修改);
 		} catch (Exception e) {
 			// 该对象可能无法设置时间
 			UtilLog.debug("设置dataStatus失败！");

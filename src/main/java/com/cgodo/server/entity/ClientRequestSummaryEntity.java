@@ -1,10 +1,39 @@
 package com.cgodo.server.entity;
 
+import com.cgodo.constant.EnumStatus;
 import java.io.Serializable;
 import java.util.Date;
 
 public class ClientRequestSummaryEntity implements Serializable {
     private String id;
+
+    /**
+     * 创建时间
+     *
+     * @mbggenerated do_not_delete_during_merge
+     */
+    private Date gmtCreated;
+
+    /**
+     * 修改时间
+     *
+     * @mbggenerated do_not_delete_during_merge
+     */
+    private Date gmtUpdated;
+
+    /**
+     * 数据状态，表示该数据对应的数据逻辑状态，如已删除，已修改等
+     *
+     * @mbggenerated do_not_delete_during_merge
+     */
+    private EnumStatus status;
+
+    /**
+     * 该数据当前所属的版本，用来做事物控制
+     *
+     * @mbggenerated do_not_delete_during_merge
+     */
+    private Long version;
 
     /**
      * 总客户数，每次请求，都被视为一次统计
@@ -48,6 +77,78 @@ public class ClientRequestSummaryEntity implements Serializable {
 
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
+    }
+
+    /**
+     * 创建时间
+     *
+     * @mbggenerated do_not_delete_during_merge
+     */
+    public Date getGmtCreated() {
+        return gmtCreated;
+    }
+
+    /**
+     * 创建时间
+     *
+     * @mbggenerated do_not_delete_during_merge
+     */
+    public void setGmtCreated(Date gmtCreated) {
+        this.gmtCreated = gmtCreated;
+    }
+
+    /**
+     * 修改时间
+     *
+     * @mbggenerated do_not_delete_during_merge
+     */
+    public Date getGmtUpdated() {
+        return gmtUpdated;
+    }
+
+    /**
+     * 修改时间
+     *
+     * @mbggenerated do_not_delete_during_merge
+     */
+    public void setGmtUpdated(Date gmtUpdated) {
+        this.gmtUpdated = gmtUpdated;
+    }
+
+    /**
+     * 数据状态，表示该数据对应的数据逻辑状态，如已删除，已修改等
+     *
+     * @mbggenerated do_not_delete_during_merge
+     */
+    public EnumStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * 数据状态，表示该数据对应的数据逻辑状态，如已删除，已修改等
+     *
+     * @mbggenerated do_not_delete_during_merge
+     */
+    public void setStatus(EnumStatus status) {
+        this.status = status;
+    }
+
+    /**
+     * 该数据当前所属的版本，用来做事物控制
+     *
+     * @mbggenerated do_not_delete_during_merge
+     */
+    public Long getVersion() {
+        return version;
+    }
+
+    /**
+     * 该数据当前所属的版本，用来做事物控制
+     *
+     * @mbggenerated do_not_delete_during_merge
+     */
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     /**
@@ -141,6 +242,10 @@ public class ClientRequestSummaryEntity implements Serializable {
         }
         ClientRequestSummaryEntity other = (ClientRequestSummaryEntity) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getGmtCreated() == null ? other.getGmtCreated() == null : this.getGmtCreated().equals(other.getGmtCreated()))
+            && (this.getGmtUpdated() == null ? other.getGmtUpdated() == null : this.getGmtUpdated().equals(other.getGmtUpdated()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()))
             && (this.getClientNumber() == null ? other.getClientNumber() == null : this.getClientNumber().equals(other.getClientNumber()))
             && (this.getCurrentDayNumber() == null ? other.getCurrentDayNumber() == null : this.getCurrentDayNumber().equals(other.getCurrentDayNumber()))
             && (this.getSummaryTime() == null ? other.getSummaryTime() == null : this.getSummaryTime().equals(other.getSummaryTime()))
@@ -158,6 +263,10 @@ public class ClientRequestSummaryEntity implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getGmtCreated() == null) ? 0 : getGmtCreated().hashCode());
+        result = prime * result + ((getGmtUpdated() == null) ? 0 : getGmtUpdated().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
         result = prime * result + ((getClientNumber() == null) ? 0 : getClientNumber().hashCode());
         result = prime * result + ((getCurrentDayNumber() == null) ? 0 : getCurrentDayNumber().hashCode());
         result = prime * result + ((getSummaryTime() == null) ? 0 : getSummaryTime().hashCode());
