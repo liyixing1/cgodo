@@ -1,6 +1,7 @@
-package com.cgodo.mybatis.aop;
+package com.cgodo.page.aop;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 import org.apache.commons.beanutils.MethodUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -33,6 +34,7 @@ public class CountAspect {
 	 * @author liyixing 2011-12-6 下午09:47:50
 	 * @throws Throwable
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Around("execution(public * *(.., org.apache.ibatis.session.RowBounds)) ")
 	public Object count(ProceedingJoinPoint pjp) throws Throwable {
 		ReflectiveMethodInvocation reflectiveMethodInvocation = (ReflectiveMethodInvocation) FieldUtils
@@ -58,7 +60,7 @@ public class CountAspect {
 						target.getClass(), "countByExample",
 						sourceMethod.getParameterTypes()[0]).invoke(target,
 						args[0]);
-
+				page.setResults((List) ret);
 				// 调用目标的count方法
 				page.setTotalCount(count);
 			}
