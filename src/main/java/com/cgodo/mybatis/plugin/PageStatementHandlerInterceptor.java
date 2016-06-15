@@ -50,7 +50,7 @@ public class PageStatementHandlerInterceptor implements Interceptor {
 		RowBounds rowBounds = (RowBounds) FieldUtils.getField(
 				PreparedStatementHandler.class, "rowBounds", true).get(handler);
 
-		if (rowBounds instanceof Page<?>) {
+		if (rowBounds instanceof Page) {
 			// 读取SQL语句
 			BoundSql boundSql = statement.getBoundSql();
 			String sql = boundSql.getSql();

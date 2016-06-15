@@ -34,7 +34,7 @@ public class CountAspect {
 	 * @author liyixing 2011-12-6 下午09:47:50
 	 * @throws Throwable
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "rawtypes" })
 	@Around("execution(public * *(.., org.apache.ibatis.session.RowBounds)) ")
 	public Object count(ProceedingJoinPoint pjp) throws Throwable {
 		ReflectiveMethodInvocation reflectiveMethodInvocation = (ReflectiveMethodInvocation) FieldUtils
@@ -42,7 +42,7 @@ public class CountAspect {
 		Object[] args = pjp.getArgs();
 		RowBounds rowBounds = (RowBounds) args[1];
 		Method sourceMethod = reflectiveMethodInvocation.getMethod();
-		Page<?> page = PageContext.get();
+		Page page = PageContext.get();
 
 		// 分页查询，必须存在rowBounds
 		if (rowBounds == null) {

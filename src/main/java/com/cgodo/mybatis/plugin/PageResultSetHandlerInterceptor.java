@@ -29,7 +29,7 @@ public class PageResultSetHandlerInterceptor implements Interceptor {
 				target.getClass(), "rowBounds", true).get(target);
 		//
 		// // 非mybatis默认分页信息，就设置为mybatis默认分页，这样mybatis就不会做list的假分页了
-		if (rowBounds instanceof Page<?>) {
+		if (rowBounds instanceof Page) {
 			FieldUtils.getField(target.getClass(), "rowBounds", true).set(
 					target, RowBounds.DEFAULT);
 		}

@@ -11,15 +11,15 @@ package com.cgodo.page;
  */
 public class PageContext {
 	/** 线程变量,用于存放Page */
-	private static final ThreadLocal<Page<?>> PAGE_THREAD_LOCAL = new ThreadLocal<Page<?>>();
+	private static final ThreadLocal<Page> PAGE_THREAD_LOCAL = new ThreadLocal<Page>();
 
-	public static Page<?> get() {
-		Page<?> page = PAGE_THREAD_LOCAL.get();
+	public static Page get() {
+		Page page = PAGE_THREAD_LOCAL.get();
 
 		return page;
 	}
 
-	public static void set(Page<?> page) {
+	public static void set(Page page) {
 		PAGE_THREAD_LOCAL.set(page);
 	}
 

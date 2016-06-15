@@ -16,7 +16,7 @@ import org.apache.ibatis.session.RowBounds;
  * 
  * @author 李义星
  */
-public class Page<T> extends RowBounds implements Serializable {
+public class Page extends RowBounds implements Serializable {
 	/**
 	 * 版本号
 	 */
@@ -24,7 +24,7 @@ public class Page<T> extends RowBounds implements Serializable {
 	/**
 	 * 无分页对象
 	 */
-	public static final Page<Object> NOT_PAGE = new Page<Object>(0,
+	public static final Page NOT_PAGE = new Page(0,
 			Integer.MAX_VALUE);
 
 	/**
@@ -34,8 +34,8 @@ public class Page<T> extends RowBounds implements Serializable {
 	 * @return
 	 * @author liyixing 2015年7月30日 下午5:51:49
 	 */
-	public static final <T> Page<T> getPageSizeIsOne() {
-		Page<T> page = new Page<T>();
+	public static final Page getPageSizeIsOne() {
+		Page page = new Page();
 
 		page.setPageSize(1);
 
@@ -64,7 +64,7 @@ public class Page<T> extends RowBounds implements Serializable {
 	private int pageSize = 20; // 页大小
 	private int pageNo = 1; // 页码，从1开始
 	private int totalCount = 0; // 总记录数
-	private List<T> results; // list存放的结果
+	private List<?> results; // list存放的结果
 
 	public Page() {
 		super();
@@ -153,15 +153,16 @@ public class Page<T> extends RowBounds implements Serializable {
 		return totalPage;
 	}
 
-	public List<T> getResults() {
+	@SuppressWarnings("unchecked")
+	public <T> List<T> getResults() {
 		if (results == null) {
 			results = new ArrayList<T>();
 		}
 
-		return results;
+		return (List<T>) results;
 	}
 
-	public void setResults(List<T> results) {
+	public void setResults(List<?> results) {
 		this.results = results;
 	}
 

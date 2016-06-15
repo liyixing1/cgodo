@@ -39,7 +39,7 @@ public class PageHandlerFilter implements javax.servlet.Filter {
 		UtilLog.debug("开始解析请求链接，查找分页参数{}", httpServletRequest.getQueryString());
 		Map<String, String> map = UtilUrl.urlToMap(
 				httpServletRequest.getQueryString(), "utf-8");
-		Page<Object> page = new Page<Object>();
+		Page page = new Page();
 		String pageNo = map.get("pageNo");
 		String pageSize = map.get("pageSize");
 
