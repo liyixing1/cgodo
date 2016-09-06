@@ -44,7 +44,7 @@ public class ModelAspect {
 				Object entity = list.get(0);
 				Class<?> modelClass = UtilModel
 						.entityToModel(entity.getClass());
-				List<?> modelsList = UtilBean.copyProperties(list, modelClass);
+				List<?> modelsList = UtilBean.copysProperties(list, modelClass);
 
 				return modelsList;
 			}

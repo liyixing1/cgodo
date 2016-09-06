@@ -417,6 +417,23 @@ public final class UtilDateTime {
 
 	/**
 	 * 
+	 * 描述:N天之后 
+	 * 
+	 * @param date
+	 * @param day
+	 *            天，如果要减少，则负数
+	 * @author liyixing 2015年10月15日 下午2:49:11
+	 * @return
+	 */
+	public static final Date addDay(Date date, int day) {
+		Calendar calendar = getCalendar(date);
+		calendar.set(Calendar.DAY_OF_YEAR, day);
+
+		return calendar.getTime();
+	}
+
+	/**
+	 * 
 	 * 描述:上周日
 	 * 
 	 * @param date
@@ -435,12 +452,12 @@ public final class UtilDateTime {
 	public static void main(String args[]) {
 		byte y = 127;
 		Calendar c = Calendar.getInstance();
-		c.setTimeInMillis(1445184000000l);
+		c.setTimeInMillis(1447793852000l);
 
 		System.out.println(UtilDateTime.format(c.getTime(),
 				UtilDateTime.YYYY_MM_DD_HH_MM_SS));
 
-		c.setTimeInMillis(1445788799000l);
+		c.setTimeInMillis(1447189052000l);
 
 		System.out.println(UtilDateTime.format(c.getTime(),
 				UtilDateTime.YYYY_MM_DD_HH_MM_SS));

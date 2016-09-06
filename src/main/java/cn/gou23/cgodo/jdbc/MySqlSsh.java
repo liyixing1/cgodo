@@ -17,6 +17,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.xml.DOMConfigurator;
+
 import cn.gou23.cgodo.util.UtilLog;
 import cn.gou23.cgodo.util.UtilUrl;
 
@@ -301,16 +303,31 @@ public class MySqlSsh implements Driver {
 			}
 		}
 	}
-	
+
 	public static void main(String args[]) {
+		DOMConfigurator.configure(MySqlSsh.class
+				.getResource("/cn/gou23/cgodo/resource/log4j/log4j.xml"));
+
+		if (args.length < 6) {
+			UtilLog.debug("无效的参数 需要：ssh ip port user password, mysql ip port");
+
+			return;
+		}
+		UtilLog.debug("开始启动代理，本地代理端口{}", MySqlSsh.PROXY_PORT);
 		Proxy proxy = new Proxy();
-		
-		proxy.setMysqlIp("192.168.29.4");
-		proxy.setMysqlPort(3389);
-		proxy.setSshIp("202.106.219.6");
-		proxy.setSshPassword("dhmapp@FXR");
-		proxy.setSshPort(9149);
-		proxy.setSshUser("root");
+
+		// ssh
+		proxy.setSshIp(args[0]);
+		proxy.setSshPort(Integer.valueOf(args[1]));
+		proxy.setSshUser(args[2]);
+		proxy.setSshPassword(args[3]);
+		UtilLog.debug("ssh ip:{} port:{} user:{} password:{}", args[0],
+				args[1], args[2], args[3]);
+
+		proxy.setMysqlIp(args[4]);
+		proxy.setMysqlPort(Integer.valueOf(args[5]));
+		UtilLog.debug("target mysql ip:{} port:{}", args[4], args[5]);
+
 		proxy.doPorxy();
 	}
 }

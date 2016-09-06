@@ -6,6 +6,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -50,6 +54,49 @@ public class UtilHtml {
 		int endIndex = value.indexOf("\"", startIndex);
 
 		return value.substring(startIndex, endIndex);
+	}
+	
+	/**
+	 * 
+	 * 描述:获取指定元素数据，正则方式
+	 * 
+	 * @param text
+	 * @author liyixing 2015年9月11日 上午10:02:13
+	 * @return
+	 */
+	public static final List<String> parseTextWithPattern(String text,
+			String rep) {
+		Pattern pattern = Pattern.compile(rep);
+		Matcher matcher = pattern.matcher(text);
+		List<String> results = new ArrayList<String>();
+
+		while (matcher.find()) {
+			String txt = matcher.group(1);
+			results.add(txt);
+		}
+
+		return results;
+	}
+	
+	/**
+	 * 
+	 * 描述:获取指定元素数据，正则方式，只获取第一个
+	 * 
+	 * @param text
+	 * @author liyixing 2015年9月11日 上午10:02:13
+	 * @return
+	 */
+	public static final String parseTextWithPatternHtml(String text, String rep) {
+		Pattern pattern = Pattern.compile(rep);
+		Matcher matcher = pattern.matcher(text);
+
+		while (matcher.find() && matcher.groupCount() > 0) {
+			String txt = matcher.group(1);
+
+			return txt;
+		}
+		
+		return "";
 	}
 
 	/**

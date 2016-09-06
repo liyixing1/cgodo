@@ -219,7 +219,7 @@ public final class Jxl {
 		}
 
 		this.sheet = sheet;
-		
+
 		// 读取列名,第一行作为列名存在
 		Cell[] cells = sheet.getRow(0);
 
@@ -290,6 +290,29 @@ public final class Jxl {
 		int c = columnNamesIndex.get(colunm);
 
 		return sheet.getCell(c, currentRow).getContents();
+	}
+
+	/**
+	 * 
+	 * 描述:读取所有行数据
+	 * 
+	 * @author liyixing 2011-12-19 下午02:42:21
+	 * @throws Exception
+	 */
+	public String[][] readDatas() {
+		Sheet sheet = getSheet();
+		int allRows = sheet.getRows();
+		int allColumns = sheet.getColumns();
+		String[][] results = new String[allRows][allColumns];
+
+		for (int currentRow = 1; currentRow < allRows; currentRow++) {
+			for (int currentColumn = 0; currentColumn < allColumns; currentColumn++) {
+				results[currentRow][currentColumn] = sheet.getCell(
+						currentColumn, currentRow).getContents();
+			}
+		}
+
+		return results;
 	}
 
 	/**
