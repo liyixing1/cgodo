@@ -1,28 +1,176 @@
-SET FOREIGN_KEY_CHECKS=0;
+/*==============================================================*/
+/* DBMS name:      MySQL 5.0                                    */
+/* Created on:     2016/9/13 16:56:23                           */
+/*==============================================================*/
 
-CREATE TABLE `client_request` (
-  `ID` varchar(32) NOT NULL,
+
+drop table if exists client_request;
+
+drop table if exists client_request_summary;
+
+drop table if exists power;
+
+drop table if exists role;
+
+drop table if exists role_power;
+
+drop table if exists temp;
+
+drop table if exists user_role;
+
+drop table if exists userinfo;
+
+/*==============================================================*/
+/* Table: client_request                                        */
+/*==============================================================*/
+create table client_request
+(
+   ID                   char(32) not null,
+   STATUS               varchar(100) comment '状态',
+   VERSION              bigint comment '版本号',
    GMT_CREATED          datetime comment '创建时间',
    GMT_UPDATED          datetime comment '修改时间',
-   STATUS               varchar(100) comment '数据状态，表示该数据对应的数据逻辑状态，如已删除，已修改等',
-   VERSION              bigint comment '该数据当前所属的版本，用来做事物控制',
-  `IP` varchar(19) DEFAULT NULL COMMENT 'ip地址',
-  `REQUEST_TIME` datetime DEFAULT NULL COMMENT '请求时间',
-  `PROCESSING_TIME` bigint(20) DEFAULT NULL COMMENT '处理时间',
-  `REQUEST_URL` varchar(4000) DEFAULT NULL COMMENT '请求地址',
-  `USER_AGENT` varchar(1000) DEFAULT NULL COMMENT '请求浏览器',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+   IP                   varchar(100) comment 'ip地址',
+   REQUEST_TIME         datetime comment '请求时间',
+   PROCESSING_TIME      bigint comment '处理时间',
+   REQUEST_URL          varchar(1000) comment '请求地址',
+   USER_AGENT           varchar(1000) comment '请求浏览器',
+   primary key (ID)
+);
 
-CREATE TABLE `client_request_summary` (
-  `ID` varchar(32) NOT NULL,
+alter table client_request comment 'web请求';
+
+/*==============================================================*/
+/* Table: client_request_summary                                */
+/*==============================================================*/
+create table client_request_summary
+(
+   ID                   char(32) not null,
+   STATUS               varchar(100) comment '状态',
+   VERSION              bigint comment '版本号',
    GMT_CREATED          datetime comment '创建时间',
    GMT_UPDATED          datetime comment '修改时间',
-   STATUS               varchar(100) comment '数据状态，表示该数据对应的数据逻辑状态，如已删除，已修改等',
-   VERSION              bigint comment '该数据当前所属的版本，用来做事物控制',
-  `CLIENT_NUMBER` int(11) DEFAULT NULL COMMENT '总客户数，每次请求，都被视为一次统计',
-  `CURRENT_DAY_NUMBER` int(11) DEFAULT NULL COMMENT '当天客户数，每次请求，都被视为一次统计',
-  `SUMMARY_TIME` datetime DEFAULT NULL COMMENT '统计当天时间',
-  `UV` int(11) DEFAULT NULL COMMENT '当天UV，按站点统计，即当天进入站点的人数(IP)',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+   CLIENT_NUMBER        int comment '总客户数，每次请求，都被视为一次统计',
+   CURRENT_DAY_NUMBER   int comment '当天客户数，每次新客户请求，都被视为一次统计',
+   SUMMARY_TIME         datetime comment '统计当天时间',
+   UV                   int comment '当天UV，按站点统计，即当天进入站点的人数(IP)',
+   primary key (ID)
+);
+
+alter table client_request_summary comment '请求汇总';
+
+/*==============================================================*/
+/* Table: power                                                 */
+/*==============================================================*/
+create table power
+(
+   ID                   char(32) not null,
+   STATUS               varchar(100) comment '状态',
+   VERSION              bigint comment '版本号',
+   GMT_CREATED          datetime comment '创建时间',
+   GMT_UPDATED          datetime comment '修改时间',
+   NAME                 varchar(100) comment '权限名称',
+   primary key (ID)
+);
+
+alter table power comment '权限';
+
+/*==============================================================*/
+/* Table: role                                                  */
+/*==============================================================*/
+create table role
+(
+   ID                   char(32) not null,
+   STATUS               varchar(100) comment '状态',
+   VERSION              bigint comment '版本号',
+   GMT_CREATED          datetime comment '创建时间',
+   GMT_UPDATED          datetime comment '修改时间',
+   NAME                 varchar(100) comment '角色名称',
+   primary key (ID)
+);
+
+alter table role comment '角色';
+
+/*==============================================================*/
+/* Table: role_power                                            */
+/*==============================================================*/
+create table role_power
+(
+   ID                   char(32) not null,
+   STATUS               varchar(100) comment '状态',
+   VERSION              bigint comment '版本号',
+   GMT_CREATED          datetime comment '创建时间',
+   GMT_UPDATED          datetime comment '修改时间',
+   ROLE_ID              char(32) comment '角色ID',
+   POWER_ID             char(32) comment '权限ID',
+   primary key (ID)
+);
+
+alter table role_power comment '角色权限';
+
+/*==============================================================*/
+/* Table: temp                                                  */
+/*==============================================================*/
+create table temp
+(
+   ID                   char(32) not null,
+   STATUS               varchar(100) comment '状态',
+   VERSION              bigint comment '版本号',
+   GMT_CREATED          datetime comment '创建时间',
+   GMT_UPDATED          datetime comment '修改时间',
+   primary key (ID)
+);
+
+alter table temp comment '临时，无作用';
+
+/*==============================================================*/
+/* Table: user_role                                             */
+/*==============================================================*/
+create table user_role
+(
+   ID                   char(32) not null,
+   STATUS               varchar(100) comment '状态',
+   VERSION              bigint comment '版本号',
+   GMT_CREATED          datetime comment '创建时间',
+   GMT_UPDATED          datetime comment '修改时间',
+   USER_ID              char(32) comment '用户ID',
+   ROLE_ID              char(32) comment '角色ID',
+   primary key (ID)
+);
+
+alter table user_role comment '用户角色';
+
+/*==============================================================*/
+/* Table: userinfo                                              */
+/*==============================================================*/
+create table userinfo
+(
+   ID                   char(32) not null,
+   STATUS               varchar(100) comment '状态',
+   VERSION              bigint comment '版本号',
+   GMT_CREATED          datetime comment '创建时间',
+   GMT_UPDATED          datetime comment '修改时间',
+   USER_NAME            varchar(100) comment '用户名',
+   PASSWORD             varchar(100) comment '密码',
+   USER_TYPE            varchar(100) comment '用户类型',
+   IMG_URL              varchar(1000) comment '图片',
+   NICK_NAME            varchar(100) comment '昵称',
+   FIRST_TIME           datetime comment '第一次登陆时间',
+   LAST_TIME            datetime comment '最后登陆时间',
+   primary key (ID)
+);
+
+alter table userinfo comment '用户';
+
+alter table role_power add constraint FK_Reference_1 foreign key (POWER_ID)
+      references power (ID) on delete restrict on update restrict;
+
+alter table role_power add constraint FK_Reference_2 foreign key (ROLE_ID)
+      references role (ID) on delete restrict on update restrict;
+
+alter table user_role add constraint FK_Reference_3 foreign key (USER_ID)
+      references userinfo (ID) on delete restrict on update restrict;
+
+alter table user_role add constraint FK_Reference_4 foreign key (ROLE_ID)
+      references role (ID) on delete restrict on update restrict;
+
