@@ -48,10 +48,10 @@
 		<!-- connectionURL="jdbc:paradox:/${user.home}/23gou" userId="" password="" 
 			/> -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://127.0.0.1:3306/23gou?useUnicode=false&amp;autoReconnect=true&amp;characterEncoding=utf-8"
-			userId="root" password="123" />
+			connectionURL="jdbc:mysql://127.0.0.1:3306/zhuyu?useUnicode=false&amp;autoReconnect=true&amp;characterEncoding=utf-8"
+			userId="root" password="" />
 
-		<javaModelGenerator targetPackage="com.cgodo.server.entity"
+		<javaModelGenerator targetPackage="com.cgodo.member.entity"
 			targetProject="../src/main/java">
 			<!-- 关闭自动添加子包（自动添加schema) -->
 			<property name="enableSubPackages" value="false" />
@@ -64,18 +64,40 @@
 			<property name="enableSubPackages" value="false" />
 		</sqlMapGenerator>
 
-		<javaClientGenerator targetPackage="com.cgodo.server.dao"
+		<javaClientGenerator targetPackage="com.cgodo.member.dao"
 			targetProject="../src/main/java" type="XMLMAPPER">
 			<!-- 关闭自动添加子包（自动添加schema) -->
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 
-		<table tableName="client_request" domainObjectName="ClientRequestEntity">
+		<table tableName="userinfo" domainObjectName="UserinfoEntity">
+			<columnOverride column="STATUS"
+				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
+			<columnOverride column="SPEAKING_STATUS"
+				javaType="com.cgodo.constant.EnumSpeakingStatus"></columnOverride>
+		</table>
+
+		<table tableName="role" domainObjectName="RoleEntity">
 			<columnOverride column="STATUS"
 				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
 		</table>
-
-		<table tableName="client_request_summary" domainObjectName="ClientRequestSummaryEntity">
+		
+		<table tableName="power" domainObjectName="PowerEntity">
+			<columnOverride column="STATUS"
+				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
+		</table>
+		
+		<table tableName="power" domainObjectName="PowerEntity">
+			<columnOverride column="STATUS"
+				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
+		</table>
+		
+		<table tableName="role_power" domainObjectName="RolePowerEntity">
+			<columnOverride column="STATUS"
+				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
+		</table>
+		
+		<table tableName="user_role" domainObjectName="UserRoleEntity">
 			<columnOverride column="STATUS"
 				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
 		</table>

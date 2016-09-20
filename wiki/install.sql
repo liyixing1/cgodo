@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2016/9/13 16:56:23                           */
+/* Created on:     2016/9/19 17:17:28                           */
 /*==============================================================*/
 
 
@@ -152,6 +152,7 @@ create table userinfo
    GMT_UPDATED          datetime comment '修改时间',
    USER_NAME            varchar(100) comment '用户名',
    PASSWORD             varchar(100) comment '密码',
+   SPEAKING_STATUS      varchar(100) comment '发言状态，表示是否可以发言',
    USER_TYPE            varchar(100) comment '用户类型',
    IMG_URL              varchar(1000) comment '图片',
    NICK_NAME            varchar(100) comment '昵称',
@@ -162,15 +163,15 @@ create table userinfo
 
 alter table userinfo comment '用户';
 
-alter table role_power add constraint FK_Reference_1 foreign key (POWER_ID)
+alter table role_power add constraint FK_m1 foreign key (POWER_ID)
       references power (ID) on delete restrict on update restrict;
 
-alter table role_power add constraint FK_Reference_2 foreign key (ROLE_ID)
+alter table role_power add constraint FK_m2 foreign key (ROLE_ID)
       references role (ID) on delete restrict on update restrict;
 
-alter table user_role add constraint FK_Reference_3 foreign key (USER_ID)
+alter table user_role add constraint FK_m3 foreign key (USER_ID)
       references userinfo (ID) on delete restrict on update restrict;
 
-alter table user_role add constraint FK_Reference_4 foreign key (ROLE_ID)
+alter table user_role add constraint FK_m4 foreign key (ROLE_ID)
       references role (ID) on delete restrict on update restrict;
 
