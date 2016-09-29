@@ -77,7 +77,13 @@ public class StatusPlugin implements Interceptor {
 	 */
 	protected void updateStatus(Object o) {
 		try {
-			PropertyUtils.setProperty(o, "status", EnumStatus.修改);
+			EnumStatus status = (EnumStatus) PropertyUtils.getProperty(o, "status");
+			
+			if(status!= EnumStatus.删除) {
+				PropertyUtils.setProperty(o, "status", EnumStatus.修改);
+			} else {
+				UtilLog.debug("数据将被删除，无需处理status");
+			}
 		} catch (Exception e) {
 			// 该对象可能无法设置时间
 			UtilLog.debug("设置dataStatus失败！");

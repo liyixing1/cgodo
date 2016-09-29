@@ -12,7 +12,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cgodo.member.model.UserinfoModel;
-import com.cgodo.member.service.UnserinfoService;
+import com.cgodo.member.service.UserinfoService;
 
 /**
  * 根据不同的用户类型来获取用户信息
@@ -55,5 +55,5 @@ public class UserTypeRealm extends AuthorizingRealm {
 	}
 
 	@Autowired
-	private UnserinfoService userinfoService;
+	private UserinfoService userinfoService;
 }

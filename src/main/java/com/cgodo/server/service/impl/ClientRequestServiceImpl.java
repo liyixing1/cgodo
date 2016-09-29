@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cgodo.constant.EnumStatus;
 import com.cgodo.page.Page;
 import com.cgodo.server.dao.ClientRequestEntityMapper;
 import com.cgodo.server.dao.ClientRequestSummaryEntityMapper;
@@ -33,7 +34,8 @@ public class ClientRequestServiceImpl implements ClientRequestService {
 				.createCriteria()
 				.andIpEqualTo(clientRequestModel.getIp())
 				.andRequestTimeBetween(UtilDateTime.setDateToFirstTime(now),
-						UtilDateTime.setDateToLastTime(now));
+						UtilDateTime.setDateToLastTime(now))
+				.andStatusNotEqualTo(EnumStatus.删除);
 
 		return clientRequestEntityMapper
 				.countByExample(clientRequestEntityCondition);
@@ -67,6 +69,7 @@ public class ClientRequestServiceImpl implements ClientRequestService {
 		// 最后一天
 		ClientRequestSummaryEntityCondition clientRequestSummaryEntityCondition = new ClientRequestSummaryEntityCondition();
 
+		clientRequestSummaryEntityCondition.createCriteria().andStatusNotEqualTo(EnumStatus.删除);
 		clientRequestSummaryEntityCondition
 				.setOrderByClause("CURRENT_DATE DESC, CLIENT_NUMBER DESC");
 

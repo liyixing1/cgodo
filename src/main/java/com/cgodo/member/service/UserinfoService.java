@@ -7,6 +7,6 @@ import com.cgodo.member.model.UserinfoModel;
  * @author liyixing-pc
  *
  */
-public interface UnserinfoService {
+public interface UserinfoService {
 	public UserinfoModel getByUserName(String name);
 }
