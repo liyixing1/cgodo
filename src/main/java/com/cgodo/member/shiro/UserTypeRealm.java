@@ -1,5 +1,7 @@
 package com.cgodo.member.shiro;
 
+import java.util.HashSet;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -32,11 +34,11 @@ public class UserTypeRealm extends AuthorizingRealm {
 		if (token instanceof UserTypeTUsernamePasswordToken) {
 			UserinfoModel userinfoModel = userinfoService.getByUserName(token
 					.getUsername());
-			
-			if(userinfoModel == null) {
+
+			if (userinfoModel == null) {
 				return null;
 			}
-			
+
 			return new SimpleAuthenticationInfo(userinfoModel.getId(),
 					userinfoModel.getPassword(), getName());
 		}
@@ -45,13 +47,15 @@ public class UserTypeRealm extends AuthorizingRealm {
 	}
 
 	/**
-	 * 授权
+	 * 授权，暂时不加入权限控制
 	 */
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
-		SimpleAuthorizationInfo auth = new SimpleAuthorizationInfo();
-		
-		return auth;
+//		String username = (String) principals.getPrimaryPrincipal();
+		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+		authorizationInfo.setRoles(new HashSet<String>());
+		authorizationInfo.setStringPermissions(new HashSet<String>());
+		return authorizationInfo;
 	}
 
 	@Autowired
