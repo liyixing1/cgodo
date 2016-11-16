@@ -1,6 +1,7 @@
 package com.cgodo.util;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -16,6 +17,10 @@ import org.codehaus.jackson.map.JsonMappingException;
  */
 public class UtilJson {
 	private static final com.fasterxml.jackson.databind.ObjectMapper MAPPER = new com.fasterxml.jackson.databind.ObjectMapper();
+	
+	static {
+		MAPPER.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+	}
 
 	/**
 	 * 将对象转换成JSON字符串

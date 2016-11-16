@@ -161,6 +161,15 @@ public class Page extends RowBounds implements Serializable {
 
 		return (List<T>) results;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> List<T> getList() {
+		if (results == null) {
+			results = new ArrayList<T>();
+		}
+
+		return (List<T>) results;
+	}
 
 	public void setResults(List<?> results) {
 		this.results = results;
@@ -179,6 +188,10 @@ public class Page extends RowBounds implements Serializable {
 	}
 	
 	public boolean isLast() {
+		return pageNo == getTotalPage();
+	}
+	
+	public boolean isLastPage() {
 		return pageNo == getTotalPage();
 	}
 }

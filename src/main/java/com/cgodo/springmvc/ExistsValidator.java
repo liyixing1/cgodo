@@ -4,6 +4,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ApplicationObjectSupport;
@@ -21,7 +22,7 @@ public class ExistsValidator extends ApplicationObjectSupport implements
 
 	@Override
 	public boolean isValid(String value, ConstraintValidatorContext context) {
-		if(value==null) {
+		if(StringUtils.isBlank(value)) {
 			return true;
 		}
 		
