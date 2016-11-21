@@ -101,5 +101,18 @@
 			<columnOverride column="STATUS"
 				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
 		</table>
+		
+		<table tableName="wechat_userinfo" domainObjectName="WechatUserinfoEntity">
+			<columnOverride column="STATUS"
+				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
+		</table>
+		<table tableName="sina_userinfo" domainObjectName="SinaUserinfoEntity">
+			<columnOverride column="STATUS"
+				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
+		</table>
+		<table tableName="qq_userinfo" domainObjectName="QqUserinfoEntity">
+			<columnOverride column="STATUS"
+				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
+		</table>
 	</context>
 </generatorConfiguration>

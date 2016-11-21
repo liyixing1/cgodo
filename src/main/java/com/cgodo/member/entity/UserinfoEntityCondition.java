@@ -158,6 +158,7 @@ public class UserinfoEntityCondition {
      * <li>gmtUpdated 修改时间</li>
      * <li>userName 用户名</li>
      * <li>password 密码</li>
+     * <li>speakingStatus 发言状态，表示是否可以发言</li>
      * <li>userType 用户类型</li>
      * <li>imgUrl 图片</li>
      * <li>nickName 昵称</li>
@@ -668,6 +669,76 @@ public class UserinfoEntityCondition {
             return (Criteria) this;
         }
 
+        public Criteria andSpeakingStatusIsNull() {
+            addCriterion("SPEAKING_STATUS is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeakingStatusIsNotNull() {
+            addCriterion("SPEAKING_STATUS is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeakingStatusEqualTo(EnumSpeakingStatus value) {
+            addCriterion("SPEAKING_STATUS =", value, "speakingStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeakingStatusNotEqualTo(EnumSpeakingStatus value) {
+            addCriterion("SPEAKING_STATUS <>", value, "speakingStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeakingStatusGreaterThan(EnumSpeakingStatus value) {
+            addCriterion("SPEAKING_STATUS >", value, "speakingStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeakingStatusGreaterThanOrEqualTo(EnumSpeakingStatus value) {
+            addCriterion("SPEAKING_STATUS >=", value, "speakingStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeakingStatusLessThan(EnumSpeakingStatus value) {
+            addCriterion("SPEAKING_STATUS <", value, "speakingStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeakingStatusLessThanOrEqualTo(EnumSpeakingStatus value) {
+            addCriterion("SPEAKING_STATUS <=", value, "speakingStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeakingStatusLike(EnumSpeakingStatus value) {
+            addCriterion("SPEAKING_STATUS like", value, "speakingStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeakingStatusNotLike(EnumSpeakingStatus value) {
+            addCriterion("SPEAKING_STATUS not like", value, "speakingStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeakingStatusIn(List<EnumSpeakingStatus> values) {
+            addCriterion("SPEAKING_STATUS in", values, "speakingStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeakingStatusNotIn(List<EnumSpeakingStatus> values) {
+            addCriterion("SPEAKING_STATUS not in", values, "speakingStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeakingStatusBetween(EnumSpeakingStatus value1, EnumSpeakingStatus value2) {
+            addCriterion("SPEAKING_STATUS between", value1, value2, "speakingStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeakingStatusNotBetween(EnumSpeakingStatus value1, EnumSpeakingStatus value2) {
+            addCriterion("SPEAKING_STATUS not between", value1, value2, "speakingStatus");
+            return (Criteria) this;
+        }
+
         public Criteria andUserTypeIsNull() {
             addCriterion("USER_TYPE is null");
             return (Criteria) this;
@@ -998,76 +1069,6 @@ public class UserinfoEntityCondition {
             return (Criteria) this;
         }
 
-        public Criteria andSpeakingStatusIsNull() {
-            addCriterion("SPEAKING_STATUS is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSpeakingStatusIsNotNull() {
-            addCriterion("SPEAKING_STATUS is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSpeakingStatusEqualTo(EnumSpeakingStatus value) {
-            addCriterion("SPEAKING_STATUS =", value, "speakingStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andSpeakingStatusNotEqualTo(EnumSpeakingStatus value) {
-            addCriterion("SPEAKING_STATUS <>", value, "speakingStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andSpeakingStatusGreaterThan(EnumSpeakingStatus value) {
-            addCriterion("SPEAKING_STATUS >", value, "speakingStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andSpeakingStatusGreaterThanOrEqualTo(EnumSpeakingStatus value) {
-            addCriterion("SPEAKING_STATUS >=", value, "speakingStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andSpeakingStatusLessThan(EnumSpeakingStatus value) {
-            addCriterion("SPEAKING_STATUS <", value, "speakingStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andSpeakingStatusLessThanOrEqualTo(EnumSpeakingStatus value) {
-            addCriterion("SPEAKING_STATUS <=", value, "speakingStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andSpeakingStatusLike(EnumSpeakingStatus value) {
-            addCriterion("SPEAKING_STATUS like", value, "speakingStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andSpeakingStatusNotLike(EnumSpeakingStatus value) {
-            addCriterion("SPEAKING_STATUS not like", value, "speakingStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andSpeakingStatusIn(List<EnumSpeakingStatus> values) {
-            addCriterion("SPEAKING_STATUS in", values, "speakingStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andSpeakingStatusNotIn(List<EnumSpeakingStatus> values) {
-            addCriterion("SPEAKING_STATUS not in", values, "speakingStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andSpeakingStatusBetween(EnumSpeakingStatus value1, EnumSpeakingStatus value2) {
-            addCriterion("SPEAKING_STATUS between", value1, value2, "speakingStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andSpeakingStatusNotBetween(EnumSpeakingStatus value1, EnumSpeakingStatus value2) {
-            addCriterion("SPEAKING_STATUS not between", value1, value2, "speakingStatus");
-            return (Criteria) this;
-        }
-
         public Criteria andIdLikeInsensitive(String value) {
             addCriterion("upper(ID) like", value.toUpperCase(), "id");
             return (Criteria) this;
@@ -1107,6 +1108,7 @@ public class UserinfoEntityCondition {
      * <li>gmtUpdated 修改时间</li>
      * <li>userName 用户名</li>
      * <li>password 密码</li>
+     * <li>speakingStatus 发言状态，表示是否可以发言</li>
      * <li>userType 用户类型</li>
      * <li>imgUrl 图片</li>
      * <li>nickName 昵称</li>
@@ -1131,6 +1133,7 @@ public class UserinfoEntityCondition {
      * <li>gmtUpdated 修改时间</li>
      * <li>userName 用户名</li>
      * <li>password 密码</li>
+     * <li>speakingStatus 发言状态，表示是否可以发言</li>
      * <li>userType 用户类型</li>
      * <li>imgUrl 图片</li>
      * <li>nickName 昵称</li>

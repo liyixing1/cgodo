@@ -26,13 +26,13 @@ public class ClientRequestServiceImpl implements ClientRequestService {
 	private ClientRequestSummaryEntityMapper clientRequestSummaryEntityMapper;
 
 	@Override
-	public int countByIp(ClientRequestModel clientRequestModel) {
+	public int countByIp(String ip) {
 		Date now = UtilDateTime.getNowDate();
 		ClientRequestEntityCondition clientRequestEntityCondition = new ClientRequestEntityCondition();
 
 		clientRequestEntityCondition
 				.createCriteria()
-				.andIpEqualTo(clientRequestModel.getIp())
+				.andIpEqualTo(ip)
 				.andRequestTimeBetween(UtilDateTime.setDateToFirstTime(now),
 						UtilDateTime.setDateToLastTime(now))
 				.andStatusNotEqualTo(EnumStatus.删除);
@@ -55,7 +55,7 @@ public class ClientRequestServiceImpl implements ClientRequestService {
 				.getCurrentDayNumber() + 1);
 
 		// 查看该UV是否被统计过
-		if (countByIp(clientRequestModel) < 2) {
+		if (countByIp(clientRequestModel.getIp()) < 2) {
 			clientRequestSummaryModel
 					.setUv(clientRequestSummaryModel.getUv() + 1);
 		}

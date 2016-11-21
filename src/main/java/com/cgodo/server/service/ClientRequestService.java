@@ -30,7 +30,7 @@ public interface ClientRequestService {
 	 * @return
 	 * @author liyixing 2015年8月12日 下午3:27:20
 	 */
-	public int countByIp(ClientRequestModel clientRequestModel);
+	public int countByIp(String ip);
 
 	/**
 	 * 

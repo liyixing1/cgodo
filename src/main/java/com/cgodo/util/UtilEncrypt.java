@@ -10,7 +10,6 @@ import org.apache.commons.codec.digest.DigestUtils;
  * @since 2012-7-18 下午3:45:51
  */
 public final class UtilEncrypt {
-	private static final String MD5_PREFIX = "cgodo";
 	/**
 	 * 
 	 * 描述:md5加密
@@ -22,6 +21,6 @@ public final class UtilEncrypt {
 		if (s == null) {
 			return null;
 		}
-		return DigestUtils.md5Hex(MD5_PREFIX + s);
+		return DigestUtils.md5Hex(s);
 	}
 }

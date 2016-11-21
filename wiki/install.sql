@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2016/9/19 17:17:28                           */
+/* Created on:     2016/11/21 16:18:22                          */
 /*==============================================================*/
 
 
@@ -10,15 +10,21 @@ drop table if exists client_request_summary;
 
 drop table if exists power;
 
+drop table if exists qq_userinfo;
+
 drop table if exists role;
 
 drop table if exists role_power;
+
+drop table if exists sina_userinfo;
 
 drop table if exists temp;
 
 drop table if exists user_role;
 
 drop table if exists userinfo;
+
+drop table if exists wechat_userinfo;
 
 /*==============================================================*/
 /* Table: client_request                                        */
@@ -76,6 +82,23 @@ create table power
 alter table power comment '权限';
 
 /*==============================================================*/
+/* Table: qq_userinfo                                           */
+/*==============================================================*/
+create table qq_userinfo
+(
+   ID                   char(32) not null,
+   STATUS               varchar(100) comment '状态',
+   VERSION              bigint comment '版本号',
+   GMT_CREATED          datetime comment '创建时间',
+   GMT_UPDATED          datetime comment '修改时间',
+   OPEN_ID              varchar(255) comment 'QQopenid',
+   USER_ID              char(32) comment '用户ID',
+   primary key (ID)
+);
+
+alter table qq_userinfo comment 'qq用户';
+
+/*==============================================================*/
 /* Table: role                                                  */
 /*==============================================================*/
 create table role
@@ -107,6 +130,23 @@ create table role_power
 );
 
 alter table role_power comment '角色权限';
+
+/*==============================================================*/
+/* Table: sina_userinfo                                         */
+/*==============================================================*/
+create table sina_userinfo
+(
+   ID                   char(32) not null,
+   STATUS               varchar(100) comment '状态',
+   VERSION              bigint comment '版本号',
+   GMT_CREATED          datetime comment '创建时间',
+   GMT_UPDATED          datetime comment '修改时间',
+   UID                  varchar(255) comment 'UID',
+   USER_ID              char(32) comment '用户ID',
+   primary key (ID)
+);
+
+alter table sina_userinfo comment '新浪用户';
 
 /*==============================================================*/
 /* Table: temp                                                  */
@@ -163,15 +203,41 @@ create table userinfo
 
 alter table userinfo comment '用户';
 
+/*==============================================================*/
+/* Table: wechat_userinfo                                       */
+/*==============================================================*/
+create table wechat_userinfo
+(
+   ID                   char(32) not null,
+   STATUS               varchar(100) comment '状态',
+   VERSION              bigint comment '版本号',
+   GMT_CREATED          datetime comment '创建时间',
+   GMT_UPDATED          datetime comment '修改时间',
+   OPEN_ID              varchar(255) comment '微信openid',
+   USER_ID              char(32) comment '用户ID',
+   primary key (ID)
+);
+
+alter table wechat_userinfo comment '微信用户';
+
+alter table qq_userinfo add constraint FK_Reference_7 foreign key (USER_ID)
+      references userinfo (ID) on delete restrict on update restrict;
+
 alter table role_power add constraint FK_m1 foreign key (POWER_ID)
       references power (ID) on delete restrict on update restrict;
 
 alter table role_power add constraint FK_m2 foreign key (ROLE_ID)
       references role (ID) on delete restrict on update restrict;
 
+alter table sina_userinfo add constraint FK_Reference_6 foreign key (USER_ID)
+      references userinfo (ID) on delete restrict on update restrict;
+
 alter table user_role add constraint FK_m3 foreign key (USER_ID)
       references userinfo (ID) on delete restrict on update restrict;
 
 alter table user_role add constraint FK_m4 foreign key (ROLE_ID)
       references role (ID) on delete restrict on update restrict;
+
+alter table wechat_userinfo add constraint FK_Reference_5 foreign key (USER_ID)
+      references userinfo (ID) on delete restrict on update restrict;
 

@@ -30,6 +30,16 @@ public class UserinfoServiceImpl implements UserinfoService {
 		return userinfoModels.size() > 0 ? userinfoModels.get(0) : null;
 	}
 
+	@Override
+	public UserinfoModel getById(String id) {
+		return userinfoEntityMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public void save(UserinfoModel userinfoModel) {
+		userinfoEntityMapper.insert(userinfoModel);
+	}
+
 	@Autowired
 	private UserinfoEntityMapper userinfoEntityMapper;
 }
