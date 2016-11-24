@@ -31,9 +31,13 @@ public class UserinfoContextInterceptor extends HandlerInterceptorAdapter {
 		
 		UserinfoModel userinfoModel = userinfoService.getById(String.valueOf(subject.getPrincipal()));
 
-		//隱藏密码
-		userinfoModel.setPassword("********");
-		request.setAttribute(USER_KEY, userinfoModel);
+		if(userinfoModel != null) {
+			//隱藏密码
+			userinfoModel.setPassword("********");
+			request.setAttribute(USER_KEY, userinfoModel);
+		} else {
+			subject.logout();
+		}
 		
 		return super.preHandle(request, response, handler);
 	}
