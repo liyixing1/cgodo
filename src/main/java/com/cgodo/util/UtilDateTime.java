@@ -255,6 +255,48 @@ public final class UtilDateTime {
 		date.set(Calendar.SECOND, 0);
 		date.set(Calendar.MILLISECOND, 0);
 	}
+	
+	/**
+	 * 
+	 * 描述:计算两个时间相差的秒数
+	 * <br>
+	 * d1-d2
+	 * 
+	 * @param d1
+	 * @param d2
+	 * @author liyixing 2011-7-26
+	 */
+	public static final long getDifferenceSecond(Date date1, Date date2) {
+		return (date1.getTime() - date2.getTime()) / 1000;
+	}
+	
+	/**
+	 * 
+	 * 描述:计算两个时间相差的分钟数
+	 * <br>
+	 * d1-d2
+	 * 
+	 * @param d1
+	 * @param d2
+	 * @author liyixing 2011-7-26
+	 */
+	public static final long getDifferenceMinute(Date date1, Date date2) {
+		return ((date1.getTime() - date2.getTime()) / 60000);
+	}
+	
+	/**
+	 * 
+	 * 描述:计算两个时间相差的小时
+	 * <br>
+	 * d1-d2
+	 * 
+	 * @param d1
+	 * @param d2
+	 * @author liyixing 2011-7-26
+	 */
+	public static final long getDifferenceHour(Date date1, Date date2) {
+		return ((date1.getTime() - date2.getTime()) / 3600000);
+	}
 
 	/**
 	 * 
@@ -417,7 +459,7 @@ public final class UtilDateTime {
 
 	/**
 	 * 
-	 * 描述:N天之后 
+	 * 描述:N天之后
 	 * 
 	 * @param date
 	 * @param day
@@ -476,5 +518,45 @@ public final class UtilDateTime {
 				.intValue());
 		System.out.println(BigDecimal.valueOf(33).divide(BigDecimal.valueOf(7),
 				0, BigDecimal.ROUND_UP));
+	}
+
+	/**
+	 * 与当前时间差值 <br>
+	 * 多少秒前<br>
+	 * <br>
+	 * 多少分前 <br>
+	 * 多少小时前 <br>
+	 * 多少天前 <br>
+	 * 超过一年完整时间
+	 * @param date
+	 */
+	public static final String getDiffyNowByString(Date date) {
+		Date now = new Date();
+		long d = getDifferenceSecond(now, date);
+		
+		if(d < 60) {
+			return d + "秒钟前";
+		}
+		
+		d = getDifferenceMinute(now, date);
+		
+		if(d < 60) {
+			return d + "分钟前";
+		}
+		
+		d = getDifferenceHour(now, date);
+		
+		if(d < 24) {
+			return d + "小时前";
+		}
+
+		d = getDifferenceDay(now, date);
+		
+		if(d < 365) {
+			return d + "天前";
+		}
+
+
+		return UtilDateTime.format(date, YYYY_MM_DD_HH_MM_SS);
 	}
 }

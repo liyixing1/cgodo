@@ -5,8 +5,10 @@ import java.util.Set;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
@@ -45,11 +47,11 @@ public class AuthenticationFilter extends FormAuthenticationFilter {
 			ServletResponse response) {
 		String username = getUsername(request);
 		String password = getPassword(request);
-		boolean rememberMe = isRememberMe(request);
+//		boolean rememberMe = isRememberMe(request);
 		String host = getHost(request);
 
 		UserTypeTUsernamePasswordToken userTypeTUsernamePasswordToken = new UserTypeTUsernamePasswordToken(
-				username, password, rememberMe, host);
+				username, password, true, host);
 		String url = getPathWithinApplication(request);
 
 		userTypeTUsernamePasswordToken.setUserType(loginUrlOfUserType.get(url));
@@ -85,12 +87,23 @@ public class AuthenticationFilter extends FormAuthenticationFilter {
 	protected boolean onLoginSuccess(AuthenticationToken token,
 			Subject subject, ServletRequest request, ServletResponse response)
 			throws Exception {
+		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		String url = getPathWithinApplication(request);
 		String successUrl = successUrlOfLoginUrl.get(url);
+		String contextpath = httpServletRequest.getContextPath();
+		
+		if(StringUtils.isBlank(contextpath)) {
+			contextpath = "/";
+		}
+		
+		if(!contextpath.endsWith("/")) {
+			contextpath = contextpath + '/';
+		}
+		
 		HttpServletResponse res = (HttpServletResponse) response;
 		WebUtils.getAndClearSavedRequest(request);
 		UtilHttpResponse.renderJson(res,
-				"{\"returnUrl\":\"[]\"}".replace("[]", successUrl));
+				"{\"returnUrl\":\"[]\"}".replace("[]", contextpath+successUrl));
 		return false;
 	}
 
