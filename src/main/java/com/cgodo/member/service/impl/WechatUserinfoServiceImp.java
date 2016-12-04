@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cgodo.constant.EnumStatus;
 import com.cgodo.member.dao.WechatUserinfoEntityMapper;
@@ -20,6 +22,7 @@ import com.cgodo.member.service.WechatUserinfoService;
  *
  */
 @Service
+@Transactional(isolation=Isolation.REPEATABLE_READ)
 public class WechatUserinfoServiceImp implements WechatUserinfoService {
 	@Override
 	public WechatUserinfoModel getByOpenId(String openId) {

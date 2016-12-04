@@ -1,5 +1,6 @@
 package com.cgodo.mybatis.plugin;
 
+import java.sql.SQLException;
 import java.util.Properties;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -41,14 +42,23 @@ public class VersionPlugin implements Interceptor {
 
 		if (lastId.startsWith("update")) {
 			addVersion(args[1]);
+			Object ret = invocation.proceed();
+
+			if(ret instanceof Integer ) {
+				if((Integer)ret < 1) {
+					throw new SQLException("系统繁忙，请稍后重试！");
+				}
+			}
+			return ret;
 		} else if(lastId.startsWith("insert")) {
 			initVersion(args[1]);
+			Object ret = invocation.proceed();
+			
+			return ret;
 		}
-		// }
+		
+		return invocation.proceed();
 
-		Object ret = invocation.proceed();
-
-		return ret;
 	}
 	
 	/**

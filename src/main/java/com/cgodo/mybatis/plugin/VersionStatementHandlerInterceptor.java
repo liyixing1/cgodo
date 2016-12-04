@@ -43,20 +43,22 @@ public class VersionStatementHandlerInterceptor implements Interceptor {
 			Object model = boundSql.getParameterObject();
 			Long version = (Long) PropertyUtils.getProperty(model, "version");
 			version = version - 1;
-			
+
 			// 增加条件
 			int whereIndex = sql.indexOf("where ");
 
-			if (whereIndex < 1) {
-				whereIndex = sql.indexOf("WHERE ");
-			}
-
 			// 添加版本条件
 			if (whereIndex > 1) {
-				sql.replace("where ", "where VERSION = " + version + " ");
-				sql.replace("WHERE ", "where VERSION = " + version + " ");
+				sql = sql.replace("where", "where VERSION = " + version + " and ");
 			} else {
-				sql = sql + "where VERSION = " + version + " ";
+				whereIndex = sql.indexOf("WHERE ");
+
+				// 添加版本条件
+				if (whereIndex > 1) {
+					sql = sql.replace("WHERE ", "where VERSION = " + version + " and");
+				} else {
+					sql = sql + "where VERSION = " + version + " ";
+				}
 			}
 
 			FieldUtils.getField(BoundSql.class, "sql", true).set(boundSql, sql);

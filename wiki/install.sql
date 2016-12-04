@@ -1,12 +1,16 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2016/11/21 16:18:22                          */
+/* Created on:     2016/12/4 23:09:09                           */
 /*==============================================================*/
 
 
 drop table if exists client_request;
 
 drop table if exists client_request_summary;
+
+drop index Index_1 on counter;
+
+drop table if exists counter;
 
 drop table if exists power;
 
@@ -64,6 +68,33 @@ create table client_request_summary
 );
 
 alter table client_request_summary comment '请求汇总';
+
+/*==============================================================*/
+/* Table: counter                                               */
+/*==============================================================*/
+create table counter
+(
+   ID                   char(32) not null,
+   STATUS               varchar(100) comment '状态',
+   VERSION              bigint comment '版本号',
+   GMT_CREATED          datetime comment '创建时间',
+   GMT_UPDATED          datetime comment '修改时间',
+   NAME                 varchar(100) comment '计数器名称',
+   VALUE                bigint comment '最后一次保存的值',
+   TYPE                 varchar(100) comment '分类',
+   primary key (ID)
+);
+
+alter table counter comment '计数器';
+
+/*==============================================================*/
+/* Index: Index_1                                               */
+/*==============================================================*/
+create unique index Index_1 on counter
+(
+   TYPE,
+   NAME
+);
 
 /*==============================================================*/
 /* Table: power                                                 */
