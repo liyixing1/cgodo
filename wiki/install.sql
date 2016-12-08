@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2016/12/4 23:09:09                           */
+/* Created on:     2016/12/8 15:10:17                           */
 /*==============================================================*/
 
 
@@ -25,6 +25,8 @@ drop table if exists sina_userinfo;
 drop table if exists temp;
 
 drop table if exists user_role;
+
+drop index Index_2 on userinfo;
 
 drop table if exists userinfo;
 
@@ -229,10 +231,19 @@ create table userinfo
    NICK_NAME            varchar(100) comment '昵称',
    FIRST_TIME           datetime comment '第一次登陆时间',
    LAST_TIME            datetime comment '最后登陆时间',
+   PHONE                varchar(11) comment '手机号',
    primary key (ID)
 );
 
 alter table userinfo comment '用户';
+
+/*==============================================================*/
+/* Index: Index_2                                               */
+/*==============================================================*/
+create unique index Index_2 on userinfo
+(
+   PHONE
+);
 
 /*==============================================================*/
 /* Table: wechat_userinfo                                       */

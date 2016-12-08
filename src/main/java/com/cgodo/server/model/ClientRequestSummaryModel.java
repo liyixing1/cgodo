@@ -1,5 +1,6 @@
 package com.cgodo.server.model;
 
+import com.cgodo.page.NoVersionCheck;
 import com.cgodo.server.entity.ClientRequestSummaryEntity;
 
 /**
@@ -11,6 +12,8 @@ import com.cgodo.server.entity.ClientRequestSummaryEntity;
  * @version 1.0
  * @since 2015年8月3日 上午1:07:51
  */
+
+@NoVersionCheck
 public class ClientRequestSummaryModel extends ClientRequestSummaryEntity {
 
 	/**

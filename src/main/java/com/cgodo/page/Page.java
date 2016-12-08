@@ -61,7 +61,7 @@ public class Page extends RowBounds implements Serializable {
 		return true;
 	}
 
-	private int pageSize = 10; // 页大小
+	private int pageSize = 15; // 页大小
 	private int pageNo = 1; // 页码，从1开始
 	private int totalCount = 0; // 总记录数
 	private List<?> results; // list存放的结果

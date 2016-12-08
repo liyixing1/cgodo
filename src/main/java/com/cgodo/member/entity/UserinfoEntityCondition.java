@@ -164,6 +164,7 @@ public class UserinfoEntityCondition {
      * <li>nickName 昵称</li>
      * <li>firstTime 第一次登陆时间</li>
      * <li>lastTime 最后登陆时间</li>
+     * <li>phone 手机号</li>
      * </ul>
      *
      * @mbggenerated
@@ -1069,6 +1070,76 @@ public class UserinfoEntityCondition {
             return (Criteria) this;
         }
 
+        public Criteria andPhoneIsNull() {
+            addCriterion("PHONE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhoneIsNotNull() {
+            addCriterion("PHONE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhoneEqualTo(String value) {
+            addCriterion("PHONE =", value, "phone");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhoneNotEqualTo(String value) {
+            addCriterion("PHONE <>", value, "phone");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhoneGreaterThan(String value) {
+            addCriterion("PHONE >", value, "phone");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhoneGreaterThanOrEqualTo(String value) {
+            addCriterion("PHONE >=", value, "phone");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhoneLessThan(String value) {
+            addCriterion("PHONE <", value, "phone");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhoneLessThanOrEqualTo(String value) {
+            addCriterion("PHONE <=", value, "phone");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhoneLike(String value) {
+            addCriterion("PHONE like", value, "phone");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhoneNotLike(String value) {
+            addCriterion("PHONE not like", value, "phone");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhoneIn(List<String> values) {
+            addCriterion("PHONE in", values, "phone");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhoneNotIn(List<String> values) {
+            addCriterion("PHONE not in", values, "phone");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhoneBetween(String value1, String value2) {
+            addCriterion("PHONE between", value1, value2, "phone");
+            return (Criteria) this;
+        }
+
+        public Criteria andPhoneNotBetween(String value1, String value2) {
+            addCriterion("PHONE not between", value1, value2, "phone");
+            return (Criteria) this;
+        }
+
         public Criteria andIdLikeInsensitive(String value) {
             addCriterion("upper(ID) like", value.toUpperCase(), "id");
             return (Criteria) this;
@@ -1098,6 +1169,11 @@ public class UserinfoEntityCondition {
             addCriterion("upper(NICK_NAME) like", value.toUpperCase(), "nickName");
             return (Criteria) this;
         }
+
+        public Criteria andPhoneLikeInsensitive(String value) {
+            addCriterion("upper(PHONE) like", value.toUpperCase(), "phone");
+            return (Criteria) this;
+        }
     }
 
     /**
@@ -1114,6 +1190,7 @@ public class UserinfoEntityCondition {
      * <li>nickName 昵称</li>
      * <li>firstTime 第一次登陆时间</li>
      * <li>lastTime 最后登陆时间</li>
+     * <li>phone 手机号</li>
      * </ul>
      *
      * @mbggenerated do_not_delete_during_merge
@@ -1139,6 +1216,7 @@ public class UserinfoEntityCondition {
      * <li>nickName 昵称</li>
      * <li>firstTime 第一次登陆时间</li>
      * <li>lastTime 最后登陆时间</li>
+     * <li>phone 手机号</li>
      * </ul>
      *
      * @mbggenerated

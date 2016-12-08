@@ -12,6 +12,7 @@ import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
 
+import com.cgodo.page.NoVersionCheck;
 import com.cgodo.util.UtilLog;
 
 /**
@@ -41,12 +42,15 @@ public class VersionPlugin implements Interceptor {
 		lastId = lastId.trim().toLowerCase();
 
 		if (lastId.startsWith("update")) {
+			NoVersionCheck noVersionCheck = org.springframework.core.annotation.AnnotationUtils.findAnnotation(args[1].getClass(), NoVersionCheck.class);
 			addVersion(args[1]);
 			Object ret = invocation.proceed();
 
-			if(ret instanceof Integer ) {
-				if((Integer)ret < 1) {
-					throw new SQLException("系统繁忙，请稍后重试！");
+			if(noVersionCheck == null) {
+				if(ret instanceof Integer ) {
+					if((Integer)ret < 1) {
+						throw new SQLException("系统繁忙，请稍后重试！");
+					}
 				}
 			}
 			return ret;
