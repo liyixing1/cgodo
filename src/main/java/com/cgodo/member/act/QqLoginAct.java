@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cgodo.util.UtilEncrypt;
-import com.cgodo.util.UtilHttpRequest;
 import com.cgodo.util.UtilUrl;
 
 /**
@@ -26,11 +25,7 @@ public class QqLoginAct {
 	/**
 	 * 授权地址
 	 */
-	private static final String AUTHORIZE_URL_PC = "https://graph.qq.com/oauth2.0/authorize";
-	/**
-	 * 手机端授权
-	 */
-	private static final String AUTHORIZE_URL_MOBILE = "https://graph.z.qq.com/moc2/authorize";
+	private static final String AUTHORIZE_URL = "https://graph.qq.com/oauth2.0/authorize";
 
 	/**
 	 * 登录操作，进入返回授权拼接参数后的页面
@@ -44,7 +39,7 @@ public class QqLoginAct {
 	public String login(HttpServletRequest request)
 			throws UnsupportedEncodingException {
 		// 添加?
-		String returnUrl = UtilUrl.addParameterStartCharacter(UtilHttpRequest.isMobile(request) ?  UtilUrl.addParameterStartCharacter(AUTHORIZE_URL_MOBILE) : AUTHORIZE_URL_PC);
+		String returnUrl = UtilUrl.addParameterStartCharacter(AUTHORIZE_URL);
 		// 保证顺序，否则出错
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		// 添加appid
