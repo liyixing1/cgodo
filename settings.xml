@@ -11,14 +11,14 @@
 		<server>
 			<id>snapshots</id>
 			<username>admin</username>
-			<password>huangpengpeng</password>
+			<password>2722261</password>
 		</server>
 	</servers>
 	<mirrors>
 		<mirror>
-			<id>weimaodian-porxy</id>
-			<name>weimaodian-porxy</name>
-			<url>http://maven.weimaodian.com/content/repositories/central/</url>
+			<id>23gou</id>
+			<name>23gou</name>
+			<url>http://maven.23gou.cn/content/groups/23gou/</url>
 			<mirrorOf>repo2</mirrorOf> 
 		</mirror>
 	</mirrors>
