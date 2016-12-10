@@ -43,4 +43,16 @@ public final class UtilModel {
 		return entityName.replace(".entity", ".model").replace("Entity",
 				"Model");
 	}
+
+	/**
+	 * 
+	 * 描述:首字母大写
+	 * 
+	 * @param source
+	 * @return
+	 * @author liyixing 2016年12月10日 下午2:15:04
+	 */
+	public static final String firstToUpperCase(String source) {
+		return source.substring(0,1).toUpperCase() + source.substring(1);
+	}
 }

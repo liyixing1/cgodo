@@ -12,6 +12,15 @@ import org.springframework.context.support.ApplicationObjectSupport;
 import com.cgodo.constant.EnumStatus;
 import com.cgodo.util.UtilLog;
 
+/**
+ * 
+ * 
+ * 描述:必须存在
+ *
+ * @author liyixing
+ * @version 1.0
+ * @since 2016年12月10日 下午2:05:19
+ */
 public class ExistsValidator extends ApplicationObjectSupport implements
 		ConstraintValidator<Exists, String> {
 
@@ -22,10 +31,10 @@ public class ExistsValidator extends ApplicationObjectSupport implements
 
 	@Override
 	public boolean isValid(String value, ConstraintValidatorContext context) {
-		if(StringUtils.isBlank(value)) {
+		if (StringUtils.isBlank(value)) {
 			return true;
 		}
-		
+
 		ApplicationContext applicationContext = getApplicationContext();
 		Object mapper = applicationContext.getBean(exists.dataMapper());
 		try {
