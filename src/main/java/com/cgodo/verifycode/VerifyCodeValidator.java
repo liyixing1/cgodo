@@ -20,7 +20,7 @@ public class VerifyCodeValidator {
 	 * 
 	 * 描述:验证码校验，true正确，验证后清楚
 	 * 
-	 * @param code 需要严重的验证码
+	 * @param code 需要验证的验证码
 	 * @param session 
 	 * @param key 必须具有，防止不同页面之间的验证码串联
 	 * @return
