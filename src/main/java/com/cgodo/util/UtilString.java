@@ -48,4 +48,23 @@ public final class UtilString {
 
 		return ArrayUtils.contains(strings, s);
 	}
+
+	/**
+	 * 
+	 * 描述:unicode转化成字符串，比如输入\u4e07,转化成万
+	 * 
+	 * @param ascii
+	 * @return
+	 * @author liyixing 2016年12月11日 上午2:30:38
+	 */
+	public static String ascii2native(String ascii) {
+		int n = ascii.length() / 6;
+		StringBuilder sb = new StringBuilder(n);
+		for (int i = 0, j = 2; i < n; i++, j += 6) {
+			String code = ascii.substring(j, j + 4);
+			char ch = (char) Integer.parseInt(code, 16);
+			sb.append(ch);
+		}
+		return sb.toString();
+	}
 }
