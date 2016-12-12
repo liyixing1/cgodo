@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2016/12/8 15:10:17                           */
+/* Created on:     2016/12/11 20:51:06                          */
 /*==============================================================*/
 
 
@@ -26,7 +26,9 @@ drop table if exists temp;
 
 drop table if exists user_role;
 
-drop index Index_2 on userinfo;
+drop index ci2 on userinfo;
+
+drop index ci1 on userinfo;
 
 drop table if exists userinfo;
 
@@ -232,17 +234,26 @@ create table userinfo
    FIRST_TIME           datetime comment '第一次登陆时间',
    LAST_TIME            datetime comment '最后登陆时间',
    PHONE                varchar(11) comment '手机号',
+   EMAIL                varchar(255) comment '邮箱',
    primary key (ID)
 );
 
 alter table userinfo comment '用户';
 
 /*==============================================================*/
-/* Index: Index_2                                               */
+/* Index: ci1                                                   */
 /*==============================================================*/
-create unique index Index_2 on userinfo
+create unique index ci1 on userinfo
 (
    PHONE
+);
+
+/*==============================================================*/
+/* Index: ci2                                                   */
+/*==============================================================*/
+create unique index ci2 on userinfo
+(
+   EMAIL
 );
 
 /*==============================================================*/

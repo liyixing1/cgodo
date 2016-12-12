@@ -26,6 +26,12 @@ public class Page extends RowBounds implements Serializable {
 	 */
 	public static final Page NOT_PAGE = new Page(0,
 			Integer.MAX_VALUE);
+	
+	/**
+	 * 1行数据
+	 */
+	public static final Page ONE_PAGE = new Page(0,
+			1);
 
 	/**
 	 * 
