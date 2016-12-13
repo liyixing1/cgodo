@@ -3,11 +3,11 @@ package com.cgodo.mybatis.generator;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.exception.ShellException;
 import org.mybatis.generator.internal.DefaultShellCallback;
+
+import com.cgodo.util.UtilFile;
 
 public class CgodoShellCallback extends DefaultShellCallback {
 
@@ -37,7 +37,7 @@ public class CgodoShellCallback extends DefaultShellCallback {
 		}
 
 		try {
-			String existsFileContent = FileUtils.readFileToString(new File(
+			String existsFileContent = UtilFile.readFileToString(new File(
 					existingFileFullPath));
 
 			// 找到最后一个mybatis生成的注释
@@ -81,7 +81,7 @@ public class CgodoShellCallback extends DefaultShellCallback {
 					String mergeContent = existsFileContent.substring(
 							startIndex+2, endIndex);
 					
-					if(StringUtils.isNotBlank(mergeContent)) {
+					if(mergeContent != null && !mergeContent.trim().equals("")) {
 						StringBuffer newFileSourceBf = new StringBuffer(newFileSource);
 	
 						newFileSourceBf.insert(newFileSource.lastIndexOf("}")-1, mergeContent);

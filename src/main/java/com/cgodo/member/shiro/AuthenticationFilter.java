@@ -17,6 +17,7 @@ import org.apache.shiro.web.util.WebUtils;
 
 import com.cgodo.member.shiro.UserTypeTUsernamePasswordToken;
 import com.cgodo.util.UtilHttpResponse;
+import com.cgodo.verifycode.VerifyCodeValidator;
 
 /**
  * 自定义登录认证filter<br>
@@ -71,6 +72,14 @@ public class AuthenticationFilter extends FormAuthenticationFilter {
 			throw new IllegalStateException(msg);
 		}
 
+		if(verifyCode) {
+			String code = request.getParameter("code");
+			String key = request.getParameter("key");
+			if(!VerifyCodeValidator.validation(code, ((HttpServletRequest)request).getSession(), key)){
+				return onLoginFailure(token, new AuthenticationException("验证码错误"), request, response);
+			}
+		}
+		
 		try {
 			Subject subject = getSubject(request, response);
 			// 登录
@@ -127,6 +136,11 @@ public class AuthenticationFilter extends FormAuthenticationFilter {
 			AuthenticationException e, ServletRequest request,
 			ServletResponse response) {
 		HttpServletResponse res = (HttpServletResponse) response;
+		
+		if(StringUtils.equals("验证码错误", e.getMessage())) {
+			UtilHttpResponse.renderJson(res, "{\"errors\":\"验证码错误\"}");
+			return false;
+		}
 		UtilHttpResponse.renderJson(res, "{\"errors\":\"用户名或密码错误\"}");
 		return false;
 	}
@@ -145,6 +159,11 @@ public class AuthenticationFilter extends FormAuthenticationFilter {
 	 * 登录地址与成功返回页面的关系
 	 */
 	private Map<String, String> successUrlOfLoginUrl;
+	
+	/**
+	 * 是否开启验证码
+	 */
+	private boolean verifyCode = false;
 
 	public Set<String> getLoginUrls() {
 		return loginUrls;
@@ -168,5 +187,13 @@ public class AuthenticationFilter extends FormAuthenticationFilter {
 
 	public void setSuccessUrlOfLoginUrl(Map<String, String> successUrlOfLoginUrl) {
 		this.successUrlOfLoginUrl = successUrlOfLoginUrl;
+	}
+
+	public boolean isVerifyCode() {
+		return verifyCode;
+	}
+
+	public void setVerifyCode(boolean verifyCode) {
+		this.verifyCode = verifyCode;
 	}
 }
