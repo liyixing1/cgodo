@@ -89,9 +89,11 @@ public final class Jxl {
 	 * @throws BiffException
 	 * @throws IOException
 	 */
-	public void initWorkBook(InputStream inputStream) throws BiffException,
+	public Jxl initWorkBook(InputStream inputStream) throws BiffException,
 			IOException {
 		initWorkBook(inputStream, null);
+		
+		return this;
 	}
 
 	/**
@@ -107,11 +109,13 @@ public final class Jxl {
 	 * @throws BiffException
 	 * @throws IOException
 	 */
-	public void initWorkBook(InputStream inputStream, String sheetName)
+	public Jxl initWorkBook(InputStream inputStream, String sheetName)
 			throws BiffException, IOException {
 		// 创建book
 		workBook = Workbook.getWorkbook(inputStream);
 		getSheet(sheetName);
+		
+		return this;
 	}
 
 	/**
@@ -125,9 +129,11 @@ public final class Jxl {
 	 * @author liyixing 2011-12-19 下午02:37:05
 	 * @throws IOException
 	 */
-	public void initWorkBook(OutputStream outputStream, String sheetName)
+	public Jxl initWorkBook(OutputStream outputStream, String sheetName)
 			throws IOException {
 		initWorkBook(outputStream, sheetName, new WorkbookSettings());
+		
+		return this;
 	}
 
 	/**
@@ -142,12 +148,14 @@ public final class Jxl {
 	 * @author liyixing 2011-12-19 下午02:37:05
 	 * @throws IOException
 	 */
-	public void initWorkBook(OutputStream outputStream, String sheetName,
+	public Jxl initWorkBook(OutputStream outputStream, String sheetName,
 			WorkbookSettings workbookSettings) throws IOException {
 		// 创建book
 		writableWorkBook = Workbook.createWorkbook(outputStream,
 				workbookSettings);
 		addSheet(sheetName);
+		
+		return this;
 	}
 
 	/**
@@ -324,15 +332,17 @@ public final class Jxl {
 	 * @author liyixing 2012-12-3 上午10:05:17
 	 * @throws IOException
 	 */
-	public void addSheet(String sheetName) throws IOException {
+	public Jxl addSheet(String sheetName) throws IOException {
 		if (sheetName == null) {
-			return;
+			return this;
 		}
 
 		currentWriteRow = 0;
 
 		writableSheet = writableWorkBook.createSheet(sheetName,
 				writableWorkBook.getSheets().length);
+		
+		return this;
 	}
 
 	/**
@@ -351,9 +361,11 @@ public final class Jxl {
 	 * @throws WriteException
 	 * @throws RowsExceededException
 	 */
-	public void addCell(String text) throws RowsExceededException,
+	public Jxl addCell(String text) throws RowsExceededException,
 			WriteException {
 		addCell(text, currentWriteRow);
+		
+		return this;
 	}
 
 	/**
@@ -372,15 +384,23 @@ public final class Jxl {
 	 * @throws WriteException
 	 * @throws RowsExceededException
 	 */
-	public void addCell(String text, int r) throws RowsExceededException,
+	public Jxl addCell(String text, int r) throws RowsExceededException,
 			WriteException {
 		Cell[] cells = writableSheet.getRow(r);
 		writableSheet.addCell(new Label(cells.length, r, text));
+		
+		return this;
 	}
 
-	// 进入下一行写入
-	public void nextWrite() {
+	/**
+	 * 
+	 * 描述:写入下一行
+	 * @author liyixing 2016年12月14日 下午1:53:54
+	 */
+	public Jxl nextWrite() {
 		currentWriteRow++;
+		
+		return this;
 	}
 
 	/**
@@ -393,7 +413,7 @@ public final class Jxl {
 	 * @throws IOException
 	 * @throws WriteException
 	 */
-	public void close() throws WriteException, IOException {
+	public Jxl close() throws WriteException, IOException {
 		if (workBook != null) {
 			workBook.close();
 		}
@@ -402,5 +422,7 @@ public final class Jxl {
 			writableWorkBook.write();
 			writableWorkBook.close();
 		}
+		
+		return this;
 	}
 }
