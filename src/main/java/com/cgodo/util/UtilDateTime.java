@@ -356,6 +356,38 @@ public final class UtilDateTime {
 		date.add(Calendar.DAY_OF_MONTH, -1);
 		setCalendarToLastTime(date);
 	}
+	
+	/**
+	 * 
+	 * 描述:将Date类型的时间修改为这年最后时间，也就是一年最后一天的23点59分59秒
+	 * 
+	 * @param date
+	 * @return
+	 * @author liyixing 2012-11-12 下午2:56:25
+	 */
+	public static final Date setDateToLastYearTime(Date date) {
+		Calendar c = getCalendar(date);
+		setCalendarToLastYearTime(c);
+
+		return c.getTime();
+	}
+
+	/**
+	 * 
+	 * 描述:将Calendar类型的时间修改为这年最后时间，也就是一年最后一天的23点59分59秒
+	 * 
+	 * @param date
+	 * @author liyixing 2012-11-12 下午2:57:22
+	 */
+	public static final void setCalendarToLastYearTime(Calendar date) {
+		// 设为下年第一天
+		date.set(Calendar.DAY_OF_MONTH, 1);
+		date.set(Calendar.MONTH, 1);
+		date.add(Calendar.YEAR, 1);
+		// 往前推算一天
+		date.add(Calendar.DAY_OF_YEAR, -1);
+		setCalendarToLastTime(date);
+	}
 
 	/**
 	 * 
@@ -381,6 +413,34 @@ public final class UtilDateTime {
 	 */
 	public static final void setCalendarToFirstMonthTime(Calendar date) {
 		date.set(Calendar.DAY_OF_MONTH, 1);
+		setCalendarToFirstTime(date);
+	}
+	
+	/**
+	 * 
+	 * 描述:将date类型的时间修改为这年开始时间，也就是1月1号00点00分00秒
+	 * 
+	 * @param date
+	 * @return
+	 * @author liyixing 2012-11-12 下午2:58:51
+	 */
+	public static final Date setDateToFirstYearTime(Date date) {
+		Calendar c = getCalendar(date);
+		setCalendarToFirstYearTime(c);
+
+		return c.getTime();
+	}
+
+	/**
+	 * 
+	 * 描述:将Calendar类型的时间修改为这年开始时间，也就是1号00点00分00秒
+	 * 
+	 * @param date
+	 * @author liyixing 2012-11-12 下午2:58:58
+	 */
+	public static final void setCalendarToFirstYearTime(Calendar date) {
+		date.set(Calendar.DAY_OF_MONTH, 1);
+		date.set(Calendar.MONTH, 1);
 		setCalendarToFirstTime(date);
 	}
 
