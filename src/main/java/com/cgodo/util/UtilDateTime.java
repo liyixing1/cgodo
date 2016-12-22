@@ -18,6 +18,10 @@ import java.util.Map;
 public final class UtilDateTime {
 	/** 时间格式化器集合，该类在使用过一次格式后，根据格式，保存该格式对应的格式化对象 */
 	public static final Map<String, SimpleDateFormat> datetimeFormats = new HashMap<String, SimpleDateFormat>();
+	/** 年格式 */
+	public static final String YYYY = "yyyy";
+	/** 年月格式 */
+	public static final String YYYY_MM = "yyyy-MM";
 	/** 年月日格式 */
 	public static final String YYYY_MM_DD = "yyyy-MM-dd";
 	/** 年月日 时分秒格式 */
