@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,13 +29,15 @@ public class WechatLoginAct {
 	/**
 	 * 登录操作，进入返回授权拼接参数后的页面
 	 * 
+	 * 
 	 * @param code
 	 * @param state
+	 * @param realurl 由于微信不支持子域名跳转，因此添加该参数，如果传入的该参数，会在生成的redirect_uri中添加该参数
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
 	@RequestMapping("/wechat_login.html")
-	public String login()
+	public String login(String realurl)
 			throws UnsupportedEncodingException {
 		// 添加?
 		String returnUrl = UtilUrl.addParameterStartCharacter(AUTHORIZE_URL);
@@ -43,7 +46,7 @@ public class WechatLoginAct {
 		// 添加appid
 		params.put("appid", appId);
 		params.put("redirect_uri", "http://" + domain
-				+ "/wechat_authorize_redirect.html");
+				+ "/wechat_authorize_redirect.html" + (StringUtils.isBlank(realurl) ? "" : "?realurl="+realurl));
 		params.put("response_type", "code");
 		params.put("scope", "snsapi_base");
 		params.put("state", UtilEncrypt.encode(new Date().getTime() + "cgodo"));
