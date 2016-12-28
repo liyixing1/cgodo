@@ -75,9 +75,14 @@ public class AuthenticationFilter extends FormAuthenticationFilter {
 		if(verifyCode) {
 			String code = request.getParameter("code");
 			String key = request.getParameter("key");
+			
 			if(!VerifyCodeValidator.validation(code, ((HttpServletRequest)request).getSession(), key)){
+				VerifyCodeValidator.clear(((HttpServletRequest)request).getSession(),key);
+				
 				return onLoginFailure(token, new AuthenticationException("验证码错误"), request, response);
 			}
+			
+			VerifyCodeValidator.clear(((HttpServletRequest)request).getSession(),key);
 		}
 		
 		try {

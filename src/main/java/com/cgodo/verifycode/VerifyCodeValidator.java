@@ -29,8 +29,6 @@ public class VerifyCodeValidator {
 	public static final boolean validation(String code, HttpSession session, String key) {
 		VerifyCodeModel value = (VerifyCodeModel) session.getAttribute(key);
 
-		clear(session, key);
-
 		if (value == null) {
 			return false;
 		}
