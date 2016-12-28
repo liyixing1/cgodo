@@ -174,7 +174,7 @@ public class VerifyCodeGenerator {
 			fontSize = fontSize - 16;
 		}
 
-		Font font = new Font("楷体", Font.BOLD, fontSize);
+		Font font = new Font("KaiTi", Font.BOLD, fontSize);
 		g2.setFont(font);
 		char[] chars = code.toCharArray();
 		for (int i = 0; i < verifySize; i++) {

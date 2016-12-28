@@ -1,6 +1,5 @@
 package com.cgodo.verifycode.act;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
@@ -32,12 +31,12 @@ public class VerifyCodeAct {
 	 *            可以调用com.cgodo.verifycode.VerifyCodeValidator.generateKey(
 	 *            HttpSession session)生成
 	 * @return
-	 * @throws IOException 
+	 * @throws Exception 
 	 * @throws UnsupportedEncodingException
 	 */
 	@RequestMapping("/verify_code.jhtml")
 	public String makeVerifyCode(HttpSession session, HttpServletRequest request,
-			OutputStream outputStream, HttpServletResponse response, String key) throws IOException {
+			OutputStream outputStream, HttpServletResponse response, String key) throws Exception {
 		response.setHeader("Pragma", "No-cache");
 		response.setHeader("Cache-Control", "no-cache");
 		response.setDateHeader("Expires", 0);
