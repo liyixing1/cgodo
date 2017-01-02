@@ -40,14 +40,26 @@ public class CountAspect {
 		ReflectiveMethodInvocation reflectiveMethodInvocation = (ReflectiveMethodInvocation) FieldUtils
 				.getField(pjp.getClass(), "methodInvocation", true).get(pjp);
 		Object[] args = pjp.getArgs();
-		RowBounds rowBounds = (RowBounds) args[1];
+		RowBounds rowBounds = null;
+		int index = 0;
+		
+		for(int i = 0; i< args.length; i++) {
+			Object arg = args[i];
+			
+			if(arg != null &&arg instanceof RowBounds) {
+				rowBounds = (RowBounds) arg;
+				index = i;
+				break;
+			}
+		}
+		
 		Method sourceMethod = reflectiveMethodInvocation.getMethod();
 		Page page = PageContext.get();
 
 		// 分页查询，必须存在rowBounds
 		if (rowBounds == null) {
 			rowBounds = RowBounds.DEFAULT;
-			args[1] = rowBounds;
+			args[index] = rowBounds;
 		}
 
 		Object ret = pjp.proceed(args);

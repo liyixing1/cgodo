@@ -33,10 +33,23 @@ import com.cgodo.util.UtilLog;
  */
 @Aspect
 public class ClientRequestFilter implements Filter {
+	/**
+	 * 开启或者关闭功能
+	 */
+	private boolean close = true;
+	
 	private ClientRequestService clientRequestService;
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
+	}
+
+	public boolean isClose() {
+		return close;
+	}
+
+	public void setClose(boolean close) {
+		this.close = close;
 	}
 
 	@Override
@@ -57,29 +70,31 @@ public class ClientRequestFilter implements Filter {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {
-			Date end = UtilDateTime.getNowDate();
-
-			// 插入
-			ClientRequestModel clientRequestModel = new ClientRequestModel();
-
-			clientRequestModel.setIp(ip);
-			clientRequestModel.setRequestTime(start);
-			clientRequestModel.setProcessingTime(end.getTime()
-					- start.getTime());
-			clientRequestModel.setRequestUrl(url);
-			clientRequestModel.setUserAgent(UtilHttpRequest
-					.getUseragent(httpServletRequest));
-
-			if (clientRequestService == null) {
-				WebApplicationContext webApplicationContext = WebApplicationContextUtils
-						.getRequiredWebApplicationContext(servletContext);
-				clientRequestService = webApplicationContext
-						.getBean(ClientRequestService.class);
+			if(!close) {
+				Date end = UtilDateTime.getNowDate();
+	
+				// 插入
+				ClientRequestModel clientRequestModel = new ClientRequestModel();
+	
+				clientRequestModel.setIp(ip);
+				clientRequestModel.setRequestTime(start);
+				clientRequestModel.setProcessingTime(end.getTime()
+						- start.getTime());
+				clientRequestModel.setRequestUrl(url);
+				clientRequestModel.setUserAgent(UtilHttpRequest
+						.getUseragent(httpServletRequest));
+	
+				if (clientRequestService == null) {
+					WebApplicationContext webApplicationContext = WebApplicationContextUtils
+							.getRequiredWebApplicationContext(servletContext);
+					clientRequestService = webApplicationContext
+							.getBean(ClientRequestService.class);
+				}
+	
+				clientRequestService.addClientRequest(clientRequestModel);
+				UtilLog.debug("处理请求{}结束，请求ip{}，结束时间{}，耗时{}毫秒", url, ip,
+						end.getTime(), clientRequestModel.getProcessingTime());
 			}
-
-			clientRequestService.addClientRequest(clientRequestModel);
-			UtilLog.debug("处理请求{}结束，请求ip{}，结束时间{}，耗时{}毫秒", url, ip,
-					end.getTime(), clientRequestModel.getProcessingTime());
 		}
 	}
 
