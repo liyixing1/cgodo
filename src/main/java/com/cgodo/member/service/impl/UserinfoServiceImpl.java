@@ -43,6 +43,11 @@ public class UserinfoServiceImpl implements UserinfoService {
 		userinfoEntityMapper.insert(userinfoModel);
 	}
 
+	@Override
+	public void update(UserinfoModel userinfoModel) {
+		userinfoEntityMapper.updateByPrimaryKey(userinfoModel);
+	}
+
 	@Autowired
 	private UserinfoEntityMapper userinfoEntityMapper;
 }

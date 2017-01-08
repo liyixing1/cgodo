@@ -26,4 +26,11 @@ public interface UserinfoService {
 	 * @return
 	 */
 	public void save(UserinfoModel userinfoModel);
+	
+	/**
+	 * 修改
+	 * @param userinfoModel
+	 * @return
+	 */
+	public void update(UserinfoModel userinfoModel);
 }

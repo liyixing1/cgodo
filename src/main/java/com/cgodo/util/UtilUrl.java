@@ -170,6 +170,58 @@ public final class UtilUrl {
 
 		return sb.toString();
 	}
+	
+	/**
+	 * 将Map转换成请求的url，不带?符号
+	 * 
+	 * 某如某个参数值为空，则依然转化，只是值不存在，如name=
+	 * <br>
+	 * 不进行url encode
+	 * @param params
+	 *            需要转化的参数
+	 * @param encoding
+	 *            参数使用的编码
+	 * @param ignores
+	 *            要忽略的字段
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public static final String mapToUrlNoEncode(Map<String, Object> params,
+			String encoding, String... ignores)
+			throws UnsupportedEncodingException {
+		StringBuilder sb = new StringBuilder();
+		boolean isFirst = true;
+
+		for (Map.Entry<String, Object> entry : params.entrySet()) {
+			if (ArrayUtils.contains(ignores, entry.getKey())) {
+				continue;
+			}
+
+			Object value = entry.getValue();
+
+			if (value == null) {
+				value = "";
+			}
+
+			if (value instanceof Class<?>) {
+				continue;
+			}
+
+			if (isFirst) {
+				sb.append(entry.getKey());
+				sb.append('=');
+				sb.append(value.toString());
+				isFirst = false;
+			} else {
+				sb.append(PARAMETER_SEPARATION);
+				sb.append(entry.getKey());
+				sb.append('=');
+				sb.append(value.toString());
+			}
+		}
+
+		return sb.toString();
+	}
 
 	/**
 	 * 

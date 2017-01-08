@@ -1,5 +1,6 @@
 package com.cgodo.util;
 
+import java.text.NumberFormat;
 import java.util.Collection;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -57,7 +58,7 @@ public final class UtilString {
 	 * @return
 	 * @author liyixing 2016年12月11日 上午2:30:38
 	 */
-	public static String ascii2native(String ascii) {
+	public static final String ascii2native(String ascii) {
 		int n = ascii.length() / 6;
 		StringBuilder sb = new StringBuilder(n);
 		for (int i = 0, j = 2; i < n; i++, j += 6) {
@@ -66,5 +67,24 @@ public final class UtilString {
 			sb.append(ch);
 		}
 		return sb.toString();
+	}
+
+	/**
+	 * 
+	 * 描述:设置数字的分隔符
+	 * 
+	 * @param num
+	 * @return
+	 * @author liyixing 2017年1月3日 下午4:01:31
+	 */
+	public static final String formatNumber(Number num) {
+		NumberFormat format = NumberFormat.getNumberInstance();
+		
+		return format.format(num);
+	}
+	
+	public static void main(String[] args) {
+		System.out.println( formatNumber(111111));
+		System.out.println( formatNumber(111));
 	}
 }

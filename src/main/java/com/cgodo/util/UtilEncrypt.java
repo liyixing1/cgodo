@@ -23,4 +23,12 @@ public final class UtilEncrypt {
 		}
 		return DigestUtils.md5Hex(s);
 	}
+	
+	public static final String sha1(String s) {
+		if (s == null) {
+			return null;
+		}
+		
+		return DigestUtils.sha1Hex(s);
+	}
 }
