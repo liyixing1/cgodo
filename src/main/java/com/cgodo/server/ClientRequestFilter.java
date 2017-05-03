@@ -70,8 +70,9 @@ public class ClientRequestFilter implements Filter {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {
+			Date end = UtilDateTime.getNowDate();
+			
 			if(!close) {
-				Date end = UtilDateTime.getNowDate();
 	
 				// 插入
 				ClientRequestModel clientRequestModel = new ClientRequestModel();
@@ -92,9 +93,11 @@ public class ClientRequestFilter implements Filter {
 				}
 	
 				clientRequestService.addClientRequest(clientRequestModel);
-				UtilLog.debug("处理请求{}结束，请求ip{}，结束时间{}，耗时{}毫秒", url, ip,
-						end.getTime(), clientRequestModel.getProcessingTime());
 			}
+
+			UtilLog.debug("处理请求{}结束，请求ip{}，结束时间{}，耗时{}毫秒", url, ip,
+					end.getTime(), end.getTime()
+					- start.getTime());
 		}
 	}
 

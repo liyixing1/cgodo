@@ -1,13 +1,10 @@
 package com.cgodo.member.shiro;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SubjectContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cgodo.member.model.UserinfoModel;
 import com.cgodo.member.service.UserinfoService;
-import com.cgodo.util.UtilDateTime;
 
 /**
  * 
@@ -24,12 +21,12 @@ public class LoginInfoCookieRememberMeManager extends
 			SubjectContext subjectContext) {
 		PrincipalCollection principals = super.getRememberedPrincipals(subjectContext);
 		
-		if(principals != null && StringUtils.isNotBlank((String)principals.getPrimaryPrincipal())){
-			UserinfoModel userinfoModel = userinfoService.getById((String)principals.getPrimaryPrincipal());
-			
-			userinfoModel.setLastTime(UtilDateTime.getNowDate());
-			userinfoService.update(userinfoModel);
-		}
+//		if(principals != null && StringUtils.isNotBlank((String)principals.getPrimaryPrincipal())){
+//			UserinfoModel userinfoModel = userinfoService.getById((String)principals.getPrimaryPrincipal());
+//			
+//			userinfoModel.setLastTime(UtilDateTime.getNowDate());
+//			userinfoService.update(userinfoModel);
+//		}
 		
 		return principals;
 	}
