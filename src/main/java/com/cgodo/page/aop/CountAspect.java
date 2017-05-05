@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import org.apache.commons.beanutils.MethodUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -42,18 +43,19 @@ public class CountAspect {
 		Object[] args = pjp.getArgs();
 		RowBounds rowBounds = null;
 		int index = 0;
-		
-		for(int i = 0; i< args.length; i++) {
+
+		for (int i = 0; i < args.length; i++) {
 			Object arg = args[i];
-			
-			if(arg != null &&arg instanceof RowBounds) {
+
+			if (arg != null && arg instanceof RowBounds) {
 				rowBounds = (RowBounds) arg;
 				index = i;
 				break;
 			}
 		}
-		
+
 		Method sourceMethod = reflectiveMethodInvocation.getMethod();
+		String method = sourceMethod.getName();
 		Page page = PageContext.get();
 
 		// 分页查询，必须存在rowBounds
@@ -68,10 +70,19 @@ public class CountAspect {
 			// 需要分页
 			if (rowBounds == page) {
 				Object target = pjp.getTarget();
-				int count = (Integer) MethodUtils.getAccessibleMethod(
-						target.getClass(), "countByExample",
-						sourceMethod.getParameterTypes()[0]).invoke(target,
-						args[0]);
+				int count = 0;
+
+				if (StringUtils.endsWith(method, "Condition")) {
+					count = (Integer) MethodUtils.getAccessibleMethod(
+							target.getClass(), "countByCondition",
+							sourceMethod.getParameterTypes()[0]).invoke(target,
+							args[0]);
+				} else {
+					count = (Integer) MethodUtils.getAccessibleMethod(
+							target.getClass(), "countByExample",
+							sourceMethod.getParameterTypes()[0]).invoke(target,
+							args[0]);
+				}
 				page.setResults((List) ret);
 				// 调用目标的count方法
 				page.setTotalCount(count);
