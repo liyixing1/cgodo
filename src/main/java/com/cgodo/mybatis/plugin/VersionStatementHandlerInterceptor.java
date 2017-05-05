@@ -1,6 +1,7 @@
 package com.cgodo.mybatis.plugin;
 
 import java.sql.Connection;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -41,6 +42,11 @@ public class VersionStatementHandlerInterceptor implements Interceptor {
 
 		if (sql.startsWith("update") || sql.startsWith("UPDATE")) {
 			Object model = boundSql.getParameterObject();
+			
+			if(model instanceof Map<?, ?>){
+				return invocation.proceed();
+			}
+			
 			Long version = (Long) PropertyUtils.getProperty(model, "version");
 			version = version - 1;
 

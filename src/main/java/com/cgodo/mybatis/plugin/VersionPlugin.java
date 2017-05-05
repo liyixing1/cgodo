@@ -1,5 +1,6 @@
 package com.cgodo.mybatis.plugin;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -43,7 +44,17 @@ public class VersionPlugin implements Interceptor {
 
 		if (lastId.startsWith("update")) {
 			NoVersionCheck noVersionCheck = org.springframework.core.annotation.AnnotationUtils.findAnnotation(args[1].getClass(), NoVersionCheck.class);
-			addVersion(args[1]);
+			
+			try {
+				addVersion(args[1]);
+			} catch (Exception e) {
+				// 该对象可能无法设置时间
+				UtilLog.debug("设置version失败！");
+				
+				Object ret = invocation.proceed();
+				return ret;
+			}
+			
 			Object ret = invocation.proceed();
 
 			if(noVersionCheck == null) {
@@ -85,15 +96,13 @@ public class VersionPlugin implements Interceptor {
 	 * 描述:修改语句，添加条件
 	 * 
 	 * @author liyixing 2011-11-8 下午11:48:08
+	 * @throws NoSuchMethodException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
 	 */
-	protected void addVersion(Object o) {
-		try {
-			Long version = (Long) PropertyUtils.getProperty(o, "version");
-			PropertyUtils.setProperty(o, "version", version+1);
-		} catch (Exception e) {
-			// 该对象可能无法设置时间
-			UtilLog.debug("设置version失败！");
-		}
+	protected void addVersion(Object o) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+		Long version = (Long) PropertyUtils.getProperty(o, "version");
+		PropertyUtils.setProperty(o, "version", version+1);
 	}
 
 	@Override
