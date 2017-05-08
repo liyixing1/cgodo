@@ -1,7 +1,12 @@
-package com.cgodo.comment;
+package com.cgodo.component;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
 
+import com.cgodo.component.model.WechatCallModel;
+import com.cgodo.component.model.WechatNotifyModel;
 import com.cgodo.util.UtilDateTime;
 
 /**
@@ -35,9 +40,90 @@ public interface WechatComment {
 	 * 
 	 * @return
 	 * @author liyixing 2017年1月6日 下午6:13:17
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public Config getConfig(String url) throws Exception;
+
+	/**
+	 * 
+	 * 描述:下单接口
+	 * 
+	 * @param ordersId
+	 * @param body
+	 *            商品简单描述
+	 * @param totalPrice
+	 * @param ip
+	 * @param userinfoModel
+	 * @author liyixing 2017年5月7日 下午5:45:34
+	 * @return
+	 * @throws Exception
+	 */
+	public WechatCallModel unifiedorder(String orderId, String body,
+			BigDecimal totalPrice, String ip, String openId, String userId)
+			throws Exception;
+
+	/**
+	 * 
+	 * 描述:关闭 订单
+	 * 
+	 * @param ordersId
+	 * @param body
+	 *            商品简单描述
+	 * @param totalPrice
+	 * @param ip
+	 * @param userinfoModel
+	 * @author liyixing 2017年5月7日 下午5:45:34
+	 * @return
+	 * @throws Exception
+	 */
+	public WechatCallModel closeorder(String orderId, String ip,
+			String userId) throws Exception;
+
+	/**
+	 * 
+	 * 描述:查询 订单
+	 * 
+	 * @param orderId
+	 * @param transactionId
+	 *            微信订单号
+	 * @param ip
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 * @author liyixing 2017年5月8日 下午4:43:58
+	 */
+	public WechatCallModel orderquery(String orderId, String transactionId,
+			String ip, String userId) throws Exception;
+
+	/**
+	 * 
+	 * 描述:通知
+	 * 
+	 * @param wechatNotifyModel
+	 * @author liyixing 2017年5月8日 下午4:50:00
+	 */
+	public void doNotify(WechatNotifyModel wechatNotifyModel);
+
+	/**
+	 * 
+	 * 描述:生成签名
+	 * 
+	 * @param paramsUrl
+	 * @return
+	 * @author liyixing 2017年5月8日 下午8:06:00
+	 */
+	public String createSign(String paramsUrl);
+	
+	/**
+	 * 
+	 * 描述:验证签名
+	 * 
+	 * @param paramsUrl
+	 * @return
+	 * @author liyixing 2017年5月8日 下午8:06:00
+	 * @throws UnsupportedEncodingException 
+	 */
+	public boolean validationSign(Map<String, Object> paramsMap) throws UnsupportedEncodingException;
 
 	/**
 	 * 服务号所有者的临时票据
@@ -98,12 +184,13 @@ public interface WechatComment {
 		 * @return
 		 */
 		public boolean isExpires() {
-			long expiresIn = getDateTime.getTime() + this.expiresIn * 1000 - 300000;
-			
-			if(UtilDateTime.getNowDate().getTime() >= expiresIn) {
+			long expiresIn = getDateTime.getTime() + this.expiresIn * 1000
+					- 300000;
+
+			if (UtilDateTime.getNowDate().getTime() >= expiresIn) {
 				return true;
 			}
-			
+
 			return false;
 		}
 	}
@@ -167,12 +254,13 @@ public interface WechatComment {
 		 * @return
 		 */
 		public boolean isExpires() {
-			long expiresIn = getDateTime.getTime() + this.expiresIn * 1000 - 300000;
-			
-			if(UtilDateTime.getNowDate().getTime() >= expiresIn) {
+			long expiresIn = getDateTime.getTime() + this.expiresIn * 1000
+					- 300000;
+
+			if (UtilDateTime.getNowDate().getTime() >= expiresIn) {
 				return true;
 			}
-			
+
 			return false;
 		}
 	}

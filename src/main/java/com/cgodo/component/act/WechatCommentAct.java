@@ -1,11 +1,11 @@
-package com.cgodo.comment.act;
+package com.cgodo.component.act;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.cgodo.comment.WechatComment;
+import com.cgodo.component.WechatComment;
 
 @Component
 @RequestMapping("/wechat_comment")

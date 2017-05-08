@@ -17,6 +17,13 @@ public interface WechatUserinfoService {
 	public WechatUserinfoModel getByOpenId(String openId);
 	
 	/**
+	 * 用户名获取
+	 * @param name
+	 * @return
+	 */
+	public WechatUserinfoModel getByUserId(String userId);
+	
+	/**
 	 * 添加微信用户
 	 */
 	public void add(WechatUserinfoModel wechatUserinfoModel);	/**

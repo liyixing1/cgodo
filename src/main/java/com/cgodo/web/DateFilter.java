@@ -34,6 +34,10 @@ public class DateFilter implements javax.servlet.Filter {
 		request.setAttribute("month",UtilDateTime.format(now, UtilDateTime.YYYY_MM));
 		request.setAttribute("day",UtilDateTime.format(now, UtilDateTime.YYYY_MM_DD));
 		request.setAttribute("now",UtilDateTime.format(now, UtilDateTime.YYYY_MM_DD_HH_MM_SS));
+		//时间戳
+		request.setAttribute("timeStamp",now.getTime());
+		//时间磋，秒
+		request.setAttribute("timeStampSecond",now.getTime()/1000);
 		chain.doFilter(request, response);
 	}
 

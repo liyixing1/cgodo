@@ -36,6 +36,19 @@ public class WechatUserinfoServiceImp implements WechatUserinfoService {
 
 		return wechatUserinfoModels.size() > 0 ? wechatUserinfoModels.get(0) : null;
 	}
+	
+	@Override
+	public WechatUserinfoModel getByUserId(String userId) {
+		WechatUserinfoEntityCondition wechatUserinfoEntityCondition = new WechatUserinfoEntityCondition();
+
+		wechatUserinfoEntityCondition.createCriteria()
+				.andStatusNotEqualTo(EnumStatus.删除).andUserIdEqualTo(userId);
+
+		List<WechatUserinfoModel> wechatUserinfoModels = wechatUserinfoEntityMapper
+				.selectByExample(wechatUserinfoEntityCondition);
+
+		return wechatUserinfoModels.size() > 0 ? wechatUserinfoModels.get(0) : null;
+	}
 
 	@Override
 	public void add(WechatUserinfoModel wechatUserinfoModel) {

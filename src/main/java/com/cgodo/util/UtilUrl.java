@@ -187,8 +187,7 @@ public final class UtilUrl {
 	 * @throws UnsupportedEncodingException
 	 */
 	public static final String mapToUrlNoEncode(Map<String, Object> params,
-			String encoding, String... ignores)
-			throws UnsupportedEncodingException {
+			String encoding, String... ignores) {
 		StringBuilder sb = new StringBuilder();
 		boolean isFirst = true;
 
