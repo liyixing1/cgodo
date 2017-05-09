@@ -45,6 +45,7 @@ public class PageHandlerFilter implements javax.servlet.Filter {
 
 		PageContext.set(page);
 		request.setAttribute("page", page);
+		request.setAttribute("error_code", 1);
 
 		// 解析参数
 		if (StringUtils.isNotBlank(pageNo)) {
@@ -59,6 +60,10 @@ public class PageHandlerFilter implements javax.servlet.Filter {
 
 		try {
 			chain.doFilter(request, response);
+			
+			if(page.getResults()!=null) {
+				request.setAttribute("items", page.getResults());
+			}
 		} finally {
 			PageContext.clear();
 		}

@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import com.cgodo.page.Page;
 import com.cgodo.page.PageContext;
 import com.cgodo.util.UtilLog;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -59,7 +60,16 @@ public class CgodoMappingJackson2JsonView extends MappingJackson2JsonView {
 	 * @param result
 	 */
 	private void filterPage(Map<String, Object> result) {
+		Page page = PageContext.get();
 		result.put("page", PageContext.get());
+		result.put("error_code", "1");
+		result.put("items", page.getResults());
+		result.put("message", "success");
+		result.put("pageNo", page.getPageNo());
+		result.put("pageSize", page.getPageSize());
+		result.put("pageSize", page.getPageSize());
+		result.put("totalCount", page.getTotalCount());
+		result.put("totalPage", page.getTotalPage());
 	}
 
 	/**

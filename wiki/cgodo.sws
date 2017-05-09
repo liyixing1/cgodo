@@ -16,7 +16,8 @@
 		<Model Expanded="Yes" ID="{C33845AC-A86D-4C0A-B0C4-37EE946CEA5C}" Loaded="No" Name="cgodo" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="member.pdm"/>
 		<Model Expanded="Yes" ID="{C33845AC-A86D-4C0A-B0C4-37EE946CEA5C}" Loaded="No" Name="cgodo" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="member.pdm"/>
 		<Model Expanded="Yes" ID="{C33845AC-A86D-4C0A-B0C4-37EE946CEA5C}" Loaded="No" Name="cgodo" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="member.pdm"/>
-		<Model Expanded="Yes" ID="{C33845AC-A86D-4C0A-B0C4-37EE946CEA5C}" Name="cgodo" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="component.pdm"/>
+		<Model Expanded="Yes" ID="{C33845AC-A86D-4C0A-B0C4-37EE946CEA5C}" Loaded="No" Name="cgodo" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="component.pdm"/>
+		<Model Expanded="Yes" ID="{D63F50B7-BCB4-4411-9A5D-3181A242457A}" Loaded="No" Name="健康电商" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="../../healthy/wiki/data/健康电商.pdm"/>
 		<Model Expanded="Yes" ID="{D63F50B7-BCB4-4411-9A5D-3181A242457A}" Name="健康电商" Selected="Yes" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="../../healthy/wiki/data/健康电商.pdm"/>
 	</Local>
 	<BrowserModule Name="Repository"/>

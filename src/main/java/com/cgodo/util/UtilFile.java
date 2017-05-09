@@ -2,7 +2,12 @@ package com.cgodo.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.UUID;
+
+import org.apache.commons.io.IOUtils;
 
 public class UtilFile {
 	/**
@@ -23,5 +28,46 @@ public class UtilFile {
 		in.close();
 
 		return new String(filecontent, encoding);
+	}
+
+	/**
+	 * 
+	 * 描述:
+	 * 
+	 * @param savePath 新文件路径 
+	 * @param relativePath 新文件相对路径
+	 * @param oldFile
+	 * @return
+	 * @author liyixing 2017年5月9日 下午5:12:46
+	 * @throws IOException 
+	 */
+	public static final String copyAsNew(String savePath, String relativePath,
+			InputStream old, String  oldFileName) throws IOException {
+		// 文件保存目录路径
+		// String savePath = pageContext.getServletContext().getRealPath("/") +
+		// "attached/";
+		// 文件保存目录URL
+		// String saveUrl = request.getContextPath() + "/attached/";
+
+		// 检查目录
+		File uploadDir = new File(savePath);
+		if (!uploadDir.isDirectory()) {
+			uploadDir.mkdirs();
+		}
+		// 检查目录写权限
+		if (!uploadDir.canWrite()) {
+			throw new IOException("改目录不可写");
+		}
+
+		int exeIndex = oldFileName.lastIndexOf(".");
+		String key =  UUID.randomUUID().toString().replace("-", "")
+				+ (exeIndex>0?oldFileName.substring(exeIndex):".jpg");
+		File newFile = new File(savePath+key);
+		newFile.createNewFile();
+		FileOutputStream fileOutputStream = new FileOutputStream(newFile);
+		IOUtils.copy(old, fileOutputStream);
+		fileOutputStream.close();
+		
+		return relativePath + key;
 	}
 }
