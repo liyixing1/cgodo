@@ -37,7 +37,7 @@ public class WechatLoginAct {
 	 * @throws UnsupportedEncodingException
 	 */
 	@RequestMapping("/wechat_login.html")
-	public String login(String realurl)
+	public String login(String realurl,Boolean userinfo)
 			throws UnsupportedEncodingException {
 		// 添加?
 		String returnUrl = UtilUrl.addParameterStartCharacter(AUTHORIZE_URL);
@@ -45,10 +45,22 @@ public class WechatLoginAct {
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		// 添加appid
 		params.put("appid", appId);
-		params.put("redirect_uri", "http://" + domain
-				+ "/wechat_authorize_redirect.html" + (StringUtils.isBlank(realurl) ? "" : "?realurl="+realurl));
+		String  redirect_uri = "http://" + domain
+				+ "/wechat_authorize_redirect.html" + (StringUtils.isBlank(realurl) ? "" : "?realurl="+realurl);
+		
+		if(userinfo == null || !userinfo) {
+			redirect_uri = UtilUrl.addParam(redirect_uri, "scope", "snsapi_base");
+		} else {
+			redirect_uri = UtilUrl.addParam(redirect_uri, "scope", "snsapi_userinfo");
+		}
+		
+		params.put("redirect_uri", redirect_uri);
 		params.put("response_type", "code");
-		params.put("scope", "snsapi_base");
+		if(userinfo == null || !userinfo) {
+			params.put("scope", "snsapi_base");
+		} else {
+			params.put("scope", "snsapi_userinfo");
+		}
 		params.put("state", UtilEncrypt.encode(new Date().getTime() + "cgodo"));
 
 		returnUrl += UtilUrl.mapToUrl(params, "utf-8") + "#wechat_redirect";

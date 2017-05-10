@@ -170,13 +170,36 @@ public final class UtilUrl {
 
 		return sb.toString();
 	}
-	
+
+	/**
+	 * 
+	 * 描述:追加参数
+	 * 
+	 * @param name
+	 * @param value
+	 * @return
+	 * @author liyixing 2017年5月9日 下午9:55:19
+	 */
+	public static final String addParam(String url, String name, String value) {
+		url = addParameterStartCharacter(url);
+
+		if (url.endsWith("?")) {
+			// 没有参数
+			url = url + name + "=" + value;
+		} else {
+			// 有参数
+			url = url + "&" + name + "=" + value;
+		}
+		
+		return url;
+	}
+
 	/**
 	 * 将Map转换成请求的url，不带?符号
 	 * 
-	 * 某如某个参数值为空，则依然转化，只是值不存在，如name=
-	 * <br>
+	 * 某如某个参数值为空，则依然转化，只是值不存在，如name= <br>
 	 * 不进行url encode
+	 * 
 	 * @param params
 	 *            需要转化的参数
 	 * @param encoding

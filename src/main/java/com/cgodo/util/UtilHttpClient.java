@@ -30,7 +30,7 @@ public class UtilHttpClient {
 		HttpGet httpGet = new HttpGet(url);
 		CloseableHttpResponse response = httpclient.execute(httpGet);
 		HttpEntity entity = response.getEntity();
-		return EntityUtils.toString(entity);
+		return EntityUtils.toString(entity,"utf-8");
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public class UtilHttpClient {
 		HttpPost httpPost = new HttpPost(url);
 		CloseableHttpResponse response = httpclient.execute(httpPost);
 		HttpEntity entity = response.getEntity();
-		return EntityUtils.toString(entity);
+		return EntityUtils.toString(entity,"utf-8");
 	}
 	
 	/**
