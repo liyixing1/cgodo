@@ -8,6 +8,7 @@ import java.util.TreeMap;
 import java.util.UUID;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -231,6 +232,7 @@ public class WechatCommentImpl implements WechatComment {
 		params.put("device_info", "WEB");
 		params.put("nonce_str", UUID.randomUUID().toString().replace("-", ""));
 		params.put("body", body);
+		params.put("openid", openId);
 		params.put("out_trade_no", orderId);
 		// total_fee订单总金额，单位为分，只能为整数
 		params.put("total_fee", totalPrice.multiply(BigDecimal.valueOf(100))
@@ -294,8 +296,13 @@ public class WechatCommentImpl implements WechatComment {
 		params.put("appid", appId);
 		params.put("mch_id", mchId);
 		params.put("nonce_str", UUID.randomUUID().toString().replace("-", ""));
-		params.put("out_trade_no", orderId);
-		params.put("transaction_id", transactionId);
+		
+		if(StringUtils.isNotBlank(orderId)) {
+			params.put("out_trade_no", orderId);
+		} else {
+			params.put("transaction_id", transactionId);
+		}
+		
 		String paramsUrl = UtilUrl.mapToUrlNoEncode(params, "utf-8");
 		String sign = createSign(paramsUrl);
 		params.put("sign", sign);

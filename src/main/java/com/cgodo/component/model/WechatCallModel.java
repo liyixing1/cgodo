@@ -2,9 +2,6 @@ package com.cgodo.component.model;
 
 import java.util.Map;
 
-import org.dom4j.DocumentException;
-import org.springframework.beans.BeanUtils;
-
 import com.cgodo.component.entity.WechatCallEntity;
 import com.cgodo.util.UtilDom4j;
 import com.cgodo.util.UtilLog;
@@ -43,8 +40,8 @@ public class WechatCallModel extends WechatCallEntity {
         try {
         	resultMap = UtilDom4j.xmlBody2map(result, "xml");
 			wechatModel= new WechatModel();
-			BeanUtils.copyProperties(resultMap, wechatModel);
-		} catch (DocumentException e) {
+			org.apache.commons.beanutils.BeanUtils.populate(wechatModel,resultMap);
+		} catch (Exception e) {
 			UtilLog.error("微信 回调，xml转化成 map失败", e);
 			
 			throw new RuntimeException(e);
