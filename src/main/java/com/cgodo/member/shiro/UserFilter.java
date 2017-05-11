@@ -48,7 +48,7 @@ public class UserFilter extends org.apache.shiro.web.filter.authc.UserFilter {
     		Subject subject = SecurityUtils.getSubject();
     		UserinfoModel userinfoModel = userinfoService.getById(String.valueOf(subject.getPrincipal()));
     		
-    		if(userinfoModel.getUserType().equals(userType)) {
+    		if(userinfoModel!=null && userinfoModel.getUserType().equals(userType)) {
     			return true;
     		} else {
     			//未登录，进行登陆操作

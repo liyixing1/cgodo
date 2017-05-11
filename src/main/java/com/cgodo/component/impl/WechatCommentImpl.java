@@ -83,10 +83,10 @@ public class WechatCommentImpl implements WechatComment {
 				.toUpperCase();
 		return sign;
 	}
-	
+
 	@Override
-	public boolean validationSign(Map<String, Object> paramsMap){
-		String sign = UtilUrl.mapToUrlNoEncode(paramsMap, "utf-8","sign");
+	public boolean validationSign(Map<String, Object> paramsMap) {
+		String sign = createSign(UtilUrl.mapToUrlNoEncode(paramsMap, "utf-8", "sign"));
 		return paramsMap.get("sign").toString().equals(sign);
 	}
 
@@ -258,8 +258,8 @@ public class WechatCommentImpl implements WechatComment {
 	}
 
 	@Override
-	public WechatCallModel closeorder(String orderId, String ip,
-			String userId) throws Exception {
+	public WechatCallModel closeorder(String orderId, String ip, String userId)
+			throws Exception {
 		WechatCallModel wechatCallModel = new WechatCallModel();
 		// 保证顺序，否则出错
 		// 参数名ASCII码从小到大排序（字典序）；
@@ -296,13 +296,13 @@ public class WechatCommentImpl implements WechatComment {
 		params.put("appid", appId);
 		params.put("mch_id", mchId);
 		params.put("nonce_str", UUID.randomUUID().toString().replace("-", ""));
-		
-		if(StringUtils.isNotBlank(orderId)) {
+
+		if (StringUtils.isNotBlank(orderId)) {
 			params.put("out_trade_no", orderId);
 		} else {
 			params.put("transaction_id", transactionId);
 		}
-		
+
 		String paramsUrl = UtilUrl.mapToUrlNoEncode(params, "utf-8");
 		String sign = createSign(paramsUrl);
 		params.put("sign", sign);
@@ -321,11 +321,11 @@ public class WechatCommentImpl implements WechatComment {
 
 	@Override
 	public void doNotify(WechatNotifyModel wechatNotifyModel) {
-		//校验签名
-		if(!validationSign(wechatNotifyModel.getParamsMap())) {
+		// 校验签名
+		if (!validationSign(wechatNotifyModel.getParamsMap())) {
 			return;
 		}
-		
+
 		try {
 			for (WechatCommonListener wechatCommonListener : wechatCommonListeners) {
 				if (wechatNotifyModel.getType() == EnumWechatNotifyType.统一下单) {
@@ -336,13 +336,22 @@ public class WechatCommentImpl implements WechatComment {
 		} catch (Exception e) {
 			UtilLog.error("微信回调处理失败", e);
 			wechatNotifyModel.setResult("ERROR:" + e.getMessage());
-			wechatNotifyModel.setResult("ERROR:"+e.getMessage());
+			wechatNotifyModel.setResult("ERROR:" + e.getMessage());
 			wechatNotifyService.add(wechatNotifyModel);
 			throw new RuntimeException(e);
 		}
 
 		wechatNotifyModel.setResult("SUCCESS");
 		wechatNotifyService.add(wechatNotifyModel);
+	}
+
+	public static void main(String[] args) throws Exception {
+		String result = UtilHttpClient
+				.httpRequestPostXML(
+						"http://yiliao.nalanyuan.com.cn/wechat_comment/pay_notify.jhtml",
+						"<xml> <appid><![CDATA[wxbdfa4fa5f118146b]]></appid> <attach><![CDATA[支付测试]]></attach> <bank_type><![CDATA[CFT]]></bank_type> <fee_type><![CDATA[CNY]]></fee_type> <is_subscribe><![CDATA[Y]]></is_subscribe> <mch_id><![CDATA[10000100]]></mch_id> <nonce_str><![CDATA[5d2b6c2a8db53831f7eda20af46e531c]]></nonce_str> <openid><![CDATA[oUpF8uMEb4qRXf22hE3X68TekukE]]></openid> <out_trade_no><![CDATA[1409811653]]></out_trade_no> <result_code><![CDATA[SUCCESS]]></result_code> <return_code><![CDATA[SUCCESS]]></return_code> <sign><![CDATA[B552ED6B279343CB493C5DD0D78AB241]]></sign> <sub_mch_id><![CDATA[10000100]]></sub_mch_id> <time_end><![CDATA[20140903131540]]></time_end> <total_fee>1</total_fee> <trade_type><![CDATA[JSAPI]]></trade_type> <transaction_id><![CDATA[1004400740201409030005092168]]></transaction_id> </xml>");
+		
+		System.out.println(result);
 	}
 
 	@Value("${weixin.appId}")

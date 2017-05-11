@@ -1,5 +1,9 @@
 package com.cgodo.component.act;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
@@ -8,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cgodo.component.WechatComment;
 import com.cgodo.component.model.WechatNotifyModel;
+import com.cgodo.constant.EnumWechatNotifyType;
+import com.cgodo.util.UtilLog;
 
 @Component
 @RequestMapping("/wechat_comment")
@@ -34,11 +40,18 @@ public class WechatCommentAct {
 	 * @throws Exception 
 	 */
 	@RequestMapping("/pay_notify.jhtml")
-	public void pay_notify(@RequestBody String xml,ModelMap modelMap) throws Exception {
+	public void pay_notify(@RequestBody String xml,ModelMap modelMap,HttpServletResponse response) throws Exception {
+		UtilLog.debug("xml", xml);
 		WechatNotifyModel wechatNotifyModel = new WechatNotifyModel();
 		
 		wechatNotifyModel.setParams(xml);
+		wechatNotifyModel.setType(EnumWechatNotifyType.统一下单);
 		wechatComment.doNotify(wechatNotifyModel);
+		send(response, "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>");
+	}
+	
+	public void send(HttpServletResponse response,String xml) throws IOException {
+		response.getWriter().write(xml);
 	}
 	
 	@Autowired
