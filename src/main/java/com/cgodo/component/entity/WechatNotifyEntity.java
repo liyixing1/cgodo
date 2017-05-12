@@ -178,7 +178,7 @@ public class WechatNotifyEntity implements Serializable {
      * @mbggenerated do_not_delete_during_merge
      */
     public void setResult(String result) {
-        this.result = result == null ? null : result.trim();
+        this.result = (result == null ? null : result.trim());
     }
 
     /**

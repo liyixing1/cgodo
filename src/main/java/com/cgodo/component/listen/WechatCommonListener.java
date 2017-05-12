@@ -18,6 +18,7 @@ public interface WechatCommonListener {
 	 * 
 	 * @param params
 	 * @author liyixing 2017年5月8日 下午1:33:35
+	 * @throws Exception 
 	 */
-	public void onUnifiedOrderNotify(WechatNotifyModel wechatNotifyModel);
+	public void onUnifiedOrderNotify(WechatNotifyModel wechatNotifyModel) throws Exception;
 }

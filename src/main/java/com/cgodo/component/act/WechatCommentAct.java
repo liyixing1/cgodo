@@ -41,7 +41,7 @@ public class WechatCommentAct {
 	 */
 	@RequestMapping("/pay_notify.jhtml")
 	public void pay_notify(@RequestBody String xml,ModelMap modelMap,HttpServletResponse response) throws Exception {
-		UtilLog.debug("xml", xml);
+		UtilLog.debug("回调xml", xml);
 		WechatNotifyModel wechatNotifyModel = new WechatNotifyModel();
 		
 		wechatNotifyModel.setParams(xml);

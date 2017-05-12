@@ -323,6 +323,9 @@ public class WechatCommentImpl implements WechatComment {
 	public void doNotify(WechatNotifyModel wechatNotifyModel) {
 		// 校验签名
 		if (!validationSign(wechatNotifyModel.getParamsMap())) {
+			wechatNotifyModel.setResult("FAIL:SIGN_ERROR");
+			wechatNotifyService.add(wechatNotifyModel);
+			
 			return;
 		}
 
@@ -335,7 +338,6 @@ public class WechatCommentImpl implements WechatComment {
 			}
 		} catch (Exception e) {
 			UtilLog.error("微信回调处理失败", e);
-			wechatNotifyModel.setResult("ERROR:" + e.getMessage());
 			wechatNotifyModel.setResult("ERROR:" + e.getMessage());
 			wechatNotifyService.add(wechatNotifyModel);
 			throw new RuntimeException(e);
