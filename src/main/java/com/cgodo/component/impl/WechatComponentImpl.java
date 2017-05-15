@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.cgodo.component.WechatComment;
-import com.cgodo.component.listen.WechatCommonListener;
+import com.cgodo.component.WechatComponent;
+import com.cgodo.component.listen.WechatComponentListener;
 import com.cgodo.component.model.WechatCallModel;
 import com.cgodo.component.model.WechatNotifyModel;
 import com.cgodo.component.service.WechatCallService;
@@ -37,7 +37,7 @@ import com.cgodo.util.UtilUrl;
  *
  */
 @Component
-public class WechatCommentImpl implements WechatComment {
+public class WechatComponentImpl implements WechatComponent {
 	/**
 	 * 令牌地址
 	 */
@@ -106,7 +106,6 @@ public class WechatCommentImpl implements WechatComment {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public AccessToken getAccessToken() throws Exception {
 		WechatCallModel wechatCallModel = new WechatCallModel();
@@ -124,19 +123,18 @@ public class WechatCommentImpl implements WechatComment {
 		wechatCallModel.setParams(paramsUrl);
 		wechatCallModel.setType(EnumWechatInterfaceType.获取令牌);
 		String result = UtilHttpClient.httpRequestGet(url);
-		wechatCallModel.setResult(result);
+		wechatCallModel.setResultJson(result);
 		wechatCallService.add(wechatCallModel);
 		// 解析json
-		Map<String, Object> map = OBJECTMAPPER.readValue(result, Map.class);
-		Integer errcode = (Integer) map.get("errcode");
+		Integer errcode = wechatCallModel.getWechatModel().getErrcode();
 
 		if (errcode != null && errcode != 0) {
 			throw new RuntimeException("微信token获取失败，错误码：" + errcode + ","
-					+ map.get("errmsg"));
+					+ wechatCallModel.getWechatModel().getErrmsg());
 		}
 
-		String access_token = (String) map.get("access_token");
-		Integer expires_in = (Integer) map.get("expires_in");
+		String access_token = wechatCallModel.getWechatModel().getAccess_token();
+		Integer expires_in = wechatCallModel.getWechatModel().getExpires_in();
 		AccessToken accessToken = new AccessToken();
 
 		accessToken.setAccess_token(access_token);
@@ -161,7 +159,7 @@ public class WechatCommentImpl implements WechatComment {
 		wechatCallModel.setParams(paramsUrl);
 		wechatCallModel.setType(EnumWechatInterfaceType.获取票据);
 		String result = UtilHttpClient.httpRequestGet(url);
-		wechatCallModel.setResult(result);
+		wechatCallModel.setResultJson(result);
 		wechatCallService.add(wechatCallModel);
 		// 解析json
 		@SuppressWarnings("unchecked")
@@ -175,7 +173,7 @@ public class WechatCommentImpl implements WechatComment {
 
 		String jticket = (String) map.get("ticket");
 		Integer expires_in = (Integer) map.get("expires_in");
-		WechatComment.Ticket ticket = new Ticket();
+		WechatComponent.Ticket ticket = new Ticket();
 
 		ticket.setTicket(jticket);
 		ticket.setGetDateTime(UtilDateTime.getNowDate());
@@ -330,7 +328,7 @@ public class WechatCommentImpl implements WechatComment {
 		}
 
 		try {
-			for (WechatCommonListener wechatCommonListener : wechatCommonListeners) {
+			for (WechatComponentListener wechatCommonListener : wechatCommonListeners) {
 				if (wechatNotifyModel.getType() == EnumWechatNotifyType.统一下单) {
 					wechatCommonListener
 							.onUnifiedOrderNotify(wechatNotifyModel);
@@ -350,7 +348,7 @@ public class WechatCommentImpl implements WechatComment {
 	public static void main(String[] args) throws Exception {
 		String result = UtilHttpClient
 				.httpRequestPostXML(
-						"http://yiliao.nalanyuan.com.cn/wechat_comment/pay_notify.jhtml",
+						"http://yiliao.nalanyuan.com.cn/wechat_component/pay_notify.jhtml",
 						"<xml> <appid><![CDATA[wxbdfa4fa5f118146b]]></appid> <attach><![CDATA[支付测试]]></attach> <bank_type><![CDATA[CFT]]></bank_type> <fee_type><![CDATA[CNY]]></fee_type> <is_subscribe><![CDATA[Y]]></is_subscribe> <mch_id><![CDATA[10000100]]></mch_id> <nonce_str><![CDATA[5d2b6c2a8db53831f7eda20af46e531c]]></nonce_str> <openid><![CDATA[oUpF8uMEb4qRXf22hE3X68TekukE]]></openid> <out_trade_no><![CDATA[1409811653]]></out_trade_no> <result_code><![CDATA[SUCCESS]]></result_code> <return_code><![CDATA[SUCCESS]]></return_code> <sign><![CDATA[B552ED6B279343CB493C5DD0D78AB241]]></sign> <sub_mch_id><![CDATA[10000100]]></sub_mch_id> <time_end><![CDATA[20140903131540]]></time_end> <total_fee>1</total_fee> <trade_type><![CDATA[JSAPI]]></trade_type> <transaction_id><![CDATA[1004400740201409030005092168]]></transaction_id> </xml>");
 		
 		System.out.println(result);
@@ -372,7 +370,7 @@ public class WechatCommentImpl implements WechatComment {
 	@Autowired
 	private WechatCallService wechatCallService;
 	@Autowired
-	private List<WechatCommonListener> wechatCommonListeners;
+	private List<WechatComponentListener> wechatCommonListeners;
 	@Autowired
 	private WechatNotifyService wechatNotifyService;
 }

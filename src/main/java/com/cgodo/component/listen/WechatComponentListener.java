@@ -11,7 +11,7 @@ import com.cgodo.component.model.WechatNotifyModel;
  * @version 1.0
  * @since 2017年5月7日 下午11:58:30
  */
-public interface WechatCommonListener {
+public interface WechatComponentListener {
 	/**
 	 * 
 	 * 描述:统一下单回调通知

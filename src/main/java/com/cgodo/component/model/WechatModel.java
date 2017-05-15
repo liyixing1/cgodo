@@ -152,7 +152,31 @@ public class WechatModel {
 	 * USERPAYING--用户支付中 PAYERROR--支付失败(其他原因，如银行返回失败)
 	 */
 	private String trade_state;
+	
+	/**
+	 * token
+	 */
+	private String access_token;
 
+	/**
+	 * 过期时间
+	 */
+	private Integer expires_in;
+	
+	/**
+	 * 票据
+	 */
+	private String ticket;
+	
+	/**
+	 * 错误码
+	 */
+	private Integer errcode;
+	/**
+	 * 错误消息
+	 */
+	private String errmsg;
+	
 	public String getAppid() {
 		return appid;
 	}
@@ -375,5 +399,45 @@ public class WechatModel {
 
 	public void setTrade_state(String trade_state) {
 		this.trade_state = trade_state;
+	}
+
+	public String getAccess_token() {
+		return access_token;
+	}
+
+	public void setAccess_token(String access_token) {
+		this.access_token = access_token;
+	}
+
+	public Integer getExpires_in() {
+		return expires_in;
+	}
+
+	public void setExpires_in(Integer expires_in) {
+		this.expires_in = expires_in;
+	}
+
+	public String getTicket() {
+		return ticket;
+	}
+
+	public void setTicket(String ticket) {
+		this.ticket = ticket;
+	}
+
+	public Integer getErrcode() {
+		return errcode;
+	}
+
+	public void setErrcode(Integer errcode) {
+		this.errcode = errcode;
+	}
+
+	public String getErrmsg() {
+		return errmsg;
+	}
+
+	public void setErrmsg(String errmsg) {
+		this.errmsg = errmsg;
 	}
 }

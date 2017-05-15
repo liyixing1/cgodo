@@ -10,14 +10,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.cgodo.component.WechatComment;
+import com.cgodo.component.WechatComponent;
 import com.cgodo.component.model.WechatNotifyModel;
 import com.cgodo.constant.EnumWechatNotifyType;
 import com.cgodo.util.UtilLog;
 
 @Component
-@RequestMapping("/wechat_comment")
-public class WechatCommentAct {
+@RequestMapping("/wechat_component")
+public class WechatComponentAct {
 	/**
 	 * 
 	 * 描述:获取jsconfig
@@ -28,7 +28,7 @@ public class WechatCommentAct {
 	 */
 	@RequestMapping("/config.html")
 	public void config(String url,ModelMap modelMap) throws Exception {
-		modelMap.put("wechatConfig", wechatComment.getConfig(url));
+		modelMap.put("wechatConfig", wechatComponent.getConfig(url));
 	}
 	
 	/**
@@ -46,7 +46,7 @@ public class WechatCommentAct {
 		
 		wechatNotifyModel.setParams(xml);
 		wechatNotifyModel.setType(EnumWechatNotifyType.统一下单);
-		wechatComment.doNotify(wechatNotifyModel);
+		wechatComponent.doNotify(wechatNotifyModel);
 		send(response, "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>");
 	}
 	
@@ -55,5 +55,5 @@ public class WechatCommentAct {
 	}
 	
 	@Autowired
-	private WechatComment wechatComment;
+	private WechatComponent wechatComponent;
 }

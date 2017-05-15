@@ -15,7 +15,7 @@ import com.cgodo.util.UtilDateTime;
  * @author liyixing-pc
  *
  */
-public interface WechatComment {
+public interface WechatComponent {
 	/**
 	 * 获取token,token有效期是2小时
 	 * 
@@ -179,13 +179,13 @@ public interface WechatComment {
 		}
 
 		/**
-		 * 是否过期,追加5分钟缓冲期
+		 * 是否过期,追加1分钟缓冲期
 		 * 
 		 * @return
 		 */
 		public boolean isExpires() {
 			long expiresIn = getDateTime.getTime() + this.expiresIn * 1000
-					- 300000;
+					- 60000;
 
 			if (UtilDateTime.getNowDate().getTime() >= expiresIn) {
 				return true;
@@ -249,13 +249,13 @@ public interface WechatComment {
 		}
 
 		/**
-		 * 是否过期,追加5分钟缓冲期
+		 * 是否过期,追加1分钟缓冲期
 		 * 
 		 * @return
 		 */
 		public boolean isExpires() {
 			long expiresIn = getDateTime.getTime() + this.expiresIn * 1000
-					- 300000;
+					- 60000;
 
 			if (UtilDateTime.getNowDate().getTime() >= expiresIn) {
 				return true;
