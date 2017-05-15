@@ -1,6 +1,7 @@
 package com.cgodo.springmvc;
 
 import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Documented;
@@ -15,7 +16,7 @@ import javax.validation.Payload;
  * 
  * @author Emmanuel Bernard
  */
-@Target({ FIELD })
+@Target({ FIELD,TYPE })
 @Retention(RUNTIME)
 @Documented
 @Constraint(validatedBy = { NotExistsValidator.class })
