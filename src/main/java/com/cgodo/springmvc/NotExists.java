@@ -1,7 +1,6 @@
 package com.cgodo.springmvc;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Documented;
@@ -16,10 +15,10 @@ import javax.validation.Payload;
  * 
  * @author Emmanuel Bernard
  */
-@Target({ FIELD,TYPE })
+@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER ,TYPE })
 @Retention(RUNTIME)
 @Documented
-@Constraint(validatedBy = { NotExistsValidator.class })
+@Constraint(validatedBy = { NotExistsValidator.class,NotExistsIntegerValidator.class })
 public @interface NotExists {
 
 	String message() default "{已存在的数据}";

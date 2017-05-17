@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ApplicationObjectSupport;
@@ -22,8 +21,8 @@ import com.cgodo.util.UtilModel;
  * @version 1.0
  * @since 2016年12月10日 下午2:05:19
  */
-public class NotExistsValidator extends ApplicationObjectSupport implements
-		ConstraintValidator<NotExists, Object> {
+public class NotExistsIntegerValidator extends ApplicationObjectSupport implements
+		ConstraintValidator<NotExists, Integer> {
 
 	@Override
 	public void initialize(NotExists constraintAnnotation) {
@@ -31,17 +30,11 @@ public class NotExistsValidator extends ApplicationObjectSupport implements
 	}
 
 	@Override
-	public boolean isValid(Object value, ConstraintValidatorContext context) {
+	public boolean isValid(Integer value, ConstraintValidatorContext context) {
 		if (value == null) {
 			return true;
 		}
 
-		if(value instanceof String) {
-			if(StringUtils.isBlank((String)value)) {
-				return true;
-			}
-		}
-		
 		try {
 			ApplicationContext applicationContext = getApplicationContext();
 			Object mapper = applicationContext.getBean(notExists.dataMapper());

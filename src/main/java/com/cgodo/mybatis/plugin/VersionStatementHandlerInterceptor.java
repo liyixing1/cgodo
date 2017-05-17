@@ -48,6 +48,11 @@ public class VersionStatementHandlerInterceptor implements Interceptor {
 			}
 			
 			Long version = (Long) PropertyUtils.getProperty(model, "version");
+			
+			if(version == null) {
+				return invocation.proceed();
+			}
+			
 			version = version - 1;
 
 			// 增加条件

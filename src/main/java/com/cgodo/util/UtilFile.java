@@ -57,7 +57,7 @@ public class UtilFile {
 		}
 		// 检查目录写权限
 		if (!uploadDir.canWrite()) {
-			throw new IOException("改目录不可写");
+			throw new IOException("该目录不可写");
 		}
 
 		int exeIndex = oldFileName.lastIndexOf(".");
