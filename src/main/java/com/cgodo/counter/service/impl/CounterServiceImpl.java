@@ -43,14 +43,14 @@ public class CounterServiceImpl implements CounterService {
 	public CounterModel readAndInc(String type, String name) {
 		// 重复三次，失败可能的原因是因为索引重复type+name，该索引是属于防止重复的，
 		// 同时请求修改，version检查时也会报错
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 3; i++) {
 			try {
 				return readAndInc(type, name, 1, 1);
 			} catch (Exception e) {
 				UtilLog.error("保存counter时失败，第{}次", e,i);
 
-				if (i >= 10) {
-					UtilLog.error("保存counter时失败，超过10次，退出尝试", e);
+				if (i >= 3) {
+					UtilLog.error("保存counter时失败，超过3次，退出尝试", e);
 					throw new RuntimeException(e);
 				}
 			}
