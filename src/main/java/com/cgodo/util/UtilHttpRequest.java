@@ -3,6 +3,7 @@ package com.cgodo.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -28,8 +29,7 @@ public class UtilHttpRequest {
 	 * 移动设备正则匹配：手机端，用于判断浏览器信息<br>
 	 * \b 是单词边界(连着的两个(字母字符 与 非字母字符) 之间的逻辑上的间隔),<br>
 	 * 字符串在编译时会被转码一次,所以是<br>
-	 * "\\b" \B 是单词内部逻辑间隔(连着的两个字母字符之间的逻辑上的间隔)
-	 * <br>
+	 * "\\b" \B 是单词内部逻辑间隔(连着的两个字母字符之间的逻辑上的间隔) <br>
 	 * CASE_INSENSITIVE不区分大小写
 	 */
 	private static final Pattern PAR_PATTERN = Pattern.compile(
@@ -129,5 +129,45 @@ public class UtilHttpRequest {
 	 */
 	public static final String getUseragent(HttpServletRequest request) {
 		return request.getHeader("user-agent");
+	}
+
+	/**
+	 * 
+	 * 描述:实际请求地址
+	 * 
+	 * @param request
+	 * @return
+	 * @author liyixing 2017年5月17日 下午10:21:16
+	 */
+	public static final String getRelativePath(HttpServletRequest request) {
+		if (request.getAttribute(RequestDispatcher.INCLUDE_REQUEST_URI) != null) {
+			String result = (String) request
+					.getAttribute(RequestDispatcher.INCLUDE_PATH_INFO);
+			if (result == null) {
+				result = (String) request
+						.getAttribute(RequestDispatcher.INCLUDE_SERVLET_PATH);
+			} else {
+				result = (String) request
+						.getAttribute(RequestDispatcher.INCLUDE_SERVLET_PATH)
+						+ result;
+			}
+			if ((result == null) || (result.equals(""))) {
+				result = "/";
+			}
+			return (result);
+		}
+
+		// No, extract the desired path directly from the request
+		String result = request.getPathInfo();
+		if (result == null) {
+			result = request.getServletPath();
+		} else {
+			result = request.getServletPath() + result;
+		}
+		if ((result == null) || (result.equals(""))) {
+			result = "/";
+		}
+		return (result);
+
 	}
 }

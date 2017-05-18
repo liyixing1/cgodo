@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
@@ -39,6 +40,10 @@ public class CgodoMappingJackson2JsonView extends MappingJackson2JsonView {
 				} else if (entry.getValue() instanceof BindingResult) {
 					filterErrors((BindingResult) entry.getValue(), errors);
 				}
+			}
+			
+			if(StringUtils.isNotBlank((String)model.get("error_message"))){
+				errors.add((String)model.get("error_message"));
 			}
 			
 			if(errors.size() > 0) {

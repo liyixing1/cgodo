@@ -27,5 +27,7 @@ public @interface Exists {
 	Class<? extends Payload>[] payload() default { };
 	
 	Class<?> dataMapper();
+	
+	String field() default "id";
 }
 

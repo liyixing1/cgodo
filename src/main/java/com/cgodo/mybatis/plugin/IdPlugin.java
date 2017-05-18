@@ -43,12 +43,8 @@ public class IdPlugin implements Interceptor {
 
 		// insert操作
 		if (lastId.startsWith("insert")) {
-			Object idSrc = PropertyUtils.getProperty(args[1], "id");
-			
-			if (idSrc == null) {
-				PropertyUtils.setProperty(args[1], "id", UUID.randomUUID()
+			PropertyUtils.setProperty(args[1], "id", UUID.randomUUID()
 						.toString().replace("-", ""));
-			}
 		}
 
 		return invocation.proceed();
