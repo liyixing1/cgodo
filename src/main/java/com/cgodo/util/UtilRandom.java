@@ -1,5 +1,6 @@
 package com.cgodo.util;
 
+import java.math.BigDecimal;
 import java.util.Random;
 
 /**
@@ -25,5 +26,34 @@ public final class UtilRandom {
 	 */
 	public static final int nextInt(int bound) {
 		return RANDOM.nextInt(bound);
+	}
+	
+	/**
+	 * 
+	 * 描述:随机整数<br>指定位数
+	 * 
+	 * @param 位数
+	 * @return
+	 * @author liyixing 2017年5月16日 下午7:53:55
+	 */
+	public static final long nextDigitLong(int digit) {
+		double d = RANDOM.nextDouble();
+		double n = Math.pow(10,digit);
+		
+		BigDecimal result = BigDecimal.valueOf(d*n);
+		
+		return result.longValue();
+	}
+	
+	/**
+	 * 
+	 * 描述:随机整数<br>指定位数
+	 * 
+	 * @param 位数
+	 * @return
+	 * @author liyixing 2017年5月16日 下午7:53:55
+	 */
+	public static final int nextDigitInt(int digit) {
+		return (int) nextDigitLong(digit);
 	}
 }
