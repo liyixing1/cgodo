@@ -56,4 +56,9 @@ public final class UtilRandom {
 	public static final int nextDigitInt(int digit) {
 		return (int) nextDigitLong(digit);
 	}
+	
+	public static void main(String[] args) {
+		while(true)
+		System.out.println( UtilRandom.nextInt(2)+1);
+	}
 }
