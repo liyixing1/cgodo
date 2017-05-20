@@ -2,6 +2,8 @@ package com.cgodo.util;
 
 import java.text.NumberFormat;
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.util.CollectionUtils;
@@ -79,12 +81,32 @@ public final class UtilString {
 	 */
 	public static final String formatNumber(Number num) {
 		NumberFormat format = NumberFormat.getNumberInstance();
-		
+
 		return format.format(num);
 	}
-	
+
+	/**
+	 * 
+	 * 描述:去除字符串中的空格、回车、换行符、制表符
+	 * 
+	 * @param str
+	 * @return
+	 * @author liyixing 2017年5月20日 下午10:38:39
+	 */
+	public static final String removeBlank(String str) {
+		String dest = "";
+
+		if (str != null) {
+			Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+			Matcher m = p.matcher(str);
+			dest = m.replaceAll("");
+		}
+
+		return dest;
+	}
+
 	public static void main(String[] args) {
-		System.out.println( formatNumber(111111));
-		System.out.println( formatNumber(111));
+		System.out.println(formatNumber(111111));
+		System.out.println(formatNumber(111));
 	}
 }
