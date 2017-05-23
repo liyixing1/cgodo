@@ -34,6 +34,59 @@
 
 		return str.indexOf(searchvalue);
 	};
+	
+	/**
+	 * ###.###
+	 * 000.00
+	 * yyyy-MM-dd  HH:mm:ss
+	 */
+	$.format = function(obj, format) {
+		if(!obj) {
+			return '';
+		}
+		
+		if(typeof(obj) == 'number') {
+			
+		}
+	};
+	
+	/**
+	 * "{},{},hehe".messageFormat("hello","world")=hello,word,hehe
+	 */
+	$.formatMessage = function() {
+		if(arguments.length == 0) {
+			return '';
+		}
+		
+		var str = arguments[0];
+		
+		if ($.isBlank(str)) {
+			return "";
+		}
+		
+		if(arguments.length < 2) {
+			return  str;
+		}
+		
+		var strs = str.split('{}');
+		
+		//可变字符串变量数不一致
+		if(strs.length != arguments.length) {
+			return str;
+		}
+		
+		var result = '';
+		
+		for(i = 0; i < strs.length; i++) {
+			result = result + strs[i];
+			
+			if(i < strs.length - 1) {
+				result = result + arguments[i+1] ;
+			}
+		}
+		
+		return result;
+	};
 })(jQuery);
 
 /**
