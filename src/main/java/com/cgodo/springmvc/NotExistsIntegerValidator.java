@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ApplicationObjectSupport;
 
 import com.cgodo.util.UtilLog;
-import com.cgodo.util.UtilModel;
+import com.cgodo.util.UtilString;
 
 /**
  * 
@@ -40,7 +40,7 @@ public class NotExistsIntegerValidator extends ApplicationObjectSupport implemen
 			Object mapper = applicationContext.getBean(notExists.dataMapper());
 			Object condition = notExists.conditionClass().newInstance();
 			Object criteria = MethodUtils.invokeMethod(condition, "createCriteria");
-			MethodUtils.invokeMethod(criteria, "and"+UtilModel.firstToUpperCase(notExists.field())+"EqualTo",value);
+			MethodUtils.invokeMethod(criteria, "and"+UtilString.firstToUpperCase(notExists.field())+"EqualTo",value);
 			List<?> o = (List<?>) MethodUtils.invokeMethod(mapper, "selectByExample",
 					condition);
 			

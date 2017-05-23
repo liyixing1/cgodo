@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ApplicationObjectSupport;
 
 import com.cgodo.util.UtilLog;
-import com.cgodo.util.UtilModel;
+import com.cgodo.util.UtilString;
 
 /**
  * 
@@ -37,74 +37,83 @@ public class NotExistsValidator extends ApplicationObjectSupport implements
 			return true;
 		}
 
-		if(value instanceof String) {
-			if(StringUtils.isBlank((String)value)) {
+		if (value instanceof String) {
+			if (StringUtils.isBlank((String) value)) {
 				return true;
 			}
-			
+
 			try {
 				ApplicationContext applicationContext = getApplicationContext();
-				Object mapper = applicationContext.getBean(notExists.dataMapper());
+				Object mapper = applicationContext.getBean(notExists
+						.dataMapper());
 				Object condition = notExists.conditionClass().newInstance();
-				Object criteria = MethodUtils.invokeMethod(condition, "createCriteria");
-				MethodUtils.invokeMethod(criteria, "and"+UtilModel.firstToUpperCase(notExists.field())+"EqualTo",value);
-				List<?> o = (List<?>) MethodUtils.invokeMethod(mapper, "selectByExample",
-						condition);
-				
-				//不存在
-				if (o .size() == 0) {
+				Object criteria = MethodUtils.invokeMethod(condition,
+						"createCriteria");
+				MethodUtils.invokeMethod(criteria,
+						"and" + UtilString.firstToUpperCase(notExists.field())
+								+ "EqualTo", value);
+				List<?> o = (List<?>) MethodUtils.invokeMethod(mapper,
+						"selectByExample", condition);
+
+				// 不存在
+				if (o.size() == 0) {
 					return true;
 				}
 
 				return false;
 			} catch (Exception e1) {
 				UtilLog.error("验证notExists失败！", e1);
-				throw new RuntimeException("验证notExists失败！",e1);
-			} 
+				throw new RuntimeException("验证notExists失败！", e1);
+			}
 		} else {
 			try {
-				Object valueField = PropertyUtils.getProperty(value, notExists.field());
-				
-				if(valueField == null) {
+				Object valueField = PropertyUtils.getProperty(value,
+						notExists.field());
+
+				if (valueField == null) {
 					return true;
 				}
-				
-				if(valueField instanceof String) {
-					if(StringUtils.isBlank((String)valueField)) {
+
+				if (valueField instanceof String) {
+					if (StringUtils.isBlank((String) valueField)) {
 						return true;
 					}
 				}
-				
+
 				ApplicationContext applicationContext = getApplicationContext();
-				Object mapper = applicationContext.getBean(notExists.dataMapper());
+				Object mapper = applicationContext.getBean(notExists
+						.dataMapper());
 				Object condition = notExists.conditionClass().newInstance();
-				Object criteria = MethodUtils.invokeMethod(condition, "createCriteria");
-				MethodUtils.invokeMethod(criteria, "and"+UtilModel.firstToUpperCase(notExists.field())+"EqualTo",valueField);
-				List<?> o = (List<?>) MethodUtils.invokeMethod(mapper, "selectByExample",
-						condition);
-				
-				//不存在
-				if (o .size() == 0) {
+				Object criteria = MethodUtils.invokeMethod(condition,
+						"createCriteria");
+				MethodUtils.invokeMethod(criteria,
+						"and" + UtilString.firstToUpperCase(notExists.field())
+								+ "EqualTo", valueField);
+				List<?> o = (List<?>) MethodUtils.invokeMethod(mapper,
+						"selectByExample", condition);
+
+				// 不存在
+				if (o.size() == 0) {
 					return true;
 				}
-				
-				//已经存在 ，如果是本身的，则依然跳过
+
+				// 已经存在 ，如果是本身的，则依然跳过
 				Object old = o.get(0);
 				Object id = PropertyUtils.getProperty(value, "id");
-				
-				if(id == null) {
+
+				if (id == null) {
 					return false;
 				}
-				
-				if(id.equals(PropertyUtils.getProperty(old, "id"))){
+
+				if (id.equals(PropertyUtils.getProperty(old, "id"))) {
 					return true;
 				}
 
 				return false;
 			} catch (Exception e1) {
 				UtilLog.error("验证notExists失败！", e1);
-				throw new RuntimeException("验证notExists失败！",e1);
-			} 
+				throw new RuntimeException("验证notExists失败！", e1);
+			}
 		}
 	}
 

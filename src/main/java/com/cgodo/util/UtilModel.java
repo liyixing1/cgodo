@@ -108,19 +108,42 @@ public final class UtilModel {
 		}
 		return sb.toString();
 	}
-
-	public static void main(String[] args) {
-	}
-
+	
 	/**
 	 * 
-	 * 描述:首字母大写
+	 * 描述:数据库表明转化成java<br>
+	 * 如 ab_cd = AbCd
 	 * 
-	 * @param source
+	 * @param property
 	 * @return
-	 * @author liyixing 2016年12月10日 下午2:15:04
+	 * @author liyixing 2017年5月4日 下午11:15:25
 	 */
-	public static final String firstToUpperCase(String source) {
-		return source.substring(0, 1).toUpperCase() + source.substring(1);
+	public static final String tableNameToJavaName(String tableName) {
+		if (StringUtils.isBlank(tableName)) {
+			return "";
+		}
+
+		int len = tableName.length();
+		StringBuilder sb = new StringBuilder(len);
+
+		for (int i = 0; i < len; i++) {
+			char c = tableName.charAt(i);
+			if (c == UNDERLINE && i!=0) {
+				// 下划线不是结尾
+				if (++i < len) {
+					sb.append(Character.toUpperCase(tableName.charAt(i)));
+				}
+			} else {
+				if(sb.length() > 0) {
+					sb.append(Character.toLowerCase(c));
+				} else {
+					sb.append(Character.toUpperCase(c));
+				}
+			}
+		}
+		return sb.toString();
+	}
+
+	public static void main(String[] args) {
 	}
 }
