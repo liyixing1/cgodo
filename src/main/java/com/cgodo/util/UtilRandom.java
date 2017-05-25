@@ -48,7 +48,7 @@ public final class UtilRandom {
 			r = r * 10;
 		}
 		
-		return result.longValue();
+		return r;
 	}
 	
 	/**
@@ -63,17 +63,10 @@ public final class UtilRandom {
 		return (int) nextDigitLong(digit);
 	}
 	
-	public static void main(String[] args) {
-		double d = 0.036;
-		double n = Math.pow(10,2);
-		System.out.println(n);
-		BigDecimal result = BigDecimal.valueOf(d*n);
-		long r = result.longValue();
-		System.out.println(r);
-		while(r < (n/10)) {
-			//补位
-			r = r * 10;
+	public static void main(String[] args) throws InterruptedException {
+		while (true) {
+			System.out.println(nextDigitLong(5));
+			Thread.sleep(100);
 		}
-		System.out.println(r);
 	}
 }
