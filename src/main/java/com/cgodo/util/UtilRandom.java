@@ -43,6 +43,10 @@ public final class UtilRandom {
 		BigDecimal result = BigDecimal.valueOf(d*n);
 		long r = result.longValue();
 		
+		if(r == 0l) {
+			r = 1l;
+		}
+		
 		while(r < (n/10)) {
 			//补位
 			r = r * 10;
