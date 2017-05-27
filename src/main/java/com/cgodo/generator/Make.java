@@ -29,7 +29,7 @@ public class Make {
 		dataMap.put("remark", makeInfo.getTableRemark());
 		dataMap.put("columnModels", makeInfo.getColumnModels());
 		dataMap.put("javaName", makeInfo.getJavaName());
-		dataMap.put("javaVarName", makeInfo.getJavaName());
+		dataMap.put("javaVarName", makeInfo.getJavaVarName());
 		dataMap.put("entityMapperName", makeInfo.getEntityMapperName());
 		dataMap.put("entityMapperVariableName", makeInfo.getEntityMapperVariableName());
 		dataMap.put("applicationName", GeneratorApplication.applicationName);

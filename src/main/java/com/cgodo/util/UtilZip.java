@@ -36,6 +36,31 @@ public final class UtilZip {
 	 * @throws Exception
 	 * @author liyixing 2017年5月18日 下午3:13:37
 	 */
+	public static final void zip(String zipFileName, File... inputFiles)
+			throws Exception {
+		UtilLog.debug("开始压缩");
+		ZipOutputStream out = new ZipOutputStream(new FileOutputStream(
+				zipFileName));
+		BufferedOutputStream bo = new BufferedOutputStream(out);
+		
+		for(File inputFile : inputFiles) {
+			zip(out, inputFile, inputFile.getName(), bo);
+		}
+		
+		bo.close();
+		out.close(); // 输出流关闭
+		UtilLog.debug("压缩完成");
+	}
+	
+	/**
+	 * 
+	 * 描述:生成zip
+	 * 
+	 * @param zipFileName
+	 * @param inputFile
+	 * @throws Exception
+	 * @author liyixing 2017年5月18日 下午3:13:37
+	 */
 	public static final void zip(String zipFileName, File inputFile)
 			throws Exception {
 		UtilLog.debug("开始压缩");
