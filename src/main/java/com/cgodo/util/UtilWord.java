@@ -30,7 +30,7 @@ public class UtilWord {
 						"__EVENTVALIDATION",
 						"/wEdAAmhyUgD9FTUMeQJH4N5MdCpCG9mt+G5mKxkJmbtRkfMQTyR1R+fT/IjuebvQlAfObN9iXMNWwR7DLE2yWIT3HqM3XZxIK/NvYMvtFx3AW3s1je5gij1i1GPrY+QGn/6BFUCVVfbMNCH7DygaimgizggFgTjtK7hK11bry/4HktSMDyLlmRoMzte3Qd9tvkDZDpjukRZZop55XYJRyAGuVdBuLlAUrqnbhfR0IqmaBiOBw==",
 						"ctl00$content$FileUpload1", file,
-						"ctl00$content$txtResolution", "400",
+						"ctl00$content$txtResolution", "150",
 						"ctl00$content$ddlImageType", "png",
 						"ctl00$content$cmdSaveAttachment", "转换");
 		String result = UtilHttpClient.httpRequestPostFile(url, params);
@@ -41,7 +41,7 @@ public class UtilWord {
 			for(int i = 1; i< elements.size(); i++) {
 				Element e = elements.get(i);
 				
-				results.add(e.attr("href"));
+				results.add("http://www.docpe.com/"+e.attr("href").replace("../../", ""));
 			}
 		}
 		
@@ -49,7 +49,6 @@ public class UtilWord {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		word2Img(new File("D:\\1.doc"));
-		word2Img(new File("D:\\2.doc"));
+		word2Img(new File("D:\\22.doc"));
 	}
 }
