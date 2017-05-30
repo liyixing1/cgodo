@@ -156,6 +156,7 @@ public class PowerEntityCondition {
      * <li>gmtCreated 创建时间</li>
      * <li>gmtUpdated 修改时间</li>
      * <li>name 权限名称</li>
+     * <li>type 所属分类</li>
      * </ul>
      *
      * @mbggenerated
@@ -591,6 +592,76 @@ public class PowerEntityCondition {
             return (Criteria) this;
         }
 
+        public Criteria andTypeIsNull() {
+            addCriterion("TYPE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("TYPE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(String value) {
+            addCriterion("TYPE =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(String value) {
+            addCriterion("TYPE <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(String value) {
+            addCriterion("TYPE >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("TYPE >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(String value) {
+            addCriterion("TYPE <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(String value) {
+            addCriterion("TYPE <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLike(String value) {
+            addCriterion("TYPE like", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotLike(String value) {
+            addCriterion("TYPE not like", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<String> values) {
+            addCriterion("TYPE in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<String> values) {
+            addCriterion("TYPE not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(String value1, String value2) {
+            addCriterion("TYPE between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(String value1, String value2) {
+            addCriterion("TYPE not between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
         public Criteria andIdLikeInsensitive(String value) {
             addCriterion("upper(ID) like", value.toUpperCase(), "id");
             return (Criteria) this;
@@ -598,6 +669,11 @@ public class PowerEntityCondition {
 
         public Criteria andNameLikeInsensitive(String value) {
             addCriterion("upper(NAME) like", value.toUpperCase(), "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLikeInsensitive(String value) {
+            addCriterion("upper(TYPE) like", value.toUpperCase(), "type");
             return (Criteria) this;
         }
     }
@@ -609,6 +685,7 @@ public class PowerEntityCondition {
      * <li>gmtCreated 创建时间</li>
      * <li>gmtUpdated 修改时间</li>
      * <li>name 权限名称</li>
+     * <li>type 所属分类</li>
      * </ul>
      *
      * @mbggenerated do_not_delete_during_merge
@@ -627,6 +704,7 @@ public class PowerEntityCondition {
      * <li>gmtCreated 创建时间</li>
      * <li>gmtUpdated 修改时间</li>
      * <li>name 权限名称</li>
+     * <li>type 所属分类</li>
      * </ul>
      *
      * @mbggenerated

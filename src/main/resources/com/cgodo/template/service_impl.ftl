@@ -76,6 +76,32 @@ public class ${javaName}ServiceImpl implements ${javaName}Service {
 	}
 	</#if>
 	</#list>
+	
+	<#list columnModels as columnModel>
+	<#if columnModel.typeName != 'TEXT'>
+	
+	/**
+	 * 
+	 * 描述:根据${columnModel.remark} s in 获取
+	 * 
+	 * @param <#if columnModel.property?ends_with("s")>${columnModel.property}es<#else>${columnModel.property}s</#if>
+	 * @return
+	 * @author cgodo generator ${datetime}
+	 */
+	@Override
+	public List<${modelName}> getsIn<#if columnModel.nameMethod?ends_with("s")>${columnModel.nameMethod}es<#else>${columnModel.nameMethod}s</#if>(List<${columnModel.simplTypeName}> <#if columnModel.property?ends_with("s")>${columnModel.property}es<#else>${columnModel.property}s</#if>) {
+		${entityConditionName} ${entityConditionVariableName} = new ${entityConditionName}();
+
+		${entityConditionVariableName}.createCriteria()
+				.andStatusNotEqualTo(EnumStatus.删除).and${columnModel.nameMethod}In(<#if columnModel.property?ends_with("s")>${columnModel.property}es<#else>${columnModel.property}s</#if>);
+
+		List<${modelName}> ${modelVariableName}s = ${entityMapperVariableName}
+				.selectByExample(${entityConditionVariableName});
+
+		return ${modelVariableName}s;
+	}
+	</#if>
+	</#list>
 
 	/**
 	 * 

@@ -48,7 +48,7 @@
 		<!-- connectionURL="jdbc:paradox:/${user.home}/23gou" userId="" password="" 
 			/> -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://127.0.0.1:3306/zhuyu?useUnicode=false&amp;autoReconnect=true&amp;characterEncoding=utf-8"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/ticket?useUnicode=false&amp;autoReconnect=true&amp;characterEncoding=utf-8"
 			userId="root" password="2722261" />
 
 		<javaModelGenerator targetPackage="com.cgodo.member.entity"
@@ -77,42 +77,37 @@
 				javaType="com.cgodo.constant.EnumSpeakingStatus"></columnOverride>
 		</table>
 
-		<table tableName="role" domainObjectName="RoleEntity">
-			<columnOverride column="STATUS"
-				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
-		</table>
+<!-- 		<table tableName="role" domainObjectName="RoleEntity"> -->
+<!-- 			<columnOverride column="STATUS" -->
+<!-- 				javaType="com.cgodo.constant.EnumStatus"></columnOverride> -->
+<!-- 		</table> -->
 		
 		<table tableName="power" domainObjectName="PowerEntity">
 			<columnOverride column="STATUS"
 				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
 		</table>
 		
-		<table tableName="power" domainObjectName="PowerEntity">
-			<columnOverride column="STATUS"
-				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
-		</table>
+<!-- 		<table tableName="role_power" domainObjectName="RolePowerEntity"> -->
+<!-- 			<columnOverride column="STATUS" -->
+<!-- 				javaType="com.cgodo.constant.EnumStatus"></columnOverride> -->
+<!-- 		</table> -->
 		
-		<table tableName="role_power" domainObjectName="RolePowerEntity">
-			<columnOverride column="STATUS"
-				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
-		</table>
+<!-- 		<table tableName="user_role" domainObjectName="UserRoleEntity"> -->
+<!-- 			<columnOverride column="STATUS" -->
+<!-- 				javaType="com.cgodo.constant.EnumStatus"></columnOverride> -->
+<!-- 		</table> -->
 		
-		<table tableName="user_role" domainObjectName="UserRoleEntity">
-			<columnOverride column="STATUS"
-				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
-		</table>
-		
-		<table tableName="wechat_userinfo" domainObjectName="WechatUserinfoEntity">
-			<columnOverride column="STATUS"
-				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
-		</table>
-		<table tableName="sina_userinfo" domainObjectName="SinaUserinfoEntity">
-			<columnOverride column="STATUS"
-				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
-		</table>
-		<table tableName="qq_userinfo" domainObjectName="QqUserinfoEntity">
-			<columnOverride column="STATUS"
-				javaType="com.cgodo.constant.EnumStatus"></columnOverride>
-		</table>
+<!-- 		<table tableName="wechat_userinfo" domainObjectName="WechatUserinfoEntity"> -->
+<!-- 			<columnOverride column="STATUS" -->
+<!-- 				javaType="com.cgodo.constant.EnumStatus"></columnOverride> -->
+<!-- 		</table> -->
+<!-- 		<table tableName="sina_userinfo" domainObjectName="SinaUserinfoEntity"> -->
+<!-- 			<columnOverride column="STATUS" -->
+<!-- 				javaType="com.cgodo.constant.EnumStatus"></columnOverride> -->
+<!-- 		</table> -->
+<!-- 		<table tableName="qq_userinfo" domainObjectName="QqUserinfoEntity"> -->
+<!-- 			<columnOverride column="STATUS" -->
+<!-- 				javaType="com.cgodo.constant.EnumStatus"></columnOverride> -->
+<!-- 		</table> -->
 	</context>
 </generatorConfiguration>
