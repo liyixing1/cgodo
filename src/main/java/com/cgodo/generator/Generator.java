@@ -56,6 +56,7 @@ public class Generator {
 			ListMake listMake = new ListMake();
 			SaveMake saveMake = new SaveMake();
 			EditMake editMake = new EditMake();
+			JsMake jsMake = new JsMake();
 			serviceImplMake.setNext(formMake);
 			formMake.setNext(adminActMake);
 			adminActMake.setNext(actMake);
@@ -63,6 +64,7 @@ public class Generator {
 			adminBaseMake.setNext(listMake);
 			listMake.setNext(saveMake);
 			saveMake.setNext(editMake);
+			editMake.setNext(jsMake);
 		}
 		
 		make.make(GeneratorApplication.makeCommonParams());

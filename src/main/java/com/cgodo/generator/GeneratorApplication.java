@@ -30,7 +30,13 @@ public class GeneratorApplication {
 	/**
 	 * html
 	 */
-	public static String SAVE_HTML_BASE_PATH;
+	public static String SAVE_HTML_BASE_PATH = "src/main/webapp/WEB-INF/html/";
+	
+	/**
+	 * html
+	 */
+	public static String SAVE_JS_BASE_PATH = "src/main/webapp/res/rms/js/";
+
 
 	/**
 	 * 需要忽略的字段

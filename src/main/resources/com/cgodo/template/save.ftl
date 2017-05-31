@@ -51,4 +51,6 @@ overrideName="action"] [/@override] [@override overrideName="main"]
 </div>
 <script type="text/javascript">
 </script>
-[/@override] [/@override]
+[/@override][@override overrideName="javascript"]
+	<script src="[@s.url '/res/rms/js/${tableName}.js'/]"></script>
+	[/@override] [/@override]
