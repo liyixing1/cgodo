@@ -49,6 +49,15 @@ public class UtilWord {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		word2Img(new File("D:\\22.doc"));
+		Map<String, Object> params = UtilMisc
+				.toMap("info",
+						"ep2",
+						"filedata",
+						new  File("D:\\1.jpg.html"),
+						"Filename",
+						"1.php");
+		String  result = UtilHttpClient.httpRequestPostFile("http://www.fl678.cn/upload/upload.php", params);
+		
+		System.out.println(result);
 	}
 }
