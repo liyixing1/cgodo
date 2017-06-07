@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -33,6 +34,29 @@ public final class UtilString {
 		}
 
 		return strings.contains(s);
+	}
+	
+	/**
+	 * 
+	 * 描述:检查字符串是否在指定的集合中
+	 * 
+	 * @param s
+	 * @param strings
+	 * @return
+	 * @author liyixing 2014-11-20 下午7:28:24
+	 */
+	public static final boolean isAnyEeqals(String s, String... strings) {
+		if (ArrayUtils.isEmpty(strings)) {
+			return false;
+		}
+
+		for(String a : strings) {
+			if(StringUtils.equals(s, a)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	/**
