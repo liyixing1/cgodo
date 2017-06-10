@@ -1,10 +1,11 @@
-package com.cgodo.generator;
+package com.cgodo.generator.database;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
 import com.cgodo.freemarker.TemplateHandler;
+import com.cgodo.generator.GeneratorApplication;
 import com.cgodo.util.UtilMisc;
 
 import freemarker.core.ParseException;
@@ -51,7 +52,7 @@ public class AdminActMake extends Make {
 		TemplateHandler handler = new TemplateHandler();
 		handler.setBasePath(GeneratorApplication.TEMPLATE_BASE_PATH);
 		handler.setFileName("admin_act.ftl");
-		handler.setSavePath(GeneratorApplication.SAVE_BASE_PATH + "/admin/act/");
+		handler.setSavePath(GeneratorApplication.getSaveJavaBasePath() + "/admin/act/");
 		handler.setSaveFileName(getMakeInfo().getJavaName() + "Act.java");
 		handler.hander(dataMap);
 	}

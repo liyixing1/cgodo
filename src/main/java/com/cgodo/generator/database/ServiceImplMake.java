@@ -1,4 +1,4 @@
-package com.cgodo.generator;
+package com.cgodo.generator.database;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.cgodo.freemarker.TemplateHandler;
+import com.cgodo.generator.GeneratorApplication;
 import com.cgodo.jdbc.Jdbc.ColumnModel;
 import com.cgodo.util.UtilDateTime;
 import com.cgodo.util.UtilMisc;
@@ -54,7 +55,7 @@ public class ServiceImplMake extends Make {
 		TemplateHandler handler = new TemplateHandler();
 		handler.setBasePath(GeneratorApplication.TEMPLATE_BASE_PATH);
 		handler.setFileName("service_impl.ftl");
-		handler.setSavePath(GeneratorApplication.SAVE_BASE_PATH + "/service/impl/");
+		handler.setSavePath(GeneratorApplication.getSaveJavaBasePath() + "/service/impl/");
 		handler.setSaveFileName(getMakeInfo().getJavaName() + "ServiceImpl.java");
 		handler.hander(dataMap);
 	}

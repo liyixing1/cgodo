@@ -261,5 +261,8 @@
 	<script src="[@s.url '/res/rms/javascripts/ace-elements.js'/]"></script>
 	<script src="[@s.url '/res/rms/javascripts/ace.js'/]"></script>
 	[@override overrideName="javascript"] [/@override]
+	<script>
+		$(function(){${r'$'}{RequestParameters.action!}});
+	</script>
 </body>
 </html>

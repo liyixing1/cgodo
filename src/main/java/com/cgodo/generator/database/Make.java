@@ -1,4 +1,4 @@
-package com.cgodo.generator;
+package com.cgodo.generator.database;
 
 import java.io.IOException;
 import java.util.Map;
@@ -32,7 +32,6 @@ public class Make {
 		dataMap.put("javaVarName", makeInfo.getJavaVarName());
 		dataMap.put("entityMapperName", makeInfo.getEntityMapperName());
 		dataMap.put("entityMapperVariableName", makeInfo.getEntityMapperVariableName());
-		dataMap.put("applicationName", GeneratorApplication.applicationName);
 	}
 
 	/**

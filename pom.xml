@@ -4,7 +4,7 @@
 	<groupId>com</groupId>
 	<artifactId>cgodo</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.24-SNAPSHOT</version>
+	<version>0.0.25-SNAPSHOT</version>
 	<name>cgodo</name>
 	<url>http://maven.apache.org</url>
 	<properties>
@@ -456,8 +456,6 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<includes>
-					<include>cn/gou23/cgodo/resource/jdbc/jdbc.properties</include>
-					<include>cn/gou23/cgodo/resource/log4j/log4j.xml</include>
 				</includes>
 				<filtering>true</filtering>
 			</resource>

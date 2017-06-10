@@ -1,10 +1,12 @@
-package com.cgodo.generator;
+package com.cgodo.generator.database;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.cgodo.freemarker.TemplateHandler;
+import com.cgodo.generator.GeneratorApplication;
 import com.cgodo.jdbc.Jdbc.ColumnModel;
 import com.cgodo.util.UtilMisc;
 
@@ -15,16 +17,18 @@ import freemarker.template.TemplateException;
 /**
  * 
  * 
- * 描述:Form生成器
+ * 描述:服务接口生成器
  *
  * @author liyixing
  * @version 1.0
  * @since 2017年5月22日 下午4:05:49
  */
-public class FormMake extends Make {
+public class ServiceMake extends Make {
 	public void initData(Map<String, Object> dataMap) {
 		// import
-		Set<String> imports = UtilMisc.toSet();
+		Set<String> imports = UtilMisc.toSet(List.class.getName(),
+				getMakeInfo().getBasePackage() + ".model."
+						+ getMakeInfo().getModelName());
 
 		for(ColumnModel columnModel : getMakeInfo().getColumnModels()) {
 			if(columnModel.getValueType().startsWith("java.lang.")) {
@@ -36,8 +40,6 @@ public class FormMake extends Make {
 			}
 		}
 		
-		imports.add(getMakeInfo().getBasePackage() + ".dao." + getMakeInfo().getEntityMapperName());
-		
 		dataMap.put("imports", imports);
 	}
 
@@ -47,16 +49,9 @@ public class FormMake extends Make {
 
 		TemplateHandler handler = new TemplateHandler();
 		handler.setBasePath(GeneratorApplication.TEMPLATE_BASE_PATH);
-		handler.setFileName("admin_form.ftl");
-		handler.setSavePath(GeneratorApplication.SAVE_BASE_PATH + "/admin/act/form/");
-		handler.setSaveFileName(getMakeInfo().getJavaName() + "Form.java");
-		handler.hander(dataMap);
-		
-		handler = new TemplateHandler();
-		handler.setBasePath(GeneratorApplication.TEMPLATE_BASE_PATH);
-		handler.setFileName("form.ftl");
-		handler.setSavePath(GeneratorApplication.SAVE_BASE_PATH + "/act/form/");
-		handler.setSaveFileName(getMakeInfo().getJavaName() + "Form.java");
+		handler.setFileName("service.ftl");
+		handler.setSavePath(GeneratorApplication.getSaveJavaBasePath() + "/service/");
+		handler.setSaveFileName(getMakeInfo().getJavaName() + "Service.java");
 		handler.hander(dataMap);
 	}
 }

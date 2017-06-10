@@ -1,4 +1,4 @@
-package com.cgodo.generator;
+package com.cgodo.generator.database;
 
 import java.util.List;
 

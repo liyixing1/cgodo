@@ -1,7 +1,8 @@
-package com.cgodo.generator;
+package com.cgodo.generator.database;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 
+import com.cgodo.generator.GeneratorApplication;
 import com.cgodo.jdbc.Jdbc;
 import com.cgodo.jdbc.Jdbc.ColumnModel;
 import com.cgodo.jdbc.Jdbc.TableModel;
@@ -76,7 +78,7 @@ public class Generator {
 		String tableJavaName = UtilModel.tableNameToJavaName(table.getTableName());
 		String javaVar = UtilString.firstToLowerCase(tableJavaName);
 
-		makeInfo.setBasePackage(GeneratorApplication.basePackage);
+		makeInfo.setBasePackage(GeneratorApplication.getBasePackage());
 		makeInfo.setJavaName(tableJavaName);
 		makeInfo.setJavaVarName(javaVar);
 		makeInfo.setColumnModels(columnModels);
@@ -143,7 +145,7 @@ public class Generator {
 			// 如果生成工具在类中存在 entity
 			try {
 				Field field = FieldUtils.getField(
-						Class.forName(GeneratorApplication.basePackage
+						Class.forName(GeneratorApplication.getBasePackage()
 								+ ".entity." + makeInfo.getEntityName()),
 						columnModel.getProperty(),true);
 
@@ -153,5 +155,23 @@ public class Generator {
 				UtilLog.debug("读取entity失败", e);
 			}
 		}
+	}
+	
+	public static void main(String[] args)
+			throws MalformedTemplateNameException, ParseException, IOException,
+			TemplateException, SQLException {
+		// 初始化生成参数
+		Map<TableModel, List<ColumnModel>> databaseinfo = new Jdbc(
+				"net.sf.log4jdbc.DriverSpy",
+				"jdbc:log4jdbc:mysql://127.0.0.1:3306/lsiding?useUnicode=false&autoReconnect=true&characterEncoding=utf-8",
+				"root", "2722261").getDatabaseInfo();
+		GeneratorApplication.BASE_PATH = "C:/Users/liyixing-pc/git";
+		GeneratorApplication.APPLICATION_NAME = "test";
+		GeneratorApplication.APPLICATION_DESCRIPTION = "测试";
+
+		// 开始生成
+		Generator generator = new Generator();
+		
+		generator.generator(databaseinfo,true);
 	}
 }

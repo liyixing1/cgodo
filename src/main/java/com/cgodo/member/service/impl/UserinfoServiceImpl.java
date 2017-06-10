@@ -14,6 +14,7 @@ import com.cgodo.member.dao.UserinfoEntityMapper;
 import com.cgodo.member.entity.UserinfoEntityCondition;
 import com.cgodo.member.model.UserinfoModel;
 import com.cgodo.member.service.UserinfoService;
+import com.cgodo.notify.Event;
 import com.cgodo.page.PageContext;
 
 /**
@@ -41,6 +42,7 @@ public class UserinfoServiceImpl implements UserinfoService {
 		return userinfoEntityMapper.selectByPrimaryKey(id);
 	}
 
+	@Event(name="添加用户")
 	@Override
 	public void save(UserinfoModel userinfoModel) {
 		userinfoEntityMapper.insert(userinfoModel);

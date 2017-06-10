@@ -1,9 +1,10 @@
-package com.cgodo.generator;
+package com.cgodo.generator.database;
 
 import java.io.IOException;
 import java.util.Map;
 
 import com.cgodo.freemarker.TemplateHandler;
+import com.cgodo.generator.GeneratorApplication;
 
 import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
@@ -30,7 +31,7 @@ public class AdminBaseMake extends Make {
 		TemplateHandler handler = new TemplateHandler();
 		handler.setBasePath(GeneratorApplication.TEMPLATE_BASE_PATH);
 		handler.setFileName("admin_base.ftl");
-		handler.setSavePath(GeneratorApplication.SAVE_HTML_BASE_PATH + "/common/");
+		handler.setSavePath(GeneratorApplication.getSaveHtmlBasePath() + "/common/");
 		handler.setSaveFileName("admin_base.html");
 		handler.hander(dataMap);
 	}

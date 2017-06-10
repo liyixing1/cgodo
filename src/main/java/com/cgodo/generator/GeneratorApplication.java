@@ -1,22 +1,31 @@
 package com.cgodo.generator;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.cgodo.jdbc.Jdbc;
+import com.cgodo.generator.database.ModelMake;
 import com.cgodo.jdbc.Jdbc.ColumnModel;
 import com.cgodo.jdbc.Jdbc.TableModel;
 import com.cgodo.util.UtilDateTime;
 import com.cgodo.util.UtilMisc;
 
 public class GeneratorApplication {
-	public static String basePackage;
 	/**
 	 * 应用名称
 	 */
-	public static String applicationName;
+	public static String APPLICATION_NAME;
+	
+	/**
+	 * 应用描述
+	 */
+	public static String APPLICATION_DESCRIPTION;
+	
+	/**
+	 * 生成项目时，项目模板来源
+	 */
+	public static String PROJECT_SRC_PATH;
+	
 	/**
 	 * 模板基础目录
 	 */
@@ -24,19 +33,9 @@ public class GeneratorApplication {
 			.getResource("/com/cgodo/template/").getFile() + "/";
 
 	/**
-	 * java文件保存目录
+	 * 项目所在目录
 	 */
-	public static String SAVE_BASE_PATH;
-	/**
-	 * html
-	 */
-	public static String SAVE_HTML_BASE_PATH = "src/main/webapp/WEB-INF/html/";
-	
-	/**
-	 * html
-	 */
-	public static String SAVE_JS_BASE_PATH = "src/main/webapp/res/rms/js/";
-
+	public static String BASE_PATH;
 
 	/**
 	 * 需要忽略的字段
@@ -49,7 +48,8 @@ public class GeneratorApplication {
 	public static final List<String> IGNORE_TABLES = UtilMisc.toList(
 			"client_request", "client_request_summary", "counter", "power",
 			"qq_userinfo", "role", "role_power", "sina_userinfoModel",
-			"sina_userinfo", "temp", "userinfo","user_role","wechat_userinfo","wechat_call", "wechat_notify");
+			"sina_userinfo", "temp", "userinfo", "user_role",
+			"wechat_userinfo", "wechat_call", "wechat_notify");
 	public static Map<TableModel, List<ColumnModel>> database;
 
 	/**
@@ -63,17 +63,36 @@ public class GeneratorApplication {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put("datetime", UtilDateTime.format(UtilDateTime.getNowDate(),
 				UtilDateTime.YYYY_MM_DD_HH_MM_SS));
-		dataMap.put("basePackage", basePackage);
+		dataMap.put("basePackage", getBasePackage());
 		dataMap.put("database", database);
+		dataMap.put("applicationDescription", APPLICATION_DESCRIPTION);
+		dataMap.put("applicationName", APPLICATION_NAME);
 		return dataMap;
 	}
 
-	public static void main(String[] args) throws SQLException {
-		Object o = new Jdbc(
-				"net.sf.log4jdbc.DriverSpy",
-				"jdbc:log4jdbc:mysql://127.0.0.1:3306/ticket?useUnicode=false&autoReconnect=true&characterEncoding=utf-8",
-				"root", "2722261").getDatabaseInfo();
+	public static String getBasePackage() {
+		return "com.lsiding." + APPLICATION_NAME;
+	}
 
-		System.out.println(o);
+	/**
+	 * java文件保存目录
+	 */
+	public static String getSaveJavaBasePath() {
+		return BASE_PATH + "/src/main/java/com/lsiding/"
+				+ GeneratorApplication.APPLICATION_NAME;
+	}
+
+	/**
+	 * html
+	 */
+	public static String getSaveHtmlBasePath() {
+		return BASE_PATH + "/src/main/webapp/WEB-INF/html/";
+	}
+
+	/**
+	 * js
+	 */
+	public static String getSaveJsBasePath() {
+		return BASE_PATH + "/src/main/webapp/res/rms/js/";
 	}
 }
