@@ -76,7 +76,7 @@ public class WechatComponentAct {
 		// 添加appid
 		params.put("appid", appId);
 		String  redirect_uri = "http://" + domain
-				+ "/wechat_authorize_redirect.html" + (StringUtils.isBlank(realurl) ? "" : "?realurl="+realurl);
+				+ "/wechat_component/wechat_authorize_redirect.html" + (StringUtils.isBlank(realurl) ? "" : "?realurl="+realurl);
 		
 		if(userinfo == null || !userinfo) {
 			redirect_uri = UtilUrl.addParam(redirect_uri, "scope", "snsapi_base");
